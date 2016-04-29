@@ -81,12 +81,19 @@ demo------使用demo,说明如下：
         });
 ##demo说明
 一级级联，银行选择
+
 http://zhoushengfe.com/iosselect/demo/one/bank.html
+
 二级级联，三国杀将领组合选
+
 http://zhoushengfe.com/iosselect/demo/two/sanguokill.html
+
 三级级联，省市区选择
+
 http://zhoushengfe.com/iosselect/demo/three/area.html
+
 viewport缩放时处理方案
+
 http://zhoushengfe.com/iosselect/demo/rem/bank.html
     
     
