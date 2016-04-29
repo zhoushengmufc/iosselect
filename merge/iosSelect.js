@@ -2136,6 +2136,8 @@
 	     callback: 选择完毕后的回调函数
 	     title: 选择框title
 	     itemHeight: 每一项的高度，默认 35px
+	     headerHeight: 组件标题栏高度 默认 44px
+	     addClassName: 组件额外类名 用于自定义样式
 	     oneTwoRelation: 第一列和第二列是否通过parentId关联
 	     twoThreeRelation: 第二列和第三列是否通过parentId关联
 	     oneLevelId: 第一级选中id
