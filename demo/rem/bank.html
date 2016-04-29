@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+    <title>rem-bank</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,target-densitydpi=device-dpi">
+    <script src="adaptive.js"></script>
+    <script>
+        window['adaptive'].desinWidth = 750;
+        window['adaptive'].baseFont = 18;
+        window['adaptive'].init();
+    </script>
+    <link rel="stylesheet" href="iosSelect.css">
+</head>
+<body>
+<div class="form-item item-line">                 
+    <label>请选择银行</label>                 
+    <div class="pc-box">                     
+        <input type="hidden" name="bank_id" id="bankId" value="">                     
+        <span id="showBank">点击这里选择银行</span>  
+    </div>             
+</div>
+</body>
+<script src="bank.js"></script>
+<script src="../../merge/iosSelect.js"></script>
+<script type="text/javascript">
+    var showBankDom = document.querySelector('#showBank');
+    var bankIdDom = document.querySelector('#bankId');
+
+    // 为缩放增加类名
+    var scaleValue = window.devicePixelRatioValue;
+    var scaleClassName = '';
+    var itemHeight = 35;
+    var headerHeight = 44;
+    if (scaleValue >= 3) {
+        scaleClassName = 'iosselect-scale-3';
+        itemHeight = 105;
+        headerHeight = 132;
+    }
+    else if (scaleValue >= 2) {
+        scaleClassName = 'iosselect-scale-2';
+        itemHeight = 70;
+        headerHeight = 88;
+    }
+
+    showBankDom.addEventListener('click', function () {
+        var bankId = showBankDom.dataset['id'];
+        var bankName = showBankDom.dataset['value'];
+
+        var bankSelect = new IosSelect(1, 
+            [data],
+            {
+                title: '银行卡选择',
+                oneLevelId: bankId,
+                itemHeight: itemHeight,
+                headerHeight: headerHeight,
+                addClassName: scaleClassName,
+                callback: function (selectOneObj) {
+                    bankIdDom.value = selectOneObj.id;
+                    showBankDom.innerHTML = selectOneObj.value;
+                    showBankDom.dataset['id'] = selectOneObj.id;
+                    showBankDom.dataset['value'] = selectOneObj.value;
+                }
+        });
+    });
+</script>
+</body>
+</html>
