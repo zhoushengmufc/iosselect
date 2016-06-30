@@ -3,6 +3,9 @@
 		isArray: function(arg1) {
 			return Object.prototype.toString.call(arg1) === '[object Array]';
 		},
+		isFunction: function(arg1) {
+			return typeof arg1 === 'function';
+		},
 		attrToData: function(dom, index) {
 			var obj = {};
 			for (var p in dom.dataset) {
@@ -85,7 +88,7 @@
 	     threeLevelId: 第三级选中id
 	 */
 	function IosSelect(level, data, options) {
-		if (!iosSelectUtil.isArray(data) || data.length === 0 || !iosSelectUtil.isArray(data[0])) {
+		if (!iosSelectUtil.isArray(data) || data.length === 0) {
 			return;
 		}
 		this.data = data;
@@ -400,7 +403,15 @@
 			});
 		},
 		getOneLevel: function() {
-			return this.data[0];
+			if (iosSelectUtil.isArray(this.data[0])){
+				return this.data[0];
+			}
+			else if (iosSelectUtil.isFunction(this.data[0])) {
+				return this.data[0]();
+			}
+			else {
+				throw new Error('data format error');
+			}
 		},
 		setOneLevel: function(oneLevelId, twoLevelId, threeLevelId) {
 			var oneLevelData = this.getOneLevel();
@@ -441,20 +452,25 @@
 			this.selectOneObj = iosSelectUtil.attrToData(pdom, atIndex);
 		},
 		getTwoLevel: function(oneLevelId) {
-			if (!iosSelectUtil.isArray(this.data[1])) {
+			var twoLevelData = [];
+			if (iosSelectUtil.isArray(this.data[1])) {
+				if (this.options.oneTwoRelation === 1) {
+					this.data[1].forEach(function(v, i, o) {
+						if (v['parentId'] === oneLevelId) {
+							twoLevelData.push(v);
+						}
+					});
+				} else {
+					twoLevelData = this.data[1];
+				}
+				return twoLevelData;
+			}
+			else if (iosSelectUtil.isFunction(this.data[1])) {
+				return this.data[1](oneLevelId);
+			}
+			else {
 				throw new Error('data format error');
 			}
-			var twoLevelData = [];
-			if (this.options.oneTwoRelation === 1) {
-				this.data[1].forEach(function(v, i, o) {
-					if (v['parentId'] === oneLevelId) {
-						twoLevelData.push(v);
-					}
-				});
-			} else {
-				twoLevelData = this.data[1];
-			}
-			return twoLevelData;
 		},
 		setTwoLevel: function(oneLevelId, twoLevelId, threeLevelId) {
 			var twoLevelData = this.getTwoLevel(oneLevelId);
@@ -494,24 +510,29 @@
 
 			self.selectTwoObj = iosSelectUtil.attrToData(cdom, atIndex);
 		},
-		getThreeLevel: function(twoLevelId) {
-			if (!iosSelectUtil.isArray(this.data[2])) {
+		getThreeLevel: function(oneLevelId, twoLevelId) {
+			var threeLevelData = [];
+			if (iosSelectUtil.isArray(this.data[2])) {
+				if (this.options.twoThreeRelation === 1) {
+					this.data[2].forEach(function(v, i, o) {
+						if (v['parentId'] === twoLevelId) {
+							threeLevelData.push(v);
+						}
+					});
+				} else {
+					threeLevelData = this.data[2];
+				}
+				return threeLevelData;
+			}
+			else if (iosSelectUtil.isFunction(this.data[2])) {
+				return this.data[2](oneLevelId, twoLevelId);
+			}
+			else {
 				throw new Error('data format error');
 			}
-			var threeLevelData = [];
-			if (this.options.twoThreeRelation === 1) {
-				this.data[2].forEach(function(v, i, o) {
-					if (v['parentId'] === twoLevelId) {
-						threeLevelData.push(v);
-					}
-				});
-			} else {
-				threeLevelData = this.data[2];
-			}
-			return threeLevelData;
 		},
 		setThreeLevel: function(oneLevelId, twoLevelId, threeLevelId) {
-			var threeLevelData = this.getThreeLevel(twoLevelId);
+			var threeLevelData = this.getThreeLevel(oneLevelId, twoLevelId);
 			var atIndex = 0;
 			if (!threeLevelId) {
 				threeLevelId = threeLevelData[0]['id'];
