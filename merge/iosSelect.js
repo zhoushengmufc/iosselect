@@ -2224,6 +2224,11 @@
 			this.iosSelectLayer.el.querySelector('.layer').style.height = this.itemHeight * 7 + this.headerHeight + 'px';
 
 			this.oneLevelContainDom.style.height = this.itemHeight * 7 + 'px';
+
+			this.offsetTop = document.body.scrollTop;
+			document.body.style.overflow = 'hidden';
+			window.scrollTo(0, 0);
+
 			this.scrollOne = new IScroll('#oneLevelContain', {
 				probeType: 3,
 				bounce: false
@@ -2456,10 +2461,17 @@
 					self.selectThreeObj = iosSelectUtil.attrToData(ddom, plast);
 				});
 			}
+			this.closeBtnDom = this.iosSelectLayer.el.querySelector('.close');
+			this.closeBtnDom.addEventListener('click', function(e) {
+				window.scrollTo(0, self.offsetTop);
+				document.body.style.overflow = 'auto';
+			});
+
 			this.selectBtnDom = this.iosSelectLayer.el.querySelector('.sure');
 			this.selectBtnDom.addEventListener('click', function(e) {
+				window.scrollTo(0, self.offsetTop);
+				document.body.style.overflow = 'auto';
 				self.callback && self.callback(self.selectOneObj, self.selectTwoObj, self.selectThreeObj);
-				self.iosSelectLayer.close();
 			});
 		},
 		getOneLevel: function() {
