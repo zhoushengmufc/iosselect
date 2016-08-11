@@ -217,8 +217,8 @@
 					to = Math.floor(pa) * self.itemHeight * window.adaptive.newBase;
 					plast = Math.floor(pa) + 1;
 				}
-				// self.scrollOne.scrollTo(0, -to, 0);
-				self.scrollOne.scrollToElement('li:nth-child(' + (plast) + ')', 0);
+				self.scrollOne.scrollTo(0, -to, 0);
+				// self.scrollOne.scrollToElement('li:nth-child(' + (plast) + ')', 0);
 
 				var pdom = self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
 
@@ -291,14 +291,14 @@
 					var plast = 1;
 					var to = 0;
 					if (Math.ceil(pa) === Math.round(pa)) {
-						to = Math.ceil(pa) * self.itemHeight;
+						to = Math.ceil(pa) * self.itemHeight * window.adaptive.newBase;
 						plast = Math.ceil(pa) + 1;
 					} else {
-						to = Math.floor(pa) * self.itemHeight;
+						to = Math.floor(pa) * self.itemHeight * window.adaptive.newBase;
 						plast = Math.floor(pa) + 1;
 					}
-					//self.scrollTwo.scrollTo(0, -to, 0);
-					self.scrollTwo.scrollToElement('li:nth-child(' + (plast) + ')', 0);
+					self.scrollTwo.scrollTo(0, -to, 0);
+					//self.scrollTwo.scrollToElement('li:nth-child(' + (plast) + ')', 0);
 					var cdom = self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
 
 					Array.prototype.slice.call(self.twoLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
@@ -371,14 +371,14 @@
 					var plast = 1;
 					var to = 0;
 					if (Math.ceil(pa) === Math.round(pa)) {
-						to = Math.ceil(pa) * self.itemHeight;
+						to = Math.ceil(pa) * self.itemHeight * window.adaptive.newBase;
 						plast = Math.ceil(pa) + 1;
 					} else {
-						to = Math.floor(pa) * self.itemHeight;
+						to = Math.floor(pa) * self.itemHeight * window.adaptive.newBase;
 						plast = Math.floor(pa) + 1;
 					}
-					// self.scrollThree.scrollTo(0, -to, 0);
-					self.scrollThree.scrollToElement('li:nth-child(' + (plast) + ')', 0);
+					self.scrollThree.scrollTo(0, -to, 0);
+					// self.scrollThree.scrollToElement('li:nth-child(' + (plast) + ')', 0);
 					var ddom = self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
 
 					Array.prototype.slice.call(self.threeLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
@@ -403,13 +403,13 @@
 			}
 			this.closeBtnDom = this.iosSelectLayer.el.querySelector('.close');
 			this.closeBtnDom.addEventListener('click', function(e) {
-				window.scrollTo(0, self.offsetTop);
 				document.body.style.overflow = 'auto';
+				window.scrollTo(0, self.offsetTop);
 			});
 			this.selectBtnDom = this.iosSelectLayer.el.querySelector('.sure');
 			this.selectBtnDom.addEventListener('click', function(e) {
-				window.scrollTo(0, self.offsetTop);
 				document.body.style.overflow = 'auto';
+				window.scrollTo(0, self.offsetTop);
 				self.callback && self.callback(self.selectOneObj, self.selectTwoObj, self.selectThreeObj);
 			});
 		},

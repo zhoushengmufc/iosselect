@@ -403,14 +403,14 @@
 			}
 			this.closeBtnDom = this.iosSelectLayer.el.querySelector('.close');
 			this.closeBtnDom.addEventListener('click', function(e) {
-				window.scrollTo(0, self.offsetTop);
 				document.body.style.overflow = 'auto';
+				window.scrollTo(0, self.offsetTop);
 			});
 
 			this.selectBtnDom = this.iosSelectLayer.el.querySelector('.sure');
 			this.selectBtnDom.addEventListener('click', function(e) {
-				window.scrollTo(0, self.offsetTop);
 				document.body.style.overflow = 'auto';
+				window.scrollTo(0, self.offsetTop);
 				self.callback && self.callback(self.selectOneObj, self.selectTwoObj, self.selectThreeObj);
 			});
 		},
