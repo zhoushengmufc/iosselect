@@ -26,7 +26,7 @@ demo------使用demo,说明如下：
     ###API
     new IosSelect(level, data, options)
     level: 选择的层级 1 2 3 最多支持3层
-	data: [oneLevelArray[, twoLevelArray[, threeLevelArray]]]
+	data: [oneLevelArray[, twoLevelArray[, threeLevelArray]]] 除了用数组，也可以用方法
 	options:
 	     callback: 选择完毕后的回调函数 必选
 	     title: 选择框title  可选，没有此参数则不显示title
@@ -83,8 +83,9 @@ demo------使用demo,说明如下：
                     }
                 }
         });
-        data为方法：
-        var selectDateDom = $('#selectDate');
+        
+    data为方法：
+    var selectDateDom = $('#selectDate');
     var showDateDom = $('#showDate');
     // 初始化时间
     var now = new Date();
@@ -161,7 +162,7 @@ demo------使用demo,说明如下：
         var twoLevelId = showDateDom.attr('data-month');
         var threeLevelId = showDateDom.attr('data-date');
         var iosSelect = new IosSelect(3, 
-            [yearData, monthData, dateData],
+            [yearData, monthData, dateData],// 这里传入的是方法
             {
                 title: '地址选择',
                 itemHeight: 35,
