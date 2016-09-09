@@ -22,8 +22,8 @@ demo------使用demo,说明如下：
     rem------手机端部分解决方案会使用viewport缩放，这个时候我们需要添加一些样式，页面在缩放的情况下正常显示
     
     datepicker------时间选择器，通过方法筛选数据，实现三级联动，ajax获取数据时可参考此例，但是ajax需要同步获取数据
-##使用说明
-    ##API##
+##使用说明##
+    ###API##
 	    new IosSelect(level, data, options)
 	    level: 选择的层级 1 2 3 最多支持3层
 		data: [oneLevelArray[, twoLevelArray[, threeLevelArray]]] 除了用数组，也可以用方法
