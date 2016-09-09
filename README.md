@@ -23,7 +23,7 @@ demo------使用demo,说明如下：
     
     datepicker------时间选择器，通过方法筛选数据，实现三级联动，ajax获取数据时可参考此例，但是ajax需要同步获取数据
 ##使用说明
-    ###API
+    ##API
     new IosSelect(level, data, options)
     level: 选择的层级 1 2 3 最多支持3层
 	data: [oneLevelArray[, twoLevelArray[, threeLevelArray]]] 除了用数组，也可以用方法
@@ -38,7 +38,7 @@ demo------使用demo,说明如下：
 	     oneLevelId: 第一级选中id 可选
 	     twoLevelId: 第二级选中id 可选
 	     threeLevelId: 第三级选中id 可选
-	####参数说明
+	##参数说明
 	level: 级联等级，支持1,2,3 必选项
 	data: 数组，前三项分别对应级联1,2,3项，每一项又是一个数组或方法，如果是一级下拉菜单，data长度为1
 	    如果是数组：
@@ -46,8 +46,8 @@ demo------使用demo,说明如下：
 	options.callback(selectOneObj[[, selectTwoObj], selectThreeObj]) 每个级联选中项，包含对应数据的所有字段及dom对象
 	    如果是方法：
 	    传入一个方法，在方法中获取数据
-    ####以地址选择为例：
-    ######data为三个数组：
+    ##以地址选择为例：
+    ##data为三个数组：
     // 省份列表
     var iosProvinces = [
         {'id': '130000', 'value': '河北省', 'parentId': '0'}
@@ -84,7 +84,7 @@ demo------使用demo,说明如下：
                 }
         });
         
-    #####data为方法：
+    ##data为方法：
     var selectDateDom = $('#selectDate');
     var showDateDom = $('#showDate');
     // 初始化时间
