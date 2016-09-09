@@ -47,7 +47,7 @@ demo------使用demo,说明如下：
 	    如果是方法：
 	    传入一个方法，在方法中获取数据
     ####以地址选择为例：
-    data为三个数组：
+    ######data为三个数组：
     // 省份列表
     var iosProvinces = [
         {'id': '130000', 'value': '河北省', 'parentId': '0'}
@@ -84,7 +84,7 @@ demo------使用demo,说明如下：
                 }
         });
         
-    data为方法：
+    #####data为方法：
     var selectDateDom = $('#selectDate');
     var showDateDom = $('#showDate');
     // 初始化时间
