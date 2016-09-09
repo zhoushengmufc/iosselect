@@ -49,6 +49,7 @@ demo------使用demo,说明如下：
 	    -----------------------------------------------------------------------------
 ##以地址选择为例：##
 ##data为三个数组：##
+http://zhoushengfe.com/iosselect/demo/three/area.html
 	    // 省份列表
 	    var iosProvinces = [
 	        {'id': '130000', 'value': '河北省', 'parentId': '0'}
@@ -87,6 +88,7 @@ demo------使用demo,说明如下：
 	    --------------------------------------------------------------------------------
 ##日期选择器##
 ##data为方法：##
+http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 	    var selectDateDom = $('#selectDate');
 	    var showDateDom = $('#showDate');
 	    // 初始化时间
