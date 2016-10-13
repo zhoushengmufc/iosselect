@@ -208,3 +208,11 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
     
     
     如果有使用问题，可加QQ群：419468553
+    
+    
+如果要修改菜单项高度，请自行修改样式，比如：
+.ios-select-widget-box ul li  
+.ios-select-widget-box .cover-area1
+.ios-select-widget-box .cover-area2
+
+初始化的时候赋值给：itemHeight
