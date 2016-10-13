@@ -13,6 +13,7 @@
         <span id="showBank">点击这里选择银行</span>  
     </div>             
 </div>
+    <div class="container"></div>
 </body>
 <script src="bank.js"></script>
 <script src="../../merge/iosSelect.js"></script>
@@ -26,6 +27,7 @@
         var bankSelect = new IosSelect(1, 
             [data],
             {
+                container: '.container',
                 title: '银行卡选择',
                 itemHeight: 35,
                 oneLevelId: bankId,

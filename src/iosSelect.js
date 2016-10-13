@@ -42,7 +42,12 @@
 	Layer.prototype = {
 		init: function() {
 			this.layer_el.innerHTML = this.html;
-			document.body.appendChild(this.el);
+			if (this.opts.container && document.querySelector(this.opts.container)) {
+				document.querySelector(this.opts.container).appendChild(this.el);
+			}
+			else {
+				document.body.appendChild(this.el);
+			}
 			this.el.appendChild(this.layer_el);
 			this.el.style.height = Math.max(document.documentElement.getBoundingClientRect().height, window.innerHeight);
 			if (this.opts.className) {
@@ -76,6 +81,7 @@
 	 level: 选择的层级 1 2 3 最多支持3层
 	 data: [oneLevelArray[, twoLevelArray[, threeLevelArray]]]
 	 options:
+	     container: 组件插入到该元素下 可选
 	     callback: 选择完毕后的回调函数
 	     title: 选择框title
 	     itemHeight: 每一项的高度，默认 35px
@@ -137,7 +143,8 @@
 				'<hr class="cover-area2"/>'
 			].join('\r\n');
 			this.iosSelectLayer = new Layer(all_html, {
-				className: 'ios-select-widget-box ' + this.typeBox + (this.options.addClassName? ' ' + this.options.addClassName: '')
+				className: 'ios-select-widget-box ' + this.typeBox + (this.options.addClassName? ' ' + this.options.addClassName: ''),
+				container: this.options.container || ''
 			});
 
 			this.iosSelectTitleDom = document.querySelector('#iosSelectTitle');
