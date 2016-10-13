@@ -166,7 +166,7 @@
 			this.oneLevelContainDom.style.height = this.itemHeight * 7 + 'px';
 
 			this.offsetTop = document.body.scrollTop;
-			document.body.style.overflow = 'hidden';
+			document.body.classList.add('ios-select-body-class');
 			window.scrollTo(0, 0);
 
 			this.scrollOne = new IScroll('#oneLevelContain', {
@@ -403,13 +403,17 @@
 			}
 			this.closeBtnDom = this.iosSelectLayer.el.querySelector('.close');
 			this.closeBtnDom.addEventListener('click', function(e) {
-				document.body.style.overflow = 'auto';
+				if (document.body.classList.contains('ios-select-body-class')) {
+					document.body.classList.remove('ios-select-body-class');
+				}
 				window.scrollTo(0, self.offsetTop);
 			});
 
 			this.selectBtnDom = this.iosSelectLayer.el.querySelector('.sure');
 			this.selectBtnDom.addEventListener('click', function(e) {
-				document.body.style.overflow = 'auto';
+				if (document.body.classList.contains('ios-select-body-class')) {
+					document.body.classList.remove('ios-select-body-class');
+				}
 				window.scrollTo(0, self.offsetTop);
 				self.callback && self.callback(self.selectOneObj, self.selectTwoObj, self.selectThreeObj);
 			});
