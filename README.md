@@ -28,6 +28,7 @@ demo------使用demo,说明如下：
 	    level: 选择的层级 1 2 3 最多支持3层
 		data: [oneLevelArray[, twoLevelArray[, threeLevelArray]]] 除了用数组，也可以用方法
 		options:
+		     container: 组件的父元素，传入css3选择器，比如'.a' 或 '#a'之类的
 		     callback: 选择完毕后的回调函数 必选
 		     title: 选择框title  可选，没有此参数则不显示title
 		     itemHeight: 每一项的高度，可选，默认 35px
