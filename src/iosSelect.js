@@ -92,6 +92,7 @@
 	     oneLevelId: 第一级选中id
 	     twoLevelId: 第二级选中id
 	     threeLevelId: 第三级选中id
+	     showLoading: 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
 	 */
 	function IosSelect(level, data, options) {
 		if (!iosSelectUtil.isArray(data) || data.length === 0) {
@@ -121,26 +122,29 @@
 			var self = this;
 			var all_html = [
 				'<header class="iosselect-header">',
-				'<h2 id="iosSelectTitle"></h2>',
-				'<a href="javascript:void(0)" class="close">取消</a>',
-				'<a href="javascript:void(0)" class="sure">确定</a>',
+					'<h2 id="iosSelectTitle"></h2>',
+					'<a href="javascript:void(0)" class="close">取消</a>',
+					'<a href="javascript:void(0)" class="sure">确定</a>',
 				'</header>',
 				'<section class="iosselect-box">',
-				'<div class="one-level-contain" id="oneLevelContain">',
-				'<ul class="select-one-level">',
-				'</ul>',
-				'</div>',
-				'<div class="two-level-contain" id="twoLevelContain">',
-				'<ul class="select-two-level">',
-				'</ul>',
-				'</div>',
-				'<div class="three-level-contain" id="threeLevelContain">',
-				'<ul class="select-three-level">',
-				'</ul>',
-				'</div>',
+					'<div class="one-level-contain" id="oneLevelContain">',
+						'<ul class="select-one-level">',
+						'</ul>',
+					'</div>',
+					'<div class="two-level-contain" id="twoLevelContain">',
+						'<ul class="select-two-level">',
+						'</ul>',
+					'</div>',
+					'<div class="three-level-contain" id="threeLevelContain">',
+						'<ul class="select-three-level">',
+						'</ul>',
+					'</div>',
 				'</section>',
 				'<hr class="cover-area1"/>',
-				'<hr class="cover-area2"/>'
+				'<hr class="cover-area2"/>',
+				'<div class="ios-select-loading-box" id="iosSelectLoadingBox">',
+				    '<div class="ios-select-loading"></div>',
+				'</div>'
 			].join('\r\n');
 			this.iosSelectLayer = new Layer(all_html, {
 				className: 'ios-select-widget-box ' + this.typeBox + (this.options.addClassName? ' ' + this.options.addClassName: ''),
@@ -148,6 +152,7 @@
 			});
 
 			this.iosSelectTitleDom = document.querySelector('#iosSelectTitle');
+			this.iosSelectLoadingBoxDom = document.getElementById('iosSelectLoadingBox');
 			if (this.options.title) {
 				this.iosSelectTitleDom.innerHTML = this.options.title;
 			}
@@ -425,19 +430,32 @@
 				self.callback && self.callback(self.selectOneObj, self.selectTwoObj, self.selectThreeObj);
 			});
 		},
+		loadingShow: function() {
+			this.options.showLoading && (this.iosSelectLoadingBoxDom.style.display = 'block');
+		},
+		loadingHide: function() {
+			this.iosSelectLoadingBoxDom.style.display = 'none';
+		},
 		getOneLevel: function() {
+			return this.data[0];
+		},
+		setOneLevel: function(oneLevelId, twoLevelId, threeLevelId) {
 			if (iosSelectUtil.isArray(this.data[0])){
-				return this.data[0];
+				var oneLevelData = this.getOneLevel();
+				this.renderOneLevel(oneLevelId, twoLevelId, threeLevelId, oneLevelData);
 			}
 			else if (iosSelectUtil.isFunction(this.data[0])) {
-				return this.data[0]();
+				this.loadingShow();
+				this.data[0](function(oneLevelData) {
+					this.loadingHide();
+					this.renderOneLevel(oneLevelId, twoLevelId, threeLevelId, oneLevelData);
+				}.bind(this));
 			}
 			else {
 				throw new Error('data format error');
 			}
 		},
-		setOneLevel: function(oneLevelId, twoLevelId, threeLevelId) {
-			var oneLevelData = this.getOneLevel();
+		renderOneLevel: function(oneLevelId, twoLevelId, threeLevelId, oneLevelData) {
 			if (!oneLevelId) {
 				oneLevelId = oneLevelData[0]['id'];
 			}
@@ -476,27 +494,34 @@
 		},
 		getTwoLevel: function(oneLevelId) {
 			var twoLevelData = [];
+			if (this.options.oneTwoRelation === 1) {
+				this.data[1].forEach(function(v, i, o) {
+					if (v['parentId'] === oneLevelId) {
+						twoLevelData.push(v);
+					}
+				});
+			} else {
+				twoLevelData = this.data[1];
+			}
+			return twoLevelData;
+		},
+		setTwoLevel: function(oneLevelId, twoLevelId, threeLevelId) {
 			if (iosSelectUtil.isArray(this.data[1])) {
-				if (this.options.oneTwoRelation === 1) {
-					this.data[1].forEach(function(v, i, o) {
-						if (v['parentId'] === oneLevelId) {
-							twoLevelData.push(v);
-						}
-					});
-				} else {
-					twoLevelData = this.data[1];
-				}
-				return twoLevelData;
+				var twoLevelData = this.getTwoLevel(oneLevelId);
+				this.renderTwoLevel(oneLevelId, twoLevelId, threeLevelId, twoLevelData);
 			}
 			else if (iosSelectUtil.isFunction(this.data[1])) {
-				return this.data[1](oneLevelId);
+				this.loadingShow();
+				this.data[1](oneLevelId, function(twoLevelData) {
+					this.loadingHide();
+					this.renderTwoLevel(oneLevelId, twoLevelId, threeLevelId, twoLevelData);
+				}.bind(this));
 			}
 			else {
 				throw new Error('data format error');
 			}
 		},
-		setTwoLevel: function(oneLevelId, twoLevelId, threeLevelId) {
-			var twoLevelData = this.getTwoLevel(oneLevelId);
+		renderTwoLevel: function(oneLevelId, twoLevelId, threeLevelId, twoLevelData) {
 			var atIndex = 0;
 			if (!twoLevelId) {
 				twoLevelId = twoLevelData[0]['id'];
@@ -535,28 +560,35 @@
 		},
 		getThreeLevel: function(oneLevelId, twoLevelId) {
 			var threeLevelData = [];
+			if (this.options.twoThreeRelation === 1) {
+				this.data[2].forEach(function(v, i, o) {
+					if (v['parentId'] === twoLevelId) {
+						threeLevelData.push(v);
+					}
+				});
+			} else {
+				threeLevelData = this.data[2];
+			}
+			return threeLevelData;
+		},
+		setThreeLevel: function(oneLevelId, twoLevelId, threeLevelId) {
 			if (iosSelectUtil.isArray(this.data[2])) {
-				if (this.options.twoThreeRelation === 1) {
-					this.data[2].forEach(function(v, i, o) {
-						if (v['parentId'] === twoLevelId) {
-							threeLevelData.push(v);
-						}
-					});
-				} else {
-					threeLevelData = this.data[2];
-				}
-				return threeLevelData;
+				var threeLevelData = this.getThreeLevel(oneLevelId, twoLevelId);
+				this.renderThreeLevel(threeLevelId, threeLevelData);
 			}
 			else if (iosSelectUtil.isFunction(this.data[2])) {
-				return this.data[2](oneLevelId, twoLevelId);
+				this.loadingShow();
+				this.data[2](oneLevelId, twoLevelId, function(threeLevelData) {
+					this.loadingHide();
+					this.renderThreeLevel(threeLevelId, threeLevelData);
+				}.bind(this));
 			}
 			else {
 				throw new Error('data format error');
 			}
 		},
-		setThreeLevel: function(oneLevelId, twoLevelId, threeLevelId) {
-			var threeLevelData = this.getThreeLevel(oneLevelId, twoLevelId);
-			var atIndex = 0;
+	    renderThreeLevel: function(threeLevelId, threeLevelData) {
+	    	var atIndex = 0;
 			if (!threeLevelId) {
 				threeLevelId = threeLevelData[0]['id'];
 			}
@@ -588,7 +620,7 @@
 			self.threeLevelContainDom.querySelector('li:nth-child(' + (atIndex + 2) + ')').classList.add('side2');
 
 			self.selectThreeObj = iosSelectUtil.attrToData(ddom, atIndex);
-		}
+	    }
 	}
 	if (typeof module != 'undefined' && module.exports) {
 		module.exports = IosSelect;
