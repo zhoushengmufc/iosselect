@@ -2491,7 +2491,7 @@
 			});
 		},
 		loadingShow: function() {
-			this.options.showLoading && this.iosSelectLoadingBoxDom.style.display = 'block';
+			this.options.showLoading && (this.iosSelectLoadingBoxDom.style.display = 'block');
 		},
 		loadingHide: function() {
 			this.iosSelectLoadingBoxDom.style.display = 'none';
