@@ -3,7 +3,7 @@
     <title>时间选择器</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="../../src/iosSelect.css">
+    <link rel="stylesheet" href="../../merge/iosSelect.css">
 </head>
 <body>
 <div class="form-item item-line" id="selectDate">                 
@@ -14,8 +14,9 @@
 </div>
 </body>
 <script src="zepto.js"></script>
-<script src="../../src/iscroll.js"></script>
-<script src="../../src/iosSelect.js"></script>
+<!-- <script src="../../src/iscroll.js"></script>
+<script src="../../src/iosSelect.js"></script> -->
+<script src="../../merge/iosSelect.js"></script>
 <script type="text/javascript">
     var selectDateDom = $('#selectDate');
     var showDateDom = $('#showDate');
@@ -59,65 +60,74 @@
         return arr;
     }
     var yearData = function(callback) {
-        setTimeout(function() {
-            callback(formatYear(nowYear))
-        }, 2000)
+        callback(formatYear(nowYear))
     }
     var monthData = function (year, callback) {
-        setTimeout(function() {
-            callback(formatMonth());
-        }, 2000);
+        callback(formatMonth());
     };
     var dateData = function (year, month, callback) {
-        setTimeout(function() {
-            if (/^1|3|5|7|8|10|12$/.test(month)) {
-                callback(formatDate(31));
-            }
-            else if (/^4|6|9|11$/.test(month)) {
-                callback(formatDate(30));
-            }
-            else if (/^2$/.test(month)) {
-                if (year % 4 === 0 && year % 100 !==0 || year % 400 === 0) {
-                    callback(formatDate(29));
-                }
-                else {
-                    callback(formatDate(28));
-                }
+        if (/^(1|3|5|7|8|10|12)$/.test(month)) {
+            callback(formatDate(31));
+        }
+        else if (/^(4|6|9|11)$/.test(month)) {
+            callback(formatDate(30));
+        }
+        else if (/^2$/.test(month)) {
+            if (year % 4 === 0 && year % 100 !==0 || year % 400 === 0) {
+                callback(formatDate(29));
             }
             else {
-                throw new Error('month is illegal');
+                callback(formatDate(28));
             }
-        }, 2000);
-        // ajax请求可以这样写
-        /*
-        $.ajax({
-            type: 'get',
-            url: '/example',
-            success: function(data) {
-                callback(data);
-            }
-        });
-        */
+        }
+        else {
+            throw new Error('month is illegal');
+        }
+    };
+    var hourData = function(one, two, three, callback) {
+        var hours = [];
+        for (var i = 0,len = 24; i < len; i++) {
+            hours.push({
+                id: i,
+                value: i + '时'
+            });
+        }
+        callback(hours);
+    };
+    var minuteData = function(one, two, three, four, callback) {
+        var minutes = [];
+        for (var i = 0, len = 60; i < len; i++) {
+            minutes.push({
+                id: i,
+                value: i + '分'
+            });
+        }
+        callback(minutes);
     };
     selectDateDom.bind('click', function () {
         var oneLevelId = showDateDom.attr('data-year');
         var twoLevelId = showDateDom.attr('data-month');
         var threeLevelId = showDateDom.attr('data-date');
-        var iosSelect = new IosSelect(3, 
-            [yearData, monthData, dateData],
+        var fourLevelId = showDateDom.attr('data-hour');
+        var fiveLevelId = showDateDom.attr('data-minute');
+        var iosSelect = new IosSelect(5, 
+            [yearData, monthData, dateData, hourData, minuteData],
             {
                 title: '地址选择',
                 itemHeight: 35,
-                relation: [1, 1],
+                relation: [1, 1, 0, 0],
                 oneLevelId: oneLevelId,
                 twoLevelId: twoLevelId,
                 threeLevelId: threeLevelId,
-                showLoading: true,
-                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                fourLevelId: fourLevelId,
+                fiveLevelId: fiveLevelId,
+                callback: function (selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, selectFiveObj) {
                     showDateDom.attr('data-year', selectOneObj.id);
                     showDateDom.attr('data-month', selectTwoObj.id);
                     showDateDom.attr('data-date', selectThreeObj.id);
-                    showDateDom.html(selectOneObj.value + ' ' + selectTwoObj.value + ' ' + selectThreeObj.value);
+                    showDateDom.attr('data-hour', selectFourObj.id);
+                    showDateDom.attr('data-minute', selectFiveObj.id);
+                    showDateDom.html(selectOneObj.value + ' ' + selectTwoObj.value + ' ' + selectThreeObj.value + ' ' + selectFourObj.value + ' ' + selectFiveObj.value);
                 }
         });
     });

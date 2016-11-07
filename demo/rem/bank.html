@@ -22,7 +22,7 @@
 </body>
 <script src="bank.js"></script>
 <script src="../../src/iscroll.js"></script>
-<script src="iosSelect_rem.js"></script>
+<script src="../../src/iosSelect.js"></script>
 <script type="text/javascript">
     var showBankDom = document.querySelector('#showBank');
     var bankIdDom = document.querySelector('#bankId');
@@ -38,6 +38,7 @@
                 oneLevelId: bankId,
                 itemHeight: 0.7,
                 headerHeight: 0.88,
+                cssUnit: 'rem',
                 callback: function (selectOneObj) {
                     bankIdDom.value = selectOneObj.id;
                     showBankDom.innerHTML = selectOneObj.value;
