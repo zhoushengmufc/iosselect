@@ -8,13 +8,16 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
 可以做到0依赖，只需引用一个js和css即可，样式可自己定制，也可使用默认样式
 
 ##更新日志
-    2016-11-7 1，支持最多5级级联，level参数可设置1,2,3,4,5
+    2016-11-7 1，支持最多5级级联，level参数可设置1,2,3,4,5  
+    
               2，支持设置高度和高度单位，默认单位px，itemHeight默认35,headerHeight默认44
 	          比如我们要使用rem，可以在options参数里设置如下参数
 	          itemHeight: 0.7,
                   headerHeight: 0.88,
                   cssUnit: 'rem',
+		  
 	      3，联动后默认值，比如年份变更后，之前的月份选中值不变
+	      
 
 ##文件说明
 src------iosselect基于iscroll5开发，在这个文件夹下可以看到iscroll.js,iosselect.js,iosselect.css，如果项目里有单独使用iscroll5,可以使用这个版本
@@ -108,10 +111,12 @@ demo------使用demo,说明如下：
 ##以地址选择为例：##
 ##data为三个数组：##
 http://zhoushengfe.com/iosselect/demo/three/area.html
+
 	    --------------------------------------------------------------------------------
 ##日期选择器##
 ##data为方法：##
 http://zhoushengfe.com/iosselect/demo/datepicker/date.html
+
             --------------------------------------------------------------------------------
 ##demo说明
 一级级联，银行选择
