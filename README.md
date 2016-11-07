@@ -1,3 +1,4 @@
+#如果好用请star下项目，谢谢
 # iosselect
 #webapp模仿ios下拉菜单  
 html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统一下拉菜单样式而生
