@@ -1,3 +1,4 @@
+require ('style!css!./iosSelect.css');
 (function() {
 	var IScroll = (function() {
 		var rAF = window.requestAnimationFrame ||

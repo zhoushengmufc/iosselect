@@ -1,0 +1,25 @@
+{
+  "name": "iosselect",
+  "version": "0.0.3",
+  "description": "iosselect for andriod and ios",
+  "main": "merge/iosSelect.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhoushengmufc/iosselect.git"
+  },
+  "keywords": [
+    "iosselect",
+    "select",
+    "ios",
+    "andriod"
+  ],
+  "author": "zhousheng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhoushengmufc/iosselect/issues"
+  },
+  "homepage": "https://github.com/zhoushengmufc/iosselect#readme"
+}
