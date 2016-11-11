@@ -27,7 +27,9 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
     3，联动后默认值，比如年份变更后，之前的月份选中值不变
     
 ##使用方法
+
     方法1：npm install iosselect
+    
     方法2：直接引用静态文件，参看demo
 	      
 
