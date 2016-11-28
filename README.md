@@ -9,6 +9,10 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
 可以做到0依赖，只需引用一个js和css即可，样式可自己定制，也可使用默认样式
 
 ##更新日志
+
+    2016-11-28
+    
+    1，添加options.itemShowCount参数，展示的选项可以为3,5,7,9。默认为7项
     
     2016-11-11
     
@@ -159,5 +163,12 @@ http://zhoushengfe.com/iosselect/demo/five/time.html
     
 如果要修改菜单项里样式，请自行修改样式，比如：
 .ios-select-widget-box ul li  
+
+如果要设置页面默认选中值，可以将默认值写在html元素中，以地址选择器为例：
+
+
+<span data-city-code="510100" data-province-code="510000" data-district-code="510105" id="show_contact">四川省 成都市 青羊区</span>
+
+页面就有默认选项啦
 
  如果有使用问题，可加QQ群：419468553
