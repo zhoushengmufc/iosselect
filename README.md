@@ -9,6 +9,11 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
 可以做到0依赖，只需引用一个js和css即可，样式可自己定制，也可使用默认样式
 
 ##更新日志
+    
+    2016-11-11
+    
+    1，npm publish
+    
     2016-11-7 
     
     1，支持最多5级级联，level参数可设置1,2,3,4,5  
@@ -20,6 +25,12 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
 	  cssUnit: 'rem',
 
     3，联动后默认值，比如年份变更后，之前的月份选中值不变
+    
+##使用方法
+
+    方法1：npm install iosselect
+    
+    方法2：直接引用静态文件，参看demo
 	      
 
 ##文件说明
