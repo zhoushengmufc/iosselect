@@ -161,14 +161,17 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 
 http://zhoushengfe.com/iosselect/demo/five/time.html 
     
-如果要修改菜单项里样式，请自行修改样式，比如：
+###如果要修改菜单项里样式，请自行修改样式，比如：
+
 .ios-select-widget-box ul li  
 
-如果要设置页面默认选中值，可以将默认值写在html元素中，以地址选择器为例：
+###如果要设置页面默认选中值，可以将默认值写在html元素中，以地址选择器为例：
 
 
 <span data-city-code="510100" data-province-code="510000" data-district-code="510105" id="show_contact">四川省 成都市 青羊区</span>
 
 页面就有默认选项啦
+
+
 
  如果有使用问题，可加QQ群：419468553
