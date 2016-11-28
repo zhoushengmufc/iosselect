@@ -1,4 +1,3 @@
-require ('style!css!./iosSelect.css');
 (function() {
 	var IScroll = (function() {
 		var rAF = window.requestAnimationFrame ||
@@ -2138,29 +2137,6 @@ require ('style!css!./iosSelect.css');
 			}
 		}
 	}
-	/*
-	 level: 选择的层级 1 2 3 最多支持3层
-	 data: [oneLevelArray[, twoLevelArray[, threeLevelArray]]]
-	 options:
-	     container: 组件插入到该元素下 可选
-	     callback: 选择完毕后的回调函数
-	     title: 选择框title
-	     itemHeight: 每一项的高度，默认 35
-	     headerHeight: 组件标题栏高度 默认 44
-	     cssUnit: px或者rem 默认是px
-	     addClassName: 组件额外类名 用于自定义样式
-	     relation: 数组 [oneTwoRelation, twoThreeRelation, threeFourRelation, fourFiveRelation] 默认值：[0, 0, 0, 0]
-		     oneTwoRelation: 第一列和第二列是否通过parentId关联
-		     twoThreeRelation: 第二列和第三列是否通过parentId关联
-		     threeFourRelation: 第三列和第四列是否通过parentId关联
-		     fourFiveRelation: 第四列和第五列是否通过parentId关联
-	     oneLevelId: 第一级选中id
-	     twoLevelId: 第二级选中id
-	     threeLevelId: 第三级选中id
-	     fourLevelId: 第四级选中id
-	     fiveLevelId: 第五级选中id
-	     showLoading: 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
-	 */
 	function IosSelect(level, data, options) {
 		if (!iosSelectUtil.isArray(data) || data.length === 0) {
 			return;
@@ -2187,6 +2163,9 @@ require ('style!css!./iosSelect.css');
 		this.callback = options.callback;
 		this.title = options.title || '';
 		this.options.itemHeight = options.itemHeight || 35;
+		this.options.itemShowCount = [3, 5, 7, 9].indexOf(options.itemShowCount) !== -1? options.itemShowCount: 7; 
+		this.options.coverArea1Top = Math.floor(this.options.itemShowCount / 2);
+		this.options.coverArea2Top = Math.ceil(this.options.itemShowCount / 2); 
 		this.options.headerHeight = options.headerHeight || 44;
 		this,options.relation = iosSelectUtil.isArray(this.options.relation)? this.options.relation: [];
 		this.options.oneTwoRelation = this.options.relation[0];
@@ -2260,10 +2239,10 @@ require ('style!css!./iosSelect.css');
 
 			if (this.options.headerHeight && this.options.itemHeight) {
 				this.coverArea1Dom = document.querySelector('.cover-area1');
-				this.coverArea1Dom.style.top = this.options.headerHeight + this.options.itemHeight * 3 + this.options.cssUnit;
+				this.coverArea1Dom.style.top = this.options.headerHeight + this.options.itemHeight * this.options.coverArea1Top + this.options.cssUnit;
 
 				this.coverArea2Dom = document.querySelector('.cover-area2');
-				this.coverArea2Dom.style.top = this.options.headerHeight + this.options.itemHeight * 4 + this.options.cssUnit;
+				this.coverArea2Dom.style.top = this.options.headerHeight + this.options.itemHeight * this.options.coverArea2Top + this.options.cssUnit;
 			}
 
 			this.oneLevelContainDom = document.querySelector('#oneLevelContain');
@@ -2278,9 +2257,9 @@ require ('style!css!./iosSelect.css');
 			this.fourLevelUlContainDom = document.querySelector('.select-four-level');
 			this.fiveLevelUlContainDom = document.querySelector('.select-five-level');
 
-			this.iosSelectLayer.el.querySelector('.layer').style.height = this.options.itemHeight * 7 + this.options.headerHeight + this.options.cssUnit;
+			this.iosSelectLayer.el.querySelector('.layer').style.height = this.options.itemHeight * this.options.itemShowCount + this.options.headerHeight + this.options.cssUnit;
 
-			this.oneLevelContainDom.style.height = this.options.itemHeight * 7 + this.options.cssUnit;
+			this.oneLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 
 			this.offsetTop = document.body.scrollTop;
 			document.body.classList.add('ios-select-body-class');
@@ -2316,13 +2295,7 @@ require ('style!css!./iosSelect.css');
 					}
 				});
 
-				var pdom = self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
-				pdom.classList.add('at');
-
-				self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-				self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-				self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-				self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
+				self.changeClassName(self.oneLevelContainDom, plast);
 			});
 			this.scrollOne.on('scrollEnd', function() {
 				var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
@@ -2337,8 +2310,6 @@ require ('style!css!./iosSelect.css');
 				}
 				self.scrollOne.scrollTo(0, -to, 0);
 
-				var pdom = self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
-
 				Array.prototype.slice.call(self.oneLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
 					if (v.classList.contains('at')) {
 						v.classList.remove('at');
@@ -2349,12 +2320,7 @@ require ('style!css!./iosSelect.css');
 					}
 				});
 
-				pdom.classList.add('at');
-
-				self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-				self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-				self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-				self.oneLevelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
+				var pdom = self.changeClassName(self.oneLevelContainDom, plast);
 
 				self.selectOneObj = iosSelectUtil.attrToData(pdom, plast);
 
@@ -2363,7 +2329,7 @@ require ('style!css!./iosSelect.css');
 				}
 			});
 			if (this.level >= 2) {
-				this.twoLevelContainDom.style.height = this.options.itemHeight * 7 + this.options.cssUnit;
+				this.twoLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 				this.scrollTwo = new IScroll('#twoLevelContain', {
 					probeType: 3,
 					bounce: false
@@ -2384,8 +2350,6 @@ require ('style!css!./iosSelect.css');
 					var plast = 0;
 					plast = Math.round(pa) + 1;
 
-					var cdom = self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
-
 					Array.prototype.slice.call(self.twoLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
 						if (v.classList.contains('at')) {
 							v.classList.remove('at');
@@ -2396,12 +2360,7 @@ require ('style!css!./iosSelect.css');
 						}
 					});
 
-					cdom.classList.add('at');
-
-					self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-					self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-					self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-					self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
+					self.changeClassName(self.twoLevelContainDom, plast);
 				});
 				this.scrollTwo.on('scrollEnd', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
@@ -2416,8 +2375,6 @@ require ('style!css!./iosSelect.css');
 					}
 					self.scrollTwo.scrollTo(0, -to, 0);
 
-					var cdom = self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
-
 					Array.prototype.slice.call(self.twoLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
 						if (v.classList.contains('at')) {
 							v.classList.remove('at');
@@ -2428,14 +2385,9 @@ require ('style!css!./iosSelect.css');
 						}
 					});
 
-					cdom.classList.add('at');
+					var pdom = self.changeClassName(self.twoLevelContainDom, plast);
 
-					self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-					self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-					self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-					self.twoLevelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
-
-					self.selectTwoObj = iosSelectUtil.attrToData(cdom, plast);
+					self.selectTwoObj = iosSelectUtil.attrToData(pdom, plast);
 
 					if (self.level > 2 && self.options.twoThreeRelation === 1) {
 						self.setThreeLevel(self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id);
@@ -2443,7 +2395,7 @@ require ('style!css!./iosSelect.css');
 				});
 			}
 			if (this.level >= 3) {
-				this.threeLevelContainDom.style.height = this.options.itemHeight * 7 + this.options.cssUnit;
+				this.threeLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 				this.scrollThree = new IScroll('#threeLevelContain', {
 					probeType: 3,
 					bounce: false
@@ -2464,8 +2416,6 @@ require ('style!css!./iosSelect.css');
 					var plast = 0;
 					plast = Math.round(pa) + 1;
 
-					var ddom = self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
-
 					Array.prototype.slice.call(self.threeLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
 						if (v.classList.contains('at')) {
 							v.classList.remove('at');
@@ -2476,12 +2426,7 @@ require ('style!css!./iosSelect.css');
 						}
 					});
 
-					ddom.classList.add('at');
-
-					self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-					self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-					self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-					self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
+					self.changeClassName(self.threeLevelContainDom, plast);
 				});
 				this.scrollThree.on('scrollEnd', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
@@ -2496,8 +2441,6 @@ require ('style!css!./iosSelect.css');
 					}
 					self.scrollThree.scrollTo(0, -to, 0);
 
-					var ddom = self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
-
 					Array.prototype.slice.call(self.threeLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
 						if (v.classList.contains('at')) {
 							v.classList.remove('at');
@@ -2508,21 +2451,16 @@ require ('style!css!./iosSelect.css');
 						}
 					});
 
-					ddom.classList.add('at');
+					var pdom = self.changeClassName(self.threeLevelContainDom, plast);
 
-					self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-					self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-					self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-					self.threeLevelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
-
-					self.selectThreeObj = iosSelectUtil.attrToData(ddom, plast);
+					self.selectThreeObj = iosSelectUtil.attrToData(pdom, plast);
 					if (self.level >= 4 && self.options.threeFourRelation === 1) {
 						self.setFourLevel(self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id);
 					}
 				});
 			}
 			if (this.level >= 4) {
-				this.fourLevelContainDom.style.height = this.options.itemHeight * 7 + this.options.cssUnit;
+				this.fourLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 				this.scrollFour = new IScroll('#fourLevelContain', {
 					probeType: 3,
 					bounce: false
@@ -2543,8 +2481,6 @@ require ('style!css!./iosSelect.css');
 					var plast = 0;
 					plast = Math.round(pa) + 1;
 
-					var ddom = self.fourLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
-
 					Array.prototype.slice.call(self.fourLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
 						if (v.classList.contains('at')) {
 							v.classList.remove('at');
@@ -2555,12 +2491,7 @@ require ('style!css!./iosSelect.css');
 						}
 					});
 
-					ddom.classList.add('at');
-
-					self.fourLevelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-					self.fourLevelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-					self.fourLevelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-					self.fourLevelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
+					self.changeClassName(self.fourLevelContainDom, plast);
 				});
 				this.scrollFour.on('scrollEnd', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
@@ -2575,8 +2506,6 @@ require ('style!css!./iosSelect.css');
 					}
 					self.scrollFour.scrollTo(0, -to, 0);
 
-					var ddom = self.fourLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
-
 					Array.prototype.slice.call(self.fourLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
 						if (v.classList.contains('at')) {
 							v.classList.remove('at');
@@ -2587,14 +2516,9 @@ require ('style!css!./iosSelect.css');
 						}
 					});
 
-					ddom.classList.add('at');
+					var pdom = self.changeClassName(self.fourLevelContainDom, plast);
 
-					self.fourLevelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-					self.fourLevelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-					self.fourLevelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-					self.fourLevelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
-
-					self.selectFourObj = iosSelectUtil.attrToData(ddom, plast);
+					self.selectFourObj = iosSelectUtil.attrToData(pdom, plast);
 
 					if (self.level >= 5 && self.options.fourFiveRelation === 1) {
 						self.setFiveLevel(self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id);
@@ -2602,7 +2526,7 @@ require ('style!css!./iosSelect.css');
 				});
 			}
 			if (this.level >= 5) {
-				this.fiveLevelContainDom.style.height = this.options.itemHeight * 7 + this.options.cssUnit;
+				this.fiveLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 				this.scrollFive = new IScroll('#fiveLevelContain', {
 					probeType: 3,
 					bounce: false
@@ -2623,8 +2547,6 @@ require ('style!css!./iosSelect.css');
 					var plast = 0;
 					plast = Math.round(pa) + 1;
 
-					var ddom = self.fiveLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
-
 					Array.prototype.slice.call(self.fiveLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
 						if (v.classList.contains('at')) {
 							v.classList.remove('at');
@@ -2635,12 +2557,7 @@ require ('style!css!./iosSelect.css');
 						}
 					});
 
-					ddom.classList.add('at');
-
-					self.fiveLevelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-					self.fiveLevelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-					self.fiveLevelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-					self.fiveLevelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
+					self.changeClassName(self.fiveLevelContainDom, plast);
 				});
 				this.scrollFive.on('scrollEnd', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
@@ -2655,8 +2572,6 @@ require ('style!css!./iosSelect.css');
 					}
 					self.scrollFive.scrollTo(0, -to, 0);
 
-					var ddom = self.fiveLevelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
-
 					Array.prototype.slice.call(self.fiveLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
 						if (v.classList.contains('at')) {
 							v.classList.remove('at');
@@ -2667,14 +2582,9 @@ require ('style!css!./iosSelect.css');
 						}
 					});
 
-					ddom.classList.add('at');
+					var pdom = self.changeClassName(self.fiveLevelContainDom, plast);
 
-					self.fiveLevelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-					self.fiveLevelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-					self.fiveLevelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-					self.fiveLevelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
-
-					self.selectFiveObj = iosSelectUtil.attrToData(ddom, plast);
+					self.selectFiveObj = iosSelectUtil.attrToData(pdom, plast);
 				});
 			}
 
@@ -2730,36 +2640,27 @@ require ('style!css!./iosSelect.css');
 			}
 			var oneHtml = '';
 			var self = this;
-			var atIndex = 0;
-			oneHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
-			oneHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
-			oneHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
+			var plast = 0;
+			oneHtml += this.getWhiteItem();
 			oneLevelData.forEach(function(v, i, o) {
 				if (v.id == oneLevelId) {
 					oneHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';" ' + iosSelectUtil.attrToHtml(v) + ' class="at">' + v.value + '</li>';
-					atIndex = i + 1 + 3;
+					plast = i + 1;
 				} else {
 					oneHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"' + iosSelectUtil.attrToHtml(v) + '>' + v.value + '</li>';
 				}
 			}.bind(this));
-			oneHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
-			oneHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
-			oneHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
+			oneHtml += this.getWhiteItem();
 			this.oneLevelUlContainDom.innerHTML = oneHtml;
 
 			this.scrollOne.refresh();
-			this.scrollOne.scrollToElement('li:nth-child(' + (atIndex - 3) + ')', 0);
+			this.scrollOne.scrollToElement('li:nth-child(' + plast + ')', 0);
 			if (this.level >= 2) {
 				this.setTwoLevel(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId);
 			}
 
-			var pdom = this.oneLevelContainDom.querySelector('.at');
-			this.oneLevelContainDom.querySelector('li:nth-child(' + (atIndex - 1) + ')').classList.add('side1');
-			this.oneLevelContainDom.querySelector('li:nth-child(' + (atIndex - 2) + ')').classList.add('side2');
-			this.oneLevelContainDom.querySelector('li:nth-child(' + (atIndex + 1) + ')').classList.add('side1');
-			this.oneLevelContainDom.querySelector('li:nth-child(' + (atIndex + 2) + ')').classList.add('side2');
-
-			this.selectOneObj = iosSelectUtil.attrToData(pdom, atIndex);
+			var pdom = this.changeClassName(this.oneLevelContainDom, plast);
+			this.selectOneObj = iosSelectUtil.attrToData(pdom, this.getAtIndexByPlast(plast));
 		},
 		getTwoLevel: function(oneLevelId) {
 			var twoLevelData = [];
@@ -2791,7 +2692,7 @@ require ('style!css!./iosSelect.css');
 			}
 		},
 		renderTwoLevel: function(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, twoLevelData) {
-			var atIndex = 0;
+			var plast = 0;
 			var hasAtId = twoLevelData.some(function(v, i, o) {
 				return v.id == twoLevelId;
 			});
@@ -2800,35 +2701,25 @@ require ('style!css!./iosSelect.css');
 			}
 			var twoHtml = '';
 			var self = this;
-			twoHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
-			twoHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
-			twoHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
+			twoHtml += this.getWhiteItem();
 			twoLevelData.forEach(function(v, i, o) {
 				if (v.id == twoLevelId) {
 					twoHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"' + iosSelectUtil.attrToHtml(v) + ' class="at">' + v.value + '</li>';
-					atIndex = i + 1 + 3;
+					plast = i + 1;
 				} else {
 					twoHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"' + iosSelectUtil.attrToHtml(v) + '>' + v.value + '</li>';
 				}
 			}.bind(this));
-			twoHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
-			twoHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
-			twoHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"></li>';
+			twoHtml += this.getWhiteItem();
 			this.twoLevelUlContainDom.innerHTML = twoHtml;
 			this.scrollTwo.refresh();
-			this.scrollTwo.scrollToElement(':nth-child(' + (atIndex - 3) + ')', 0);
+			this.scrollTwo.scrollToElement(':nth-child(' + plast + ')', 0);
 			if (this.level >= 3) {
 				this.setThreeLevel(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId);
 			}
 
-			var cdom = self.twoLevelContainDom.querySelector('li:nth-child(' + atIndex + ')');
-			cdom.classList.add('at');
-			self.twoLevelContainDom.querySelector('li:nth-child(' + (atIndex - 1) + ')').classList.add('side1');
-			self.twoLevelContainDom.querySelector('li:nth-child(' + (atIndex - 2) + ')').classList.add('side2');
-			self.twoLevelContainDom.querySelector('li:nth-child(' + (atIndex + 1) + ')').classList.add('side1');
-			self.twoLevelContainDom.querySelector('li:nth-child(' + (atIndex + 2) + ')').classList.add('side2');
-
-			self.selectTwoObj = iosSelectUtil.attrToData(cdom, atIndex);
+			var pdom = this.changeClassName(this.twoLevelContainDom, plast);
+			this.selectTwoObj = iosSelectUtil.attrToData(pdom, this.getAtIndexByPlast(plast));
 		},
 		getThreeLevel: function(oneLevelId, twoLevelId) {
 			var threeLevelData = [];
@@ -2860,7 +2751,7 @@ require ('style!css!./iosSelect.css');
 			}
 		},
 	    renderThreeLevel: function(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, threeLevelData) {
-	    	var atIndex = 0;
+	    	var plast = 0;
 			var hasAtId = threeLevelData.some(function(v, i, o) {
 				return v.id == threeLevelId;
 			});
@@ -2869,36 +2760,26 @@ require ('style!css!./iosSelect.css');
 			}
 			var threeHtml = '';
 			var self = this;
-			threeHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			threeHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			threeHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
+			threeHtml += this.getWhiteItem();
 			threeLevelData.forEach(function(v, i, o) {
 				if (v.id == threeLevelId) {
 					threeHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"' + iosSelectUtil.attrToHtml(v) + ' class="at">' + v.value + '</li>';
-					atIndex = i + 1 + 3;
+					plast = i + 1;
 				} else {
 					threeHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"' + iosSelectUtil.attrToHtml(v) + '>' + v.value + '</li>';
 				}
 			}.bind(this));
-			threeHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			threeHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			threeHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
+			threeHtml += this.getWhiteItem();
 			this.threeLevelUlContainDom.innerHTML = threeHtml;
 			this.scrollThree.refresh();
-			this.scrollThree.scrollToElement(':nth-child(' + (atIndex - 3) + ')', 0);
+			this.scrollThree.scrollToElement(':nth-child(' + plast + ')', 0);
 
 			if (this.level >= 4) {
 				this.setFourLevel(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId);
 			}
 
-			var ddom = self.threeLevelContainDom.querySelector('li:nth-child(' + atIndex + ')');
-			ddom.classList.add('at');
-			self.threeLevelContainDom.querySelector('li:nth-child(' + (atIndex - 1) + ')').classList.add('side1');
-			self.threeLevelContainDom.querySelector('li:nth-child(' + (atIndex - 2) + ')').classList.add('side2');
-			self.threeLevelContainDom.querySelector('li:nth-child(' + (atIndex + 1) + ')').classList.add('side1');
-			self.threeLevelContainDom.querySelector('li:nth-child(' + (atIndex + 2) + ')').classList.add('side2');
-
-			self.selectThreeObj = iosSelectUtil.attrToData(ddom, atIndex);
+			var pdom = this.changeClassName(this.threeLevelContainDom, plast);
+			this.selectThreeObj = iosSelectUtil.attrToData(pdom, this.getAtIndexByPlast(plast));
 	    },
 	    getFourLevel: function(oneLevelId, twoLevelId, threeLevelId) {
 			var fourLevelData = [];
@@ -2930,7 +2811,7 @@ require ('style!css!./iosSelect.css');
 			}
 		},
 	    renderFourLevel: function(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, fourLevelData) {
-	    	var atIndex = 0;
+	    	var plast = 0;
 			var hasAtId = fourLevelData.some(function(v, i, o) {
 				return v.id == fourLevelId;
 			});
@@ -2939,36 +2820,26 @@ require ('style!css!./iosSelect.css');
 			}
 			var fourHtml = '';
 			var self = this;
-			fourHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			fourHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			fourHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
+			fourHtml += this.getWhiteItem();
 			fourLevelData.forEach(function(v, i, o) {
 				if (v.id == fourLevelId) {
 					fourHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"' + iosSelectUtil.attrToHtml(v) + ' class="at">' + v.value + '</li>';
-					atIndex = i + 1 + 3;
+					plast = i + 1;
 				} else {
 					fourHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"' + iosSelectUtil.attrToHtml(v) + '>' + v.value + '</li>';
 				}
 			}.bind(this));
-			fourHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			fourHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			fourHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
+			fourHtml += this.getWhiteItem();
 			this.fourLevelUlContainDom.innerHTML = fourHtml;
 			this.scrollFour.refresh();
-			this.scrollFour.scrollToElement(':nth-child(' + (atIndex - 3) + ')', 0);
+			this.scrollFour.scrollToElement(':nth-child(' + plast + ')', 0);
 
 			if (this.level >= 5) {
 				this.setFiveLevel(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId);
 			}
 
-			var ddom = self.fourLevelContainDom.querySelector('li:nth-child(' + atIndex + ')');
-			ddom.classList.add('at');
-			self.fourLevelContainDom.querySelector('li:nth-child(' + (atIndex - 1) + ')').classList.add('side1');
-			self.fourLevelContainDom.querySelector('li:nth-child(' + (atIndex - 2) + ')').classList.add('side2');
-			self.fourLevelContainDom.querySelector('li:nth-child(' + (atIndex + 1) + ')').classList.add('side1');
-			self.fourLevelContainDom.querySelector('li:nth-child(' + (atIndex + 2) + ')').classList.add('side2');
-
-			self.selectFourObj = iosSelectUtil.attrToData(ddom, atIndex);
+			var pdom = this.changeClassName(this.fourLevelContainDom, plast);
+			this.selectFourObj = iosSelectUtil.attrToData(pdom, this.getAtIndexByPlast(plast));
 	    },
 	    getFiveLevel: function(oneLevelId, twoLevelId, threeLevelId, fourLevelId) {
 			var fiveLevelData = [];
@@ -3000,7 +2871,7 @@ require ('style!css!./iosSelect.css');
 			}
 		},
 	    renderFiveLevel: function(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, fiveLevelData) {
-	    	var atIndex = 0;
+	    	var plast = 0;
 			var hasAtId = fiveLevelData.some(function(v, i, o) {
 				return v.id == fiveLevelId;
 			});
@@ -3009,32 +2880,72 @@ require ('style!css!./iosSelect.css');
 			}
 			var fiveHtml = '';
 			var self = this;
-			fiveHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			fiveHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			fiveHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
+			fiveHtml += this.getWhiteItem();
 			fiveLevelData.forEach(function(v, i, o) {
 				if (v.id == fiveLevelId) {
 					fiveHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"' + iosSelectUtil.attrToHtml(v) + ' class="at">' + v.value + '</li>';
-					atIndex = i + 1 + 3;
+					plast = i + 1;
 				} else {
 					fiveHtml += '<li style="height: ' + this.options.itemHeight + this.options.cssUnit + '; line-height: ' + this.options.itemHeight + this.options.cssUnit +';"' + iosSelectUtil.attrToHtml(v) + '>' + v.value + '</li>';
 				}
 			}.bind(this));
-			fiveHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			fiveHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
-			fiveHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
+			fiveHtml += this.getWhiteItem();
 			this.fiveLevelUlContainDom.innerHTML = fiveHtml;
 			this.scrollFive.refresh();
-			this.scrollFive.scrollToElement(':nth-child(' + (atIndex - 3) + ')', 0);
+			this.scrollFive.scrollToElement(':nth-child(' + plast + ')', 0);
 
-			var ddom = self.fiveLevelContainDom.querySelector('li:nth-child(' + atIndex + ')');
-			ddom.classList.add('at');
-			self.fiveLevelContainDom.querySelector('li:nth-child(' + (atIndex - 1) + ')').classList.add('side1');
-			self.fiveLevelContainDom.querySelector('li:nth-child(' + (atIndex - 2) + ')').classList.add('side2');
-			self.fiveLevelContainDom.querySelector('li:nth-child(' + (atIndex + 1) + ')').classList.add('side1');
-			self.fiveLevelContainDom.querySelector('li:nth-child(' + (atIndex + 2) + ')').classList.add('side2');
+			var pdom = this.changeClassName(this.fiveLevelContainDom, plast);
+			this.selectFiveObj = iosSelectUtil.attrToData(pdom, this.getAtIndexByPlast(plast));
+	    },
+	    getWhiteItem: function() {
+	    	var whiteItemHtml = '';
+	    	whiteItemHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
+	    	if (this.options.itemShowCount > 3) {
+	    		whiteItemHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
+	    	}
+	    	if (this.options.itemShowCount > 5) {
+	    		whiteItemHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
+	    	}
+	    	if (this.options.itemShowCount > 7) {
+	    		whiteItemHtml += '<li style="height: ' + this.options.itemHeight +this.options.cssUnit +  '; line-height: ' + this.options.itemHeight +this.options.cssUnit + '"></li>';
+	    	}
+	    	return whiteItemHtml;
+	    }, 
+	    changeClassName: function(levelContainDom, plast) {
+	    	var pdom;
+	    	if (this.options.itemShowCount === 3) {
+	    		pdom = levelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')');
+				pdom.classList.add('at');
+	    	}
+	    	else if (this.options.itemShowCount === 5) {
+	    		pdom = levelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')');
+				pdom.classList.add('at');
 
-			self.selectFiveObj = iosSelectUtil.attrToData(ddom, atIndex);
+				levelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side1');
+				levelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')').classList.add('side1');
+	    	}
+	    	else if (this.options.itemShowCount === 7) {
+	    		pdom = levelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
+				pdom.classList.add('at');
+
+				levelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
+				levelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
+				levelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
+				levelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
+	    	}
+	    	else if (this.options.itemShowCount === 9) {
+	    		pdom = levelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')');
+				pdom.classList.add('at');
+
+				levelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')').classList.add('side1');
+				levelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side2');
+				levelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side1');
+				levelContainDom.querySelector('li:nth-child(' + (plast + 6) + ')').classList.add('side2');
+	    	}
+	    	return pdom;
+	    },
+	    getAtIndexByPlast: function(plast) {
+	    	return plast + Math.ceil(this.itemShowCount / 2);
 	    },
 	    setBase: function() {
 			if (this.options.cssUnit === 'rem') {
