@@ -2953,7 +2953,7 @@
 				var dltStyle = window.getComputedStyle(dltDom, null);
 				var dltFontSize = dltStyle.fontSize;
 				try {
-					this.baseSize = /\d+/.exec(dltFontSize)[0];
+					this.baseSize = /\d+(?:\.\d+)?/.exec(dltFontSize)[0];
 				}
 				catch(e) {
 					this.baseSize = 1;
