@@ -2167,7 +2167,7 @@
 		this.options.coverArea1Top = Math.floor(this.options.itemShowCount / 2);
 		this.options.coverArea2Top = Math.ceil(this.options.itemShowCount / 2); 
 		this.options.headerHeight = options.headerHeight || 44;
-		this,options.relation = iosSelectUtil.isArray(this.options.relation)? this.options.relation: [];
+		this.options.relation = iosSelectUtil.isArray(this.options.relation)? this.options.relation: [];
 		this.options.oneTwoRelation = this.options.relation[0];
 		this.options.twoThreeRelation = this.options.relation[1];
 		this.options.threeFourRelation = this.options.relation[2];
