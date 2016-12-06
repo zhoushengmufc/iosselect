@@ -163,30 +163,35 @@
 					'<a style="height: ' + this.options.headerHeight + this.options.cssUnit + '; line-height: ' + this.options.headerHeight + this.options.cssUnit + '" href="javascript:void(0)" class="close">取消</a>',
 					'<a style="height: ' + this.options.headerHeight + this.options.cssUnit + '; line-height: ' + this.options.headerHeight + this.options.cssUnit + '" href="javascript:void(0)" class="sure">确定</a>',
 				'</header>',
+				'<hr class="cover-area1"/>',
+				'<hr class="cover-area2"/>',
 				'<section class="iosselect-box">',
 					'<div class="one-level-contain" id="oneLevelContain">',
 						'<ul class="select-one-level">',
 						'</ul>',
+						'<div class="effects"></div>',
 					'</div>',
 					'<div class="two-level-contain" id="twoLevelContain">',
 						'<ul class="select-two-level">',
 						'</ul>',
+						'<div class="effects"></div>',
 					'</div>',
 					'<div class="three-level-contain" id="threeLevelContain">',
 						'<ul class="select-three-level">',
 						'</ul>',
+						'<div class="effects"></div>',
 					'</div>',
 					'<div class="four-level-contain" id="fourLevelContain">',
 						'<ul class="select-four-level">',
 						'</ul>',
+						'<div class="effects"></div>',
 					'</div>',
 					'<div class="five-level-contain" id="fiveLevelContain">',
 						'<ul class="select-five-level">',
 						'</ul>',
+						'<div class="effects"></div>',
 					'</div>',
 				'</section>',
-				'<hr class="cover-area1"/>',
-				'<hr class="cover-area2"/>',
 				'<div class="ios-select-loading-box" id="iosSelectLoadingBox">',
 				    '<div class="ios-select-loading"></div>',
 				'</div>'
@@ -226,41 +231,18 @@
 
 			this.oneLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 
+			this.setEffects(this.oneLevelContainDom);
+
 			this.offsetTop = document.body.scrollTop;
 			document.body.classList.add('ios-select-body-class');
 			window.scrollTo(0, 0);
 
 			this.scrollOne = new IScroll('#oneLevelContain', {
-				probeType: 3,
 				bounce: false
 			});
 			this.scrollOne.on('scrollStart', function() {
-				Array.prototype.slice.call(self.oneLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-					if (v.classList.contains('at')) {
-						v.classList.remove('at');
-					} else if (v.classList.contains('side1')) {
-						v.classList.remove('side1');
-					} else if (v.classList.contains('side2')) {
-						v.classList.remove('side2');
-					}
-				});
-			});
-			this.scrollOne.on('scroll', function() {
-				var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
-				var plast = 1;
-
-				plast = Math.round(pa) + 1;
-				Array.prototype.slice.call(self.oneLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-					if (v.classList.contains('at')) {
-						v.classList.remove('at');
-					} else if (v.classList.contains('side1')) {
-						v.classList.remove('side1');
-					} else if (v.classList.contains('side2')) {
-						v.classList.remove('side2');
-					}
-				});
-
-				self.changeClassName(self.oneLevelContainDom, plast);
+				var atDom = self.oneLevelContainDom.querySelector('li.at');
+				atDom && atDom.classList.remove('at');
 			});
 			this.scrollOne.on('scrollEnd', function() {
 				var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
@@ -275,16 +257,6 @@
 				}
 				self.scrollOne.scrollTo(0, -to, 0);
 
-				Array.prototype.slice.call(self.oneLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-					if (v.classList.contains('at')) {
-						v.classList.remove('at');
-					} else if (v.classList.contains('side1')) {
-						v.classList.remove('side1');
-					} else if (v.classList.contains('side2')) {
-						v.classList.remove('side2');
-					}
-				});
-
 				var pdom = self.changeClassName(self.oneLevelContainDom, plast);
 
 				self.selectOneObj = iosSelectUtil.attrToData(pdom, plast);
@@ -295,37 +267,13 @@
 			});
 			if (this.level >= 2) {
 				this.twoLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
+				this.setEffects(this.twoLevelContainDom);
 				this.scrollTwo = new IScroll('#twoLevelContain', {
-					probeType: 3,
 					bounce: false
 				});
 				this.scrollTwo.on('scrollStart', function() {
-					Array.prototype.slice.call(self.twoLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-				});
-				this.scrollTwo.on('scroll', function() {
-					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
-					var plast = 0;
-					plast = Math.round(pa) + 1;
-
-					Array.prototype.slice.call(self.twoLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-
-					self.changeClassName(self.twoLevelContainDom, plast);
+					var atDom = self.twoLevelContainDom.querySelector('li.at');
+				    atDom && atDom.classList.remove('at');
 				});
 				this.scrollTwo.on('scrollEnd', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
@@ -340,16 +288,6 @@
 					}
 					self.scrollTwo.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.twoLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-
 					var pdom = self.changeClassName(self.twoLevelContainDom, plast);
 
 					self.selectTwoObj = iosSelectUtil.attrToData(pdom, plast);
@@ -361,37 +299,13 @@
 			}
 			if (this.level >= 3) {
 				this.threeLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
+				this.setEffects(this.threeLevelContainDom);
 				this.scrollThree = new IScroll('#threeLevelContain', {
-					probeType: 3,
 					bounce: false
 				});
 				this.scrollThree.on('scrollStart', function() {
-					Array.prototype.slice.call(self.threeLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-				});
-				this.scrollThree.on('scroll', function() {
-					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
-					var plast = 0;
-					plast = Math.round(pa) + 1;
-
-					Array.prototype.slice.call(self.threeLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-
-					self.changeClassName(self.threeLevelContainDom, plast);
+					var atDom = self.threeLevelContainDom.querySelector('li.at');
+				    atDom && atDom.classList.remove('at');
 				});
 				this.scrollThree.on('scrollEnd', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
@@ -406,16 +320,6 @@
 					}
 					self.scrollThree.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.threeLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-
 					var pdom = self.changeClassName(self.threeLevelContainDom, plast);
 
 					self.selectThreeObj = iosSelectUtil.attrToData(pdom, plast);
@@ -426,37 +330,13 @@
 			}
 			if (this.level >= 4) {
 				this.fourLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
+				this.setEffects(this.fourLevelContainDom);
 				this.scrollFour = new IScroll('#fourLevelContain', {
-					probeType: 3,
 					bounce: false
 				});
 				this.scrollFour.on('scrollStart', function() {
-					Array.prototype.slice.call(self.fourLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-				});
-				this.scrollFour.on('scroll', function() {
-					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
-					var plast = 0;
-					plast = Math.round(pa) + 1;
-
-					Array.prototype.slice.call(self.fourLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-
-					self.changeClassName(self.fourLevelContainDom, plast);
+					var atDom = self.fourLevelContainDom.querySelector('li.at');
+				    atDom && atDom.classList.remove('at');
 				});
 				this.scrollFour.on('scrollEnd', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
@@ -471,16 +351,6 @@
 					}
 					self.scrollFour.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.fourLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-
 					var pdom = self.changeClassName(self.fourLevelContainDom, plast);
 
 					self.selectFourObj = iosSelectUtil.attrToData(pdom, plast);
@@ -492,37 +362,13 @@
 			}
 			if (this.level >= 5) {
 				this.fiveLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
+				this.setEffects(this.fiveLevelContainDom);
 				this.scrollFive = new IScroll('#fiveLevelContain', {
-					probeType: 3,
 					bounce: false
 				});
 				this.scrollFive.on('scrollStart', function() {
-					Array.prototype.slice.call(self.fiveLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-				});
-				this.scrollFive.on('scroll', function() {
-					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
-					var plast = 0;
-					plast = Math.round(pa) + 1;
-
-					Array.prototype.slice.call(self.fiveLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
-
-					self.changeClassName(self.fiveLevelContainDom, plast);
+					var atDom = self.fiveLevelContainDom.querySelector('li.at');
+				    atDom && atDom.classList.remove('at');
 				});
 				this.scrollFive.on('scrollEnd', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
@@ -536,16 +382,6 @@
 						plast = Math.floor(pa) + 1;
 					}
 					self.scrollFive.scrollTo(0, -to, 0);
-
-					Array.prototype.slice.call(self.fiveLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
 
 					var pdom = self.changeClassName(self.fiveLevelContainDom, plast);
 
@@ -885,34 +721,21 @@
 	    	else if (this.options.itemShowCount === 5) {
 	    		pdom = levelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')');
 				pdom.classList.add('at');
-
-				levelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side1');
-				levelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')').classList.add('side1');
 	    	}
 	    	else if (this.options.itemShowCount === 7) {
 	    		pdom = levelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')');
 				pdom.classList.add('at');
-
-				levelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side1');
-				levelContainDom.querySelector('li:nth-child(' + (plast + 1) + ')').classList.add('side2');
-				levelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')').classList.add('side1');
-				levelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side2');
 	    	}
 	    	else if (this.options.itemShowCount === 9) {
 	    		pdom = levelContainDom.querySelector('li:nth-child(' + (plast + 4) + ')');
 				pdom.classList.add('at');
-
-				levelContainDom.querySelector('li:nth-child(' + (plast + 3) + ')').classList.add('side1');
-				levelContainDom.querySelector('li:nth-child(' + (plast + 2) + ')').classList.add('side2');
-				levelContainDom.querySelector('li:nth-child(' + (plast + 5) + ')').classList.add('side1');
-				levelContainDom.querySelector('li:nth-child(' + (plast + 6) + ')').classList.add('side2');
 	    	}
 	    	return pdom;
 	    },
 	    getAtIndexByPlast: function(plast) {
 	    	return plast + Math.ceil(this.itemShowCount / 2);
 	    },
-	    setBase: function() {
+	    setBase: function () {
 			if (this.options.cssUnit === 'rem') {
 				var dltDom = document.documentElement;
 				var dltStyle = window.getComputedStyle(dltDom, null);
@@ -927,7 +750,14 @@
 			else {
 				this.baseSize = 1;
 			}
-		}
+		},
+		setEffects: function (containDom) {
+			var effDom = containDom.querySelector('.effects');
+			if (effDom) {
+				effDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
+				effDom.style.backgroundSize = '100% ' + this.options.itemHeight * Math.round((this.options.itemShowCount - 1) / 2) + this.options.cssUnit;
+			}
+		} 
 	}
 	if (typeof module != 'undefined' && module.exports) {
 		module.exports = IosSelect;

@@ -3,7 +3,7 @@
     <title>bank</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="../../merge/iosSelect.css">
+    <link rel="stylesheet" href="../../src/iosSelect.css">
     <script>
         var _hmt = _hmt || [];
         (function() {
@@ -41,8 +41,8 @@
             {
                 container: '.container',
                 title: '银行卡选择',
-                itemHeight: 50,
-                itemShowCount: 3,
+                itemHeight: 35,
+                itemShowCount: 5,
                 oneLevelId: bankId,
                 callback: function (selectOneObj) {
                     bankIdDom.value = selectOneObj.id;
