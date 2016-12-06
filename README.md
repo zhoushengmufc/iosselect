@@ -10,6 +10,10 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
 
 ##更新日志
 
+    2016-12-6
+    
+    发布分支beta，大幅度减少dom操作，优化性能
+    
     2016-11-28
     
     1，添加options.itemShowCount参数，展示的选项可以为3,5,7,9。默认为7项
