@@ -10,6 +10,10 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
 
 ##更新日志
 
+    2016-12-6
+
+    发布分支beta，大幅度减少dom操作，优化性能    
+
     2016-11-28
     
     1，添加options.itemShowCount参数，展示的选项可以为3,5,7,9。默认为7项
@@ -75,6 +79,7 @@ demo------使用demo,说明如下：
 		     fourLevelId: 第四级选中id 可选
 		     fiveLevelId: 第五级选中id 可选
 		     showLoading: 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
+		     itemShowCount 展示的选项可以为3,5,7,9。默认为7项
 ##参数说明##
 		
 		data: 数组，前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法

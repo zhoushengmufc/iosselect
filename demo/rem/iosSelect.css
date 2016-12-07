@@ -67,6 +67,7 @@ ul, li {
 .ios-select-widget-box .iosselect-box > div {
 	display: block;
 	float: left;
+	position: relative;
 }
 .ios-select-widget-box ul {
 	background-color: #fff;
@@ -81,19 +82,9 @@ ul, li {
 	text-overflow: ellipsis;
 	text-align: center;
 	color: #111;
-	opacity: .3;
 }
 .ios-select-widget-box ul li.at {
 	font-size: .32rem;
-	opacity: 1;
-}
-.ios-select-widget-box ul li.side1 {
-	font-size: .3rem;
-	opacity: .7;
-}
-.ios-select-widget-box ul li.side2 {
-	font-size: .28rem;
-	opacity: .5;
 }
 .ios-select-widget-box.one-level-box .one-level-contain {
 	width: 100%;
@@ -152,6 +143,7 @@ ul, li {
 	top: 2.98rem;
 	margin: 0;
 	height: 0;
+	z-index: 5;
 }
 .ios-select-widget-box .cover-area2 {
 	width: 100%;
@@ -161,6 +153,7 @@ ul, li {
 	top: 3.66rem;
 	margin: 0;
 	height: 0;
+	z-index: 5;
 }
 .ios-select-widget-box #iosSelectTitle {
 	margin: 0;
@@ -169,4 +162,14 @@ ul, li {
     font-size: .32rem;
     font-weight: normal;
     color: #333;
+}
+.ios-select-widget-box .effects {
+	background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3)), -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+	background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3)), linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3)); 
+	position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 3;
+    background-position: top, bottom;
+    background-repeat: no-repeat;
 }
