@@ -81,6 +81,7 @@ demo------使用demo,说明如下：
 		     fourLevelId: 第四级选中id 可选
 		     fiveLevelId: 第五级选中id 可选
 		     showLoading: 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
+		     itemShowCount: 组件展示选项数目 可以为3,5,7,9 默认为7
 ##参数说明##
 		
 		data: 数组，前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
