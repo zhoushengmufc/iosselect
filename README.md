@@ -1,18 +1,22 @@
-#如果好用请star下项目，谢谢
+# 发布分支beta，大幅度减少dom操作，源代码从3000行降到1500行，优化性能，欢迎使用beta版
+
 # iosselect
+
 #webapp模仿ios下拉菜单  
+
 html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统一下拉菜单样式而生
 
 我们以IOS下select的交互和样式为蓝本，开发了这一组件
 
-##特点
+## 特点
+
 可以做到0依赖，只需引用一个js和css即可，样式可自己定制，也可使用默认样式
 
-##更新日志
+## 更新日志
 
     2016-12-6
     
-    发布分支beta，大幅度减少dom操作，优化性能
+    发布分支beta，大幅度减少dom操作，源代码从3000行降到1500行，优化性能，欢迎使用beta版
     
     
     2016-11-28
@@ -36,14 +40,14 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
 
     3，联动后默认值，比如年份变更后，之前的月份选中值不变
     
-##使用方法
+## 使用方法
 
     方法1：npm install iosselect
     
     方法2：直接引用静态文件，参看demo
 	      
 
-##文件说明
+## 文件说明
 src------iosselect基于iscroll5开发，在这个文件夹下可以看到iscroll.js,iosselect.js,iosselect.css，如果项目里有单独使用iscroll5,可以使用这个版本
 
 merge------合并了iscroll与iosselect,做到组件0依赖，方便开发
@@ -61,7 +65,7 @@ demo------使用demo,说明如下：
     datepicker------日期选择器，通过方法筛选数据，实现三级联动，ajax获取数据时可参考此例
     
     five------日期时间选择器，五级选择器，前三级联动
-##使用说明##
+## 使用说明 ##
 ###API##
 	    new IosSelect(level, data, options)
 	        level: 级联等级，支持1,2,3,4,5 必选项
