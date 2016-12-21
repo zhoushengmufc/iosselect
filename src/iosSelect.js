@@ -201,31 +201,31 @@
 				container: this.options.container || ''
 			});
 
-			this.iosSelectTitleDom = document.querySelector('#iosSelectTitle');
-			this.iosSelectLoadingBoxDom = document.getElementById('iosSelectLoadingBox');
+			this.iosSelectTitleDom = this.iosSelectLayer.el.querySelector('#iosSelectTitle');
+			this.iosSelectLoadingBoxDom = this.iosSelectLayer.el.querySelector('#iosSelectLoadingBox');
 			if (this.options.title) {
 				this.iosSelectTitleDom.innerHTML = this.options.title;
 			}
 
 			if (this.options.headerHeight && this.options.itemHeight) {
-				this.coverArea1Dom = document.querySelector('.cover-area1');
+				this.coverArea1Dom = this.iosSelectLayer.el.querySelector('.cover-area1');
 				this.coverArea1Dom.style.top = this.options.headerHeight + this.options.itemHeight * this.options.coverArea1Top + this.options.cssUnit;
 
-				this.coverArea2Dom = document.querySelector('.cover-area2');
+				this.coverArea2Dom = this.iosSelectLayer.el.querySelector('.cover-area2');
 				this.coverArea2Dom.style.top = this.options.headerHeight + this.options.itemHeight * this.options.coverArea2Top + this.options.cssUnit;
 			}
 
-			this.oneLevelContainDom = document.querySelector('#oneLevelContain');
-			this.twoLevelContainDom = document.querySelector('#twoLevelContain');
-			this.threeLevelContainDom = document.querySelector('#threeLevelContain');
-			this.fourLevelContainDom = document.querySelector('#fourLevelContain');
-			this.fiveLevelContainDom = document.querySelector('#fiveLevelContain');
+			this.oneLevelContainDom = this.iosSelectLayer.el.querySelector('#oneLevelContain');
+			this.twoLevelContainDom = this.iosSelectLayer.el.querySelector('#twoLevelContain');
+			this.threeLevelContainDom = this.iosSelectLayer.el.querySelector('#threeLevelContain');
+			this.fourLevelContainDom = this.iosSelectLayer.el.querySelector('#fourLevelContain');
+			this.fiveLevelContainDom = this.iosSelectLayer.el.querySelector('#fiveLevelContain');
 
-			this.oneLevelUlContainDom = document.querySelector('.select-one-level');
-			this.twoLevelUlContainDom = document.querySelector('.select-two-level');
-			this.threeLevelUlContainDom = document.querySelector('.select-three-level');
-			this.fourLevelUlContainDom = document.querySelector('.select-four-level');
-			this.fiveLevelUlContainDom = document.querySelector('.select-five-level');
+			this.oneLevelUlContainDom = this.iosSelectLayer.el.querySelector('.select-one-level');
+			this.twoLevelUlContainDom = this.iosSelectLayer.el.querySelector('.select-two-level');
+			this.threeLevelUlContainDom = this.iosSelectLayer.el.querySelector('.select-three-level');
+			this.fourLevelUlContainDom = this.iosSelectLayer.el.querySelector('.select-four-level');
+			this.fiveLevelUlContainDom = this.iosSelectLayer.el.querySelector('.select-five-level');
 
 			this.iosSelectLayer.el.querySelector('.layer').style.height = this.options.itemHeight * this.options.itemShowCount + this.options.headerHeight + this.options.cssUnit;
 
@@ -245,6 +245,27 @@
 				atDom && atDom.classList.remove('at');
 			});
 			this.scrollOne.on('scrollEnd', function() {
+				var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
+				var plast = 1;
+				var to = 0;
+				if (Math.ceil(pa) === Math.round(pa)) {
+					to = Math.ceil(pa) * self.options.itemHeight * self.baseSize;
+					plast = Math.ceil(pa) + 1;
+				} else {
+					to = Math.floor(pa) * self.options.itemHeight * self.baseSize;
+					plast = Math.floor(pa) + 1;
+				}
+				self.scrollOne.scrollTo(0, -to, 0);
+
+				var pdom = self.changeClassName(self.oneLevelContainDom, plast);
+
+				self.selectOneObj = iosSelectUtil.attrToData(pdom, plast);
+
+				if (self.level > 1 && self.options.oneTwoRelation === 1) {
+					self.setTwoLevel(self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id);
+				}
+			});
+			this.scrollOne.on('scrollCancel', function() {
 				var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
 				var plast = 1;
 				var to = 0;
@@ -296,6 +317,27 @@
 						self.setThreeLevel(self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id);
 					}
 				});
+				this.scrollTwo.on('scrollCancel', function() {
+					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
+					var plast = 1;
+					var to = 0;
+					if (Math.ceil(pa) === Math.round(pa)) {
+						to = Math.ceil(pa) * self.options.itemHeight * self.baseSize;
+						plast = Math.ceil(pa) + 1;
+					} else {
+						to = Math.floor(pa) * self.options.itemHeight * self.baseSize;
+						plast = Math.floor(pa) + 1;
+					}
+					self.scrollTwo.scrollTo(0, -to, 0);
+
+					var pdom = self.changeClassName(self.twoLevelContainDom, plast);
+
+					self.selectTwoObj = iosSelectUtil.attrToData(pdom, plast);
+
+					if (self.level > 2 && self.options.twoThreeRelation === 1) {
+						self.setThreeLevel(self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id);
+					}
+				});
 			}
 			if (this.level >= 3) {
 				this.threeLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
@@ -308,6 +350,26 @@
 				    atDom && atDom.classList.remove('at');
 				});
 				this.scrollThree.on('scrollEnd', function() {
+					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
+					var plast = 1;
+					var to = 0;
+					if (Math.ceil(pa) === Math.round(pa)) {
+						to = Math.ceil(pa) * self.options.itemHeight * self.baseSize;
+						plast = Math.ceil(pa) + 1;
+					} else {
+						to = Math.floor(pa) * self.options.itemHeight * self.baseSize;
+						plast = Math.floor(pa) + 1;
+					}
+					self.scrollThree.scrollTo(0, -to, 0);
+
+					var pdom = self.changeClassName(self.threeLevelContainDom, plast);
+
+					self.selectThreeObj = iosSelectUtil.attrToData(pdom, plast);
+					if (self.level >= 4 && self.options.threeFourRelation === 1) {
+						self.setFourLevel(self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id);
+					}
+				});
+				this.scrollThree.on('scrollCancel', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
 					var plast = 1;
 					var to = 0;
@@ -359,6 +421,27 @@
 						self.setFiveLevel(self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id);
 					}
 				});
+				this.scrollFour.on('scrollCancel', function() {
+					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
+					var plast = 1;
+					var to = 0;
+					if (Math.ceil(pa) === Math.round(pa)) {
+						to = Math.ceil(pa) * self.options.itemHeight * self.baseSize;
+						plast = Math.ceil(pa) + 1;
+					} else {
+						to = Math.floor(pa) * self.options.itemHeight * self.baseSize;
+						plast = Math.floor(pa) + 1;
+					}
+					self.scrollFour.scrollTo(0, -to, 0);
+
+					var pdom = self.changeClassName(self.fourLevelContainDom, plast);
+
+					self.selectFourObj = iosSelectUtil.attrToData(pdom, plast);
+
+					if (self.level >= 5 && self.options.fourFiveRelation === 1) {
+						self.setFiveLevel(self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id);
+					}
+				});
 			}
 			if (this.level >= 5) {
 				this.fiveLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
@@ -371,6 +454,23 @@
 				    atDom && atDom.classList.remove('at');
 				});
 				this.scrollFive.on('scrollEnd', function() {
+					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
+					var plast = 1;
+					var to = 0;
+					if (Math.ceil(pa) === Math.round(pa)) {
+						to = Math.ceil(pa) * self.options.itemHeight * self.baseSize;
+						plast = Math.ceil(pa) + 1;
+					} else {
+						to = Math.floor(pa) * self.options.itemHeight * self.baseSize;
+						plast = Math.floor(pa) + 1;
+					}
+					self.scrollFive.scrollTo(0, -to, 0);
+
+					var pdom = self.changeClassName(self.fiveLevelContainDom, plast);
+
+					self.selectFiveObj = iosSelectUtil.attrToData(pdom, plast);
+				});
+				this.scrollFive.on('scrollCancel', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
 					var plast = 1;
 					var to = 0;
