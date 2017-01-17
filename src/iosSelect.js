@@ -1060,7 +1060,7 @@
 	    	return pdom;
 	    },
 	    getAtIndexByPlast: function(plast) {
-	    	return plast + Math.ceil(this.itemShowCount / 2);
+	    	return plast + Math.ceil(this.options.itemShowCount / 2);
 	    },
 	    setBase: function() {
 			if (this.options.cssUnit === 'rem') {
