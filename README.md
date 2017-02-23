@@ -74,76 +74,78 @@ demo------使用demo,说明如下：
     five------日期时间选择器，五级选择器，前三级联动
 ## 使用说明 ##
 ###API##
-	    new IosSelect(level, data, options)
-	        level: 级联等级，支持1,2,3,4,5 必选项
-		data: [oneLevelArray[, twoLevelArray[, threeLevelArray, [fourLevelArray, [fiveLevelArray]]]]] 除了用数组，也可以用方法
-		options:
-		     container: 组件的父元素，传入css3选择器，比如'.a' 或 '#a'之类的
-		     callback: 选择完毕后的回调函数 必选
-		     title: 选择框title  可选，没有此参数则不显示title
-		     itemHeight: 每一项的高度，可选，默认 35
-		     headerHeight: 组件标题栏高度 可选，默认 44
-		     cssUnit: css单位，目前支持px和rem，默认为px
-		     addClassName: 组件额外类名 可选，用于自定义样式
-		     relation: [1, 1, 0, 0]: [第一二级是否关联，第二三级是否关联，第三四级是否关联，第四五级是否关联] ，默认不关联，即默认是[0, 0, 0, 0]
-		     oneLevelId: 第一级选中id 可选
-		     twoLevelId: 第二级选中id 可选
-		     threeLevelId: 第三级选中id 可选
-		     fourLevelId: 第四级选中id 可选
-		     fiveLevelId: 第五级选中id 可选
-		     showLoading: 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
-		     itemShowCount: 组件展示选项数目 可以为3,5,7,9 默认为7
+new IosSelect(level, data, options)
+level: 级联等级，支持1,2,3,4,5 必选项
+data: [oneLevelArray[, twoLevelArray[, threeLevelArray, [fourLevelArray, [fiveLevelArray]]]]] 除了用数组，也可以用方法
+options:
+     container: 组件的父元素，传入css3选择器，比如'.a' 或 '#a'之类的
+     callback: 选择完毕后的回调函数 必选
+     title: 选择框title  可选，没有此参数则不显示title
+     itemHeight: 每一项的高度，可选，默认 35
+     headerHeight: 组件标题栏高度 可选，默认 44
+     cssUnit: css单位，目前支持px和rem，默认为px
+     addClassName: 组件额外类名 可选，用于自定义样式
+     relation: [1, 1, 0, 0]: [第一二级是否关联，第二三级是否关联，第三四级是否关联，第四五级是否关联] ，默认不关联，即默认是[0, 0, 0, 0]
+     oneLevelId: 第一级选中id 可选
+     twoLevelId: 第二级选中id 可选
+     threeLevelId: 第三级选中id 可选
+     fourLevelId: 第四级选中id 可选
+     fiveLevelId: 第五级选中id 可选
+     showLoading: 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
+     itemShowCount: 组件展示选项数目 可以为3,5,7,9 默认为7
 ##参数说明##
 		
-		data: 数组，前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
-		    如果是数组：
-		        每一项数组中包含一系列对象，每个对象必须要有id,作为该条数据在该项数组中的唯一标识，value作为显示值，parentId是可选属性，作为关联的标志
-			数据形如：
-			var iosProvinces = [
-                            {'id': '130000', 'value': '河北省', 'parentId': '0'}
-			];
-			var iosCitys = [
-			    {"id":"130100","value":"石家庄市","parentId":"130000"},
-			];
-			当我们选择河北省时，就到城市中找到parentId为河北省id的数据，然后展示出来
-			
-		options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, selectFiveObj) 每级选中项，包含对应数据的所有字段及dom对象
-		    如果是方法：
-		    传入一个方法，在方法中获取数据
-		    数据形如：
-		    var yearData = function(callback) {
-			callback(formatYear(nowYear))
-		    }
-		    var monthData = function (year, callback) {
-			callback(formatMonth());
-		    };
-		    var dateData = function (year, month, callback) {
-		        callback(formatDate(28));
-		    }
-		    var hourData = function(one, two, three, callback) {
-			var hours = [];
-			for (var i = 0,len = 24; i < len; i++) {
-			    hours.push({
-				id: i,
-				value: i + '时'
-			    });
-			}
-			callback(hours);
-		    };
-		    var minuteData = function(one, two, three, four, callback) {
-			var minutes = [];
-			for (var i = 0, len = 60; i < len; i++) {
-			    minutes.push({
-				id: i,
-				value: i + '分'
-			    });
-			}
-			callback(minutes);
-		    };
-		    如果是异步获取数据，比如ajax获取数据，请使用方法，如果想有加载中效果，可设置showLoading: true
-		    具体可参考demo中的日期选择器和日期时间选择器
-		    
-	    -----------------------------------------------------------------------------
+data: 数组，前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
+    如果是数组：
+	每一项数组中包含一系列对象，每个对象必须要有id,作为该条数据在该项数组中的唯一标识，value作为显示值，parentId是可选属性，作为关联的标志
+	数据形如：
+	var iosProvinces = [
+	    {'id': '130000', 'value': '河北省', 'parentId': '0'}
+	];
+	var iosCitys = [
+	    {"id":"130100","value":"石家庄市","parentId":"130000"},
+	];
+	当我们选择河北省时，就到城市中找到parentId为河北省id的数据，然后展示出来
+	
+    如果是方法：
+	    其参数分别为前几列的选中值和callback方法，比如：第一列获取数据的方法参数为callback,第二列参数为one,callback,第三列参数为one,two,callback,依次类推，第五列的参数为one,two,three,four,callback,callback调用时传入数据即可	
+            数据形如：
+	    var yearData = function(callback) {
+		callback(formatYear(nowYear))
+	    }
+	    var monthData = function (year, callback) {
+		callback(formatMonth());
+	    };
+	    var dateData = function (year, month, callback) {
+		callback(formatDate(28));
+	    }
+	    var hourData = function(one, two, three, callback) {
+		var hours = [];
+		for (var i = 0,len = 24; i < len; i++) {
+		    hours.push({
+			id: i,
+			value: i + '时'
+		    });
+		}
+		callback(hours);
+	    };
+	    var minuteData = function(one, two, three, four, callback) {
+		var minutes = [];
+		for (var i = 0, len = 60; i < len; i++) {
+		    minutes.push({
+			id: i,
+			value: i + '分'
+		    });
+		}
+		callback(minutes);
+	    };
+
+	    具体可参考demo中的日期选择器和日期时间选择器
+
+options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, selectFiveObj) 每级选中项，包含对应数据的所有字段及dom对象
+    
+
+-----------------------------------------------------------------------------
 ##以地址选择为例：##
 ##data为三个数组：##
 http://zhoushengfe.com/iosselect/demo/three/area.html
