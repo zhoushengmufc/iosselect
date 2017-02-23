@@ -1,5 +1,5 @@
 # 求打赏
-    ![image](https://github.com/zhoushengmufc/iosselect/blob/master/img/zhifu.png)
+   ![image](https://github.com/zhoushengmufc/iosselect/blob/master/img/zhifu.png)
 # master主干为稳定版，可放心使用
 # 分支beta，大幅度减少dom操作，源代码从3000行降到1500行，优化性能，但是还没经过项目实践，欢迎试用beta版并告知bug
 # iosselect
