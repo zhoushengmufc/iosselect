@@ -95,52 +95,52 @@ options:
      itemShowCount: 组件展示选项数目 可以为3,5,7,9 默认为7
 ##参数说明##
 		
-data: 数组，前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
-    如果是数组：
-	每一项数组中包含一系列对象，每个对象必须要有id,作为该条数据在该项数组中的唯一标识，value作为显示值，parentId是可选属性，作为关联的标志
-	数据形如：
-	var iosProvinces = [
-	    {'id': '130000', 'value': '河北省', 'parentId': '0'}
-	];
-	var iosCitys = [
-	    {"id":"130100","value":"石家庄市","parentId":"130000"},
-	];
-	当我们选择河北省时，就到城市中找到parentId为河北省id的数据，然后展示出来
-	
-    如果是方法：
-	    其参数分别为前几列的选中值和callback方法，比如：第一列获取数据的方法参数为callback,第二列参数为one,callback,第三列参数为one,two,callback,依次类推，第五列的参数为one,two,three,four,callback,callback调用时传入数据即可	
-            数据形如：
-	    var yearData = function(callback) {
-		callback(formatYear(nowYear))
-	    }
-	    var monthData = function (year, callback) {
-		callback(formatMonth());
-	    };
-	    var dateData = function (year, month, callback) {
-		callback(formatDate(28));
-	    }
-	    var hourData = function(one, two, three, callback) {
-		var hours = [];
-		for (var i = 0,len = 24; i < len; i++) {
-		    hours.push({
-			id: i,
-			value: i + '时'
-		    });
-		}
-		callback(hours);
-	    };
-	    var minuteData = function(one, two, three, four, callback) {
-		var minutes = [];
-		for (var i = 0, len = 60; i < len; i++) {
-		    minutes.push({
-			id: i,
-			value: i + '分'
-		    });
-		}
-		callback(minutes);
-	    };
+	data: 数组，前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
+	    如果是数组：
+		每一项数组中包含一系列对象，每个对象必须要有id,作为该条数据在该项数组中的唯一标识，value作为显示值，parentId是可选属性，作为关联的标志
+		数据形如：
+		var iosProvinces = [
+		    {'id': '130000', 'value': '河北省', 'parentId': '0'}
+		];
+		var iosCitys = [
+		    {"id":"130100","value":"石家庄市","parentId":"130000"},
+		];
+		当我们选择河北省时，就到城市中找到parentId为河北省id的数据，然后展示出来
 
-	    具体可参考demo中的日期选择器和日期时间选择器
+	    如果是方法：
+		    其参数分别为前几列的选中值和callback方法，比如：第一列获取数据的方法参数为callback,第二列参数为one,callback,第三列参数为one,two,callback,依次类推，第五列的参数为one,two,three,four,callback,callback调用时传入数据即可	
+		    数据形如：
+		    var yearData = function(callback) {
+			callback(formatYear(nowYear))
+		    }
+		    var monthData = function (year, callback) {
+			callback(formatMonth());
+		    };
+		    var dateData = function (year, month, callback) {
+			callback(formatDate(28));
+		    }
+		    var hourData = function(one, two, three, callback) {
+			var hours = [];
+			for (var i = 0,len = 24; i < len; i++) {
+			    hours.push({
+				id: i,
+				value: i + '时'
+			    });
+			}
+			callback(hours);
+		    };
+		    var minuteData = function(one, two, three, four, callback) {
+			var minutes = [];
+			for (var i = 0, len = 60; i < len; i++) {
+			    minutes.push({
+				id: i,
+				value: i + '分'
+			    });
+			}
+			callback(minutes);
+		    };
+
+		    具体可参考demo中的日期选择器和日期时间选择器
 
 options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, selectFiveObj) 每级选中项，包含对应数据的所有字段及dom对象
     
