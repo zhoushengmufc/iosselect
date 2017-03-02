@@ -87,7 +87,7 @@ demo------使用demo,说明如下：
 	     headerHeight: 组件标题栏高度 可选，默认 44
 	     cssUnit: css单位，目前支持px和rem，默认为px
 	     addClassName: 组件额外类名 可选，用于自定义样式
-	     relation: [1, 1, 0, 0]: [第一二级是否关联，第二三级是否关联，第三四级是否关联，第四五级是否关联] ，默认不关联，即默认是[0, 0, 0, 0]
+	     relation: [1, 1, 0, 0]: [第一二级是否关联，第二三级是否关联，第三四级是否关联，第四五级是否关联] ，默认不关联，即默认是[0, 0, 0, 0]
 	     oneLevelId: 第一级选中id 可选
 	     twoLevelId: 第二级选中id 可选
 	     threeLevelId: 第三级选中id 可选
@@ -98,6 +98,7 @@ demo------使用demo,说明如下：
 ##参数说明##
 		
 	data: 数组，前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
+	首先数据必须是id,value形式哈，如果是静态数据（一个数组）且有级联关系，需要通过parentid去关联数据，需要设置relation关系；如果是通过方法获取数据，parentid和relation都可不要，可以自行通过参数去获取数据
 	    如果是数组：
 		每一项数组中包含一系列对象，每个对象必须要有id,作为该条数据在该项数组中的唯一标识，value作为显示值，parentId是可选属性，作为关联的标志
 		数据形如：
@@ -143,6 +144,8 @@ demo------使用demo,说明如下：
 		    };
 
 		    具体可参考demo中的日期选择器和日期时间选择器
+		    
+		    
 
 options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, selectFiveObj) 每级选中项，包含对应数据的所有字段及dom对象
     
