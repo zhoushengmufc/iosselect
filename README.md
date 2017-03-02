@@ -98,8 +98,11 @@ demo------使用demo,说明如下：
 ##参数说明##
 		
 	data: 数组，前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
+	
 	    首先数据必须是id,value形式哈，如果是静态数据（一个数组）且有级联关系，需要通过parentid去关联数据，需要设置relation关系；如果是通过方法获取数据，parentid和relation都可不要，可以自行通过参数去获取数据
-	    如果是数组：
+	    
+	    如果是静态数据数组：
+	    
 		每一项数组中包含一系列对象，每个对象必须要有id,作为该条数据在该项数组中的唯一标识，value作为显示值，parentId是可选属性，作为关联的标志
 		数据形如：
 		var iosProvinces = [
@@ -111,6 +114,7 @@ demo------使用demo,说明如下：
 		当我们选择河北省时，就到城市中找到parentId为河北省id的数据，然后展示出来
 
 	    如果是方法：
+	    
 		    其参数分别为前几列的选中值和callback方法，比如：第一列获取数据的方法参数为callback,第二列参数为one,callback,第三列参数为one,two,callback,依次类推，第五列的参数为one,two,three,four,callback,callback调用时传入数据即可	
 		    数据形如：
 		    var yearData = function(callback) {
