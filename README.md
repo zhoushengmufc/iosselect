@@ -117,7 +117,10 @@ demo------使用demo,说明如下：
 
 	    如果是方法：
 	    
-		    其参数分别为前几列的选中值和callback方法，比如：第一列获取数据的方法参数为callback,第二列参数为one,callback,第三列参数为one,two,callback,依次类推，第五列的参数为one,two,three,four,callback,callback调用时传入数据即可	
+		    其参数分别为前几列的选中值和callback方法，
+		    比如：第一列获取数据的方法参数为callback,第二列参数为one,callback,
+		    第三列参数为one,two,callback,
+		    依次类推，第五列的参数为one,two,three,four,callback,callback调用时传入数据即可	
 		    数据形如：
 		    var yearData = function(callback) {
 			callback(formatYear(nowYear))
