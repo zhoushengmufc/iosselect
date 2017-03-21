@@ -75,8 +75,9 @@ demo------使用demo,说明如下：
     
     five------日期时间选择器，五级选择器，前三级联动
 ## 使用说明 ##
-###API##
-	new IosSelect(level, data, options)
+###API###	
+
+        new IosSelect(level, data, options)
 	level: 级联等级，支持1,2,3,4,5 必选项
 	data: [oneLevelArray[, twoLevelArray[, threeLevelArray, [fourLevelArray, [fiveLevelArray]]]]] 除了用数组，也可以用方法
 	options:
@@ -95,6 +96,7 @@ demo------使用demo,说明如下：
 	     fiveLevelId: 第五级选中id 可选
 	     showLoading: 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
 	     itemShowCount: 组件展示选项数目 可以为3,5,7,9 默认为7
+	     
 ##参数说明##
 		
 	data: 数组，前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
