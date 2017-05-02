@@ -199,13 +199,8 @@ http://zhoushengfe.com/iosselect/demo/five/time.html
 
 .ios-select-widget-box ul li  
 
-###如果要设置页面默认选中值，可以将默认值写在html元素中，以地址选择器为例：
+### 如果要设置页面默认选中值，可以将默认值赋值给组件构造函数即可
 
-```html
-<span data-city-code="510100" data-province-code="510000" data-district-code="510105" id="show_contact">四川省 成都市 青羊区</span>
-```
-
-页面就有默认选项啦
 
 
 
