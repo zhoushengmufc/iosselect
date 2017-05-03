@@ -74,7 +74,7 @@ demo------使用demo,说明如下：
     
     five------日期时间选择器，五级选择器，前三级联动
 ## 使用说明 ##
-###API###	
+### API	
 
         new IosSelect(level, data, options)
 	level: 级联等级，支持1,2,3,4,5 必选项
@@ -96,7 +96,7 @@ demo------使用demo,说明如下：
 	     showLoading: 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
 	     itemShowCount: 组件展示选项数目 可以为3,5,7,9 默认为7
 	     
-##参数说明##
+## 参数说明
 		
 	data: 数组，前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
 	
@@ -159,17 +159,19 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
     
 
 -----------------------------------------------------------------------------
-##以地址选择为例：##
-##data为三个数组：##
+## 以地址选择为例：
+## data为三个数组：
 http://zhoushengfe.com/iosselect/demo/three/area.html
 
 	    --------------------------------------------------------------------------------
-##日期选择器##
-##data为方法：##
+## 日期选择器
+## data为方法：
 http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 
             --------------------------------------------------------------------------------
-##demo说明
+	    
+	    
+## demo说明
 一级级联，银行选择
 
 http://zhoushengfe.com/iosselect/demo/one/bank.html
@@ -194,7 +196,7 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 
 http://zhoushengfe.com/iosselect/demo/five/time.html 
     
-###如果要修改菜单项里样式，请自行修改样式，比如：
+### 如果要修改菜单项里样式，请自行修改样式，比如：
 
 .ios-select-widget-box ul li  
 
