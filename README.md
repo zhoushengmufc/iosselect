@@ -202,7 +202,8 @@ http://zhoushengfe.com/iosselect/demo/five/time.html
 
 ### 如果要设置页面默认选中值，可以将默认值赋值给组件构造函数即可
 
+### 如何ajax获取数据
 
-
+![image](http://zhoushengfe.com/img/ajax.jpg)
 
  如果有使用问题，可加QQ群：419468553
