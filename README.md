@@ -3,7 +3,7 @@
 # 分支beta，大幅度减少dom操作，源代码从3000行降到1500行，优化性能，但是还没经过项目实践，欢迎试用beta版并告知bug
 # iosselect
 
-#webapp模仿ios下拉菜单  
+#webapp模仿ios下拉菜单   
 
 html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统一下拉菜单样式而生
 
