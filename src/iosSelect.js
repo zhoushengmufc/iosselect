@@ -24,7 +24,7 @@
  * @param {boolean=} options.showLoading 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
  */
 (function() {
-	iosSelectUtil = {
+	var iosSelectUtil = {
 		isArray: function(arg1) {
 			return Object.prototype.toString.call(arg1) === '[object Array]';
 		},
