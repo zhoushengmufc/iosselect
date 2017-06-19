@@ -18,6 +18,7 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
 	增加新的rem适配的js 详见merge/flex.js;
 	去除页面声明宽度，自动设置viewport;
 	新的适配js，对于headerHeight的这个api改为必填，不填，高度会超出;
+	可查看demo中的rem文件下的bank.html的适配演示;
 	增加头部遮罩层可关闭组件功能，更加类似原生;
 ## 更新日志
     2016-12-27
