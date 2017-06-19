@@ -17,6 +17,9 @@ ul, li {
 	opacity: 1;
 	background: rgba(0, 0, 0, 0.75);
 }
+.ios-select-widget-box.olay .headerContent{
+	background-color: transparent;
+}
 .ios-select-widget-box.olay > div {
 	position: fixed;
 	z-index: 1000;

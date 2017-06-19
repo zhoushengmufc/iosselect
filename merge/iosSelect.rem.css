@@ -68,9 +68,14 @@ ul, li {
 	display: block;
 	float: left;
 }
+.ios-select-widget-box.olay .headerContent{
+	background-color: transparent;
+}
 .ios-select-widget-box ul {
 	background-color: #fff;
 }
+
+
 .ios-select-widget-box ul li {
 	font-size: .26rem;
 	height: .7rem;
