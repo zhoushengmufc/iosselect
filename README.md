@@ -84,8 +84,6 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 http://zhoushengfe.com/iosselect/demo/five/time.html
 
 ### 参数说明
-
-http://zhoushengfe.com/iosselect/demo/five/time.html 
     
 ### 如果要修改菜单项里样式，请自行修改样式，比如：
 
