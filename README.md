@@ -1,5 +1,4 @@
 # iOSselect
-==================================================
 master主干为稳定版，可放心使用 如果好用请帮我点个star
 
 html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统一下拉菜单样式而生，我们以IOS下select的交互和样式为蓝本，开发了这一组件。
@@ -105,7 +104,7 @@ http://zhoushengfe.com/iosselect/demo/five/time.html
 
 ``` json
 var iosProvinces = [
-  {'id': '130000', 'value': '河北省', 'parentId': '0'}
+  {"id": "130000', "value": "河北省", "parentId": "0"}
 ];
 var iosCitys = [
   {"id":"130100","value":"石家庄市","parentId":"130000"},
