@@ -25,7 +25,6 @@ npm install iosselect
 点击下载文件到项目目录中，在HTML文件中插入以下代码，并按需调整路径。
 
 ``` html
-<!--  -->
 <link rel="stylesheet" href="/static/css/iosSelect.css">
 <script type="text/javascript" src="/static/js/iosSelect.js"></script>
 ```
@@ -82,16 +81,17 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 * 日期时间选择器，共五级，通过方法获取数据
 
 http://zhoushengfe.com/iosselect/demo/five/time.html
-
-### 参数说明
-
-http://zhoushengfe.com/iosselect/demo/five/time.html 
     
 ### 如果要修改菜单项里样式，请自行修改样式，比如：
 
+.ios-select-widget-box ul li
+
+### 参数说明
+
+#### level
+
 	default: 1
 	type:    number
-
 
 数据的层级，最多支持5层
 
@@ -297,6 +297,4 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 实例展示时，在数据加载之前下拉菜单是否显示加载中的效果，建议ajax获取数据时设置为true
 
 
-![image](http://zhoushengfe.com/img/ajax.jpg)
-
-如果有使用问题，可加QQ群：419468553
+## 如果有使用问题，可加QQ群：419468553
