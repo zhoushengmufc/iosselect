@@ -2898,7 +2898,7 @@
 			var twoLevelData = [];
 			if (this.options.oneTwoRelation === 1) {
 				this.data[1].forEach(function(v, i, o) {
-					if (v['parentId'] === oneLevelId) {
+					if (v['parentId'] == oneLevelId) {
 						twoLevelData.push(v);
 					}
 				});
@@ -2957,7 +2957,7 @@
 			var threeLevelData = [];
 			if (this.options.twoThreeRelation === 1) {
 				this.data[2].forEach(function(v, i, o) {
-					if (v['parentId'] === twoLevelId) {
+					if (v['parentId'] == twoLevelId) {
 						threeLevelData.push(v);
 					}
 				});
@@ -3017,7 +3017,7 @@
 			var fourLevelData = [];
 			if (this.options.threeFourRelation === 1) {
 				this.data[3].forEach(function(v, i, o) {
-					if (v['parentId'] === threeLevelId) {
+					if (v['parentId'] == threeLevelId) {
 						fourLevelData.push(v);
 					}
 				});
@@ -3077,7 +3077,7 @@
 			var fiveLevelData = [];
 			if (this.options.fourFiveRelation === 1) {
 				this.data[4].forEach(function(v, i, o) {
-					if (v['parentId'] === fourLevelId) {
+					if (v['parentId'] == fourLevelId) {
 						fiveLevelData.push(v);
 					}
 				});
