@@ -85,10 +85,14 @@ http://zhoushengfe.com/iosselect/demo/five/time.html
 
 ### 参数说明
 
-#### level
+
+http://zhoushengfe.com/iosselect/demo/five/time.html 
+    
+### 如果要修改菜单项里样式，请自行修改样式，比如：
 
 	default: 1
 	type:    number
+
 
 数据的层级，最多支持5层
 
@@ -293,5 +297,7 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 
 实例展示时，在数据加载之前下拉菜单是否显示加载中的效果，建议ajax获取数据时设置为true
 
+
+![image](http://zhoushengfe.com/img/ajax.jpg)
 
 如果有使用问题，可加QQ群：419468553

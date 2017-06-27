@@ -2141,7 +2141,7 @@
 		IScroll.utils = utils;
 		return IScroll;
 	})(window, document, Math);
-	iosSelectUtil = {
+	var iosSelectUtil = {
 		isArray: function(arg1) {
 			return Object.prototype.toString.call(arg1) === '[object Array]';
 		},
