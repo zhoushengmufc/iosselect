@@ -26,6 +26,18 @@ ul, li {
 	bottom: 0;
 	left: 0;
 	visibility: visible;
+  animation: fadeInUp 0.3s;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .ios-select-widget-box header.iosselect-header {
 	height: 44px;
