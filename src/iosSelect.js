@@ -84,6 +84,12 @@
 			var sureDom = this.el.querySelectorAll('.sure');
 			var closeDom = this.el.querySelectorAll('.close');
 			var self = this;
+			this.el.addEventListener('click', function(e) {
+				self.close();
+			});
+			this.layer_el.addEventListener('click', function(e) {
+				e.stopPropagation();
+			});
 			for (var i = 0, len = sureDom.length; i < len; i++) {
 				sureDom[i].addEventListener('click', function(e) {
 					self.close();
