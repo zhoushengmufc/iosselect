@@ -29,7 +29,6 @@ npm install iosselect
 点击下载文件到项目目录中，在HTML文件中插入以下代码，并按需调整路径。
 
 ``` html
-<!--  -->
 <link rel="stylesheet" href="/static/css/iosSelect.css">
 <script type="text/javascript" src="/static/js/iosSelect.js"></script>
 ```
@@ -87,9 +86,13 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 
 http://zhoushengfe.com/iosselect/demo/five/time.html
 
+### 如果要修改菜单项里样式，请自行修改样式，比如：
+
+.ios-select-widget-box ul li
+
 ### 参数说明
     
-### 如果要修改菜单项里样式，请自行修改样式，比如：
+### level
 
 	default: 1
 	type:    number
@@ -107,7 +110,7 @@ http://zhoushengfe.com/iosselect/demo/five/time.html
 如果是数组：
 每一项数组中包含一系列对象，每个对象必须要有id,作为该条数据在该项数组中的唯一标识，value作为显示值，parentId是可选属性，作为关联的标志，数据形如：
 
-``` json
+```
 var iosProvinces = [
   {"id": "130000', "value": "河北省", "parentId": "0"}
 ];
@@ -298,7 +301,5 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 
 实例展示时，在数据加载之前下拉菜单是否显示加载中的效果，建议ajax获取数据时设置为true
 
-
-![image](http://zhoushengfe.com/img/ajax.jpg)
 
 如果有使用问题，可加QQ群：419468553
