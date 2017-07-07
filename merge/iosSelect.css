@@ -204,9 +204,9 @@ ul, li {
     -webkit-animation: loading-keyframe 1s infinite linear;
             animation: loading-keyframe 1s infinite linear;
 }
-.fadeInUp{
-  -webkit-animation: fadeInUp 1s;
-  animation: fadeInUp 1s;
+.fadeInUp .layer{
+  -webkit-animation: fadeInUp .5s;
+  animation: fadeInUp .5s;
 }
 @-webkit-keyframes loading-keyframe {
     from {
