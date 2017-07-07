@@ -22,6 +22,7 @@
  * @param {string=} options.fourLevelId 第四级选中id
  * @param {string=} options.fiveLevelId 第五级选中id
  * @param {boolean=} options.showLoading 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
+ * @param {boolean=} options.showAnimate 是否需要入场动画和退场动画，如需自定义动画效果，请修改css
  */
 (function() {
 	var iosSelectUtil = {
@@ -103,8 +104,17 @@
 		},
 		close: function() {
 			if (this.el) {
-				this.el.parentNode.removeChild(this.el);
-				this.el = null;
+				if (this.opts.showAnimate) {
+					var self=this;
+					self.el.className += ' fadeOutDown';
+					setTimeout(function(){
+						self.el.parentNode.removeChild(self.el);
+						self.el = null;
+					},500);
+				}else{
+					this.el.parentNode.removeChild(this.el);
+					this.el = null;
+				}
 			}
 		}
 	}
@@ -198,8 +208,9 @@
 				'</div>'
 			].join('\r\n');
 			this.iosSelectLayer = new Layer(all_html, {
-				className: 'ios-select-widget-box ' + this.typeBox + (this.options.addClassName? ' ' + this.options.addClassName: ''),
-				container: this.options.container || ''
+				className: 'ios-select-widget-box ' + this.typeBox + (this.options.addClassName? ' ' + this.options.addClassName: '') + (this.options.showAnimate? ' fadeInUp': ''),
+				container: this.options.container || '',
+				showAnimate:this.options.showAnimate
 			});
 
 			this.iosSelectTitleDom = this.iosSelectLayer.el.querySelector('#iosSelectTitle');
