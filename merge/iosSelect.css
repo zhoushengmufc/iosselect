@@ -204,6 +204,10 @@ ul, li {
     -webkit-animation: loading-keyframe 1s infinite linear;
             animation: loading-keyframe 1s infinite linear;
 }
+.fadeInUp{
+  -webkit-animation: fadeInUp 1s;
+  animation: fadeInUp 1s;
+}
 @-webkit-keyframes loading-keyframe {
     from {
         -webkit-transform: rotate(0deg);
@@ -218,5 +222,24 @@ ul, li {
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes fadeInUp {
+    from {
+        -webkit-transform: translate3d(0,100%,0);
+    }
+    to {
+        -webkit-transform: none;
+    }
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0,100%,0);
+    }
+    to {
+        opacity: 1;
+        transform: none;
     }
 }
