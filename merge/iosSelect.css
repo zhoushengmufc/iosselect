@@ -179,6 +179,8 @@ ul, li {
 	left: 0;
 	right: 0;
 	bottom: 0;
+  padding:0;
+  margin:0;
 }
 .ios-select-widget-box.olay > div > .ios-select-loading-box {
     width: 100%;
@@ -208,6 +210,10 @@ ul, li {
   -webkit-animation: fadeInUp .5s;
   animation: fadeInUp .5s;
 }
+.fadeOutDown .layer{
+  -webkit-animation: fadeOutDown .5s;
+  animation: fadeOutDown .5s;
+}
 @-webkit-keyframes loading-keyframe {
     from {
         -webkit-transform: rotate(0deg);
@@ -227,9 +233,11 @@ ul, li {
 
 @-webkit-keyframes fadeInUp {
     from {
+        opacity: 0;
         -webkit-transform: translate3d(0,100%,0);
     }
     to {
+        opacity: 1;
         -webkit-transform: none;
     }
 }
@@ -241,5 +249,25 @@ ul, li {
     to {
         opacity: 1;
         transform: none;
+    }
+}
+@-webkit-keyframes fadeOutDown {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+    }
+}
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
     }
 }
