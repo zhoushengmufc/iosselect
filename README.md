@@ -301,5 +301,10 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 
 实例展示时，在数据加载之前下拉菜单是否显示加载中的效果，建议ajax获取数据时设置为true
 
+#### options.showAnimate
+
+    default: false
+    type:    boolean
+是否显示入场动画和退场动画，如需自定义动画效果，请覆写.fadeInUp .layer和.fadeOutDown .layer的css3动画。PS:动画时间为0.5秒。
 
 如果有使用问题，可加QQ群：419468553
