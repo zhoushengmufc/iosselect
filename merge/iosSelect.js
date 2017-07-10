@@ -2201,6 +2201,12 @@
 			var sureDom = this.el.querySelectorAll('.sure');
 			var closeDom = this.el.querySelectorAll('.close');
 			var self = this;
+			this.el.addEventListener('click', function(e) {
+				self.close();
+			});
+			this.layer_el.addEventListener('click', function(e) {
+				e.stopPropagation();
+			});
 			for (var i = 0, len = sureDom.length; i < len; i++) {
 				sureDom[i].addEventListener('click', function(e) {
 					self.close();
@@ -2214,8 +2220,17 @@
 		},
 		close: function() {
 			if (this.el) {
-				this.el.parentNode.removeChild(this.el);
-				this.el = null;
+				if (this.opts.showAnimate) {
+					var self=this;
+					self.el.className += ' fadeOutDown';
+					setTimeout(function(){
+						self.el.parentNode.removeChild(self.el);
+						self.el = null;
+					},500);
+				}else{
+					this.el.parentNode.removeChild(this.el);
+					this.el = null;
+				}
 			}
 		}
 	}
@@ -2309,8 +2324,9 @@
 				'</div>'
 			].join('\r\n');
 			this.iosSelectLayer = new Layer(all_html, {
-				className: 'ios-select-widget-box ' + this.typeBox + (this.options.addClassName? ' ' + this.options.addClassName: ''),
-				container: this.options.container || ''
+				className: 'ios-select-widget-box ' + this.typeBox + (this.options.addClassName? ' ' + this.options.addClassName: '') + (this.options.showAnimate? ' fadeInUp': ''),
+				container: this.options.container || '',
+				showAnimate:this.options.showAnimate
 			});
 
 			this.iosSelectTitleDom = this.iosSelectLayer.el.querySelector('#iosSelectTitle');
