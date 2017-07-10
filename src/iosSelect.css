@@ -211,8 +211,8 @@ ul, li {
   animation: fadeInUp .5s;
 }
 .fadeOutDown .layer{
-  -webkit-animation: fadeOutDown .5s;
-  animation: fadeOutDown .5s;
+  -webkit-animation: fadeOutDown .5s!important;
+  animation: fadeOutDown .5s!important;
 }
 @-webkit-keyframes loading-keyframe {
     from {
