@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<head>
+    <title>address</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../src/iosSelect.css">
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?b25bf95dd99f58452db28b1e99a1a46f";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+<a href="https://github.com/zhoushengmufc/iosselect">查看文档</a>
+<div class="form-item item-line" id="select_contact">
+    <label>省、市</label>
+    <div class="pc-box">
+        <input type="hidden" name="contact_province_code" data-id="0001" id="contact_province_code" value="" data-province-name="">
+        <input type="hidden" name="contact_city_code" id="contact_city_code" value="" data-city-name=""><span data-city-code="510100" data-province-code="510000" data-district-code="510105" id="show_contact">四川省 成都市 青羊区</span>
+    </div>
+</div>
+</body>
+<script src="zepto.js"></script>
+<script src="../../src/iscroll.js"></script>
+<!-- <script src="areaData_v2.js"></script> -->
+<script src="../../src/iosSelect.js"></script>
+<script type="text/javascript">
+    var iosProvinceData= function(callback){//callback为回调函数
+        $.ajax({
+          url: 'areaData_v2.js',
+          dataType: 'script',
+          success:function(data,textStatus){
+            callback(iosProvinces);
+          },
+        });
+    }
+    var iosCityData= function(province,callback){// province为已经选中的省份ID
+        $.ajax({
+          url: 'areaData_v2.js?province='+province,
+          dataType: 'script',
+          success:function(data,textStatus){
+            var datas=[];
+            for (var i = 0; i < iosCitys.length; i++) {
+                if (province==iosCitys[i]['parentId']) {
+                    datas.push(iosCitys[i]);
+                }
+            }
+            callback(datas);
+          },
+        });
+    }
+    var iosCountyData= function(province,city,callback){// province为已经选中的省份ID,city为已经选中的城市ID
+        $.ajax({
+          url: 'areaData_v2.js?city='+city,
+          dataType: 'script',
+          success:function(data,textStatus){
+            var datas=[];
+            for (var i = 0; i < iosCountys.length; i++) {
+                if (city==iosCountys[i]['parentId']) {
+                    datas.push(iosCountys[i]);
+                }
+            }
+            callback(datas);
+          },
+        });
+    }
+    var selectContactDom = $('#select_contact');
+    var showContactDom = $('#show_contact');
+    var contactProvinceCodeDom = $('#contact_province_code');
+    var contactCityCodeDom = $('#contact_city_code');
+    selectContactDom.bind('click', function () {
+        var sccode = showContactDom.attr('data-city-code');
+        var scname = showContactDom.attr('data-city-name');
+        var oneLevelId = showContactDom.attr('data-province-code');
+        var twoLevelId = showContactDom.attr('data-city-code');
+        var threeLevelId = showContactDom.attr('data-district-code');
+        var iosSelect = new IosSelect(3,
+            [iosProvinceData, iosCityData, iosCountyData],
+            {
+                title: '地址选择',
+                itemHeight: 35,
+                relation: [1, 1, 0, 0],
+                oneLevelId: oneLevelId,
+                twoLevelId: twoLevelId,
+                threeLevelId: threeLevelId,
+                showLoading:true,
+                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                    contactProvinceCodeDom.val(selectOneObj.id);
+                    contactProvinceCodeDom.attr('data-province-name', selectOneObj.value);
+                    contactCityCodeDom.val(selectTwoObj.id);
+                    contactCityCodeDom.attr('data-city-name', selectTwoObj.value);
+                    showContactDom.attr('data-province-code', selectOneObj.id);
+                    showContactDom.attr('data-city-code', selectTwoObj.id);
+                    showContactDom.attr('data-district-code', selectThreeObj.id);
+                    showContactDom.html(selectOneObj.value + ' ' + selectTwoObj.value + ' ' + selectThreeObj.value);
+                }
+        });
+    });
+</script>
+</body>
+</html>

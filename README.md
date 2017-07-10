@@ -94,9 +94,14 @@ http://zhoushengfe.com/iosselect/demo/five/time.html
     
 ### level
 
+.ios-select-widget-box ul li
+
+### 参数说明
+
+#### level
+
 	default: 1
 	type:    number
-
 
 数据的层级，最多支持5层
 
@@ -305,6 +310,7 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 
     default: false
     type:    boolean
+
 是否显示入场动画和退场动画，如需自定义动画效果，请覆写.fadeInUp .layer和.fadeOutDown .layer的css3动画。PS:动画时间为0.5秒。
 
-如果有使用问题，可加QQ群：419468553
+## 如果有使用问题，可加QQ群：419468553
