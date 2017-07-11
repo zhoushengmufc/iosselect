@@ -92,7 +92,7 @@ https://pengweifu.github.io/iosselect/demo/ajax/area2.html
 
 * 出场动画／退场动画
 
-https://pengweifu.github.io/iosselect/demo/ajax/animate.html
+https://pengweifu.github.io/iosselect/demo/one/animate.html
 
 
 
