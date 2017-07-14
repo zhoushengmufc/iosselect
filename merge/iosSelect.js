@@ -2291,9 +2291,9 @@
 			var self = this;
 			var all_html = [
 				'<header style="height: ' + this.options.headerHeight + this.options.cssUnit + '; line-height: ' + this.options.headerHeight + this.options.cssUnit + '" class="iosselect-header">',
-					'<h2 id="iosSelectTitle"></h2>',
 					'<a style="height: ' + this.options.headerHeight + this.options.cssUnit + '; line-height: ' + this.options.headerHeight + this.options.cssUnit + '" href="javascript:void(0)" class="close">取消</a>',
 					'<a style="height: ' + this.options.headerHeight + this.options.cssUnit + '; line-height: ' + this.options.headerHeight + this.options.cssUnit + '" href="javascript:void(0)" class="sure">确定</a>',
+					'<h2 id="iosSelectTitle"></h2>',
 				'</header>',
 				'<section class="iosselect-box">',
 					'<div class="one-level-contain" id="oneLevelContain">',

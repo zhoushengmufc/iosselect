@@ -31,7 +31,7 @@
 <script type="text/javascript">
     var areaData1= function(callback){// callback为回调函数
         $.ajax({
-          url: 'http://www.pengwf.com/UploadFiles/files/area.php',
+          url: 'https://test-isemail.rhcloud.com/area.php',
           dataType: 'json',
           success:function(data,textStatus){
             callback(data);
@@ -41,7 +41,7 @@
 
     var areaData2= function(province,callback){// province为已经选中的省份ID,callback为回调函数
         $.ajax({
-          url: 'http://www.pengwf.com/UploadFiles/files/area.php?province='+province,
+          url: 'https://test-isemail.rhcloud.com/area.php?province='+province,
           dataType: 'json',
           success:function(data,textStatus){
             callback(data);
@@ -51,7 +51,7 @@
 
     var areaData3= function(province,city,callback){// province为已经选中的省份ID,city为已经选中的城市ID,callback为回调函数
         $.ajax({
-          url: 'http://www.pengwf.com/UploadFiles/files/area.php?province='+province+'&city='+city,
+          url: 'https://test-isemail.rhcloud.com/area.php?province='+province+'&city='+city,
           dataType: 'json',
           success:function(data,textStatus){
             callback(data);

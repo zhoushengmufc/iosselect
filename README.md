@@ -86,6 +86,16 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 
 http://zhoushengfe.com/iosselect/demo/five/time.html
 
+* AJAX获取数据
+
+https://pengweifu.github.io/iosselect/demo/ajax/area2.html
+
+* 出场动画／退场动画
+
+https://pengweifu.github.io/iosselect/demo/one/animate.html
+
+
+
 ### 如果要修改菜单项里样式，请自行修改样式，比如：
 
 .ios-select-widget-box ul li
