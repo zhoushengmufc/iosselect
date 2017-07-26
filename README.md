@@ -94,6 +94,13 @@ https://pengweifu.github.io/iosselect/demo/ajax/area2.html
 
 https://pengweifu.github.io/iosselect/demo/one/animate.html
 
+* 组件实例化多次
+
+https://pengweifu.github.io/iosselect/demo/one/multi.html
+
+* AngularJS 异步加载
+
+https://pengweifu.github.io/iosselect/demo/ajax/angular/index.html#/components
 
 
 ### 如果要修改菜单项里样式，请自行修改样式，比如：

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+  <p>
+  Router: $state = {{$state.current.name}}
+  </p>
+
+  <p>
+  Navigate Menu: <a ui-sref="home">Home</a> | <a ui-sref="components">UI Components</a>
+  </p>
+
+  <div style="border:1px solid #ccc; min-height:200px; padding:20px;">
+      <div ui-view></div>
+  </div>
+
+  <script src="assets/requirejs/require.js"></script>
+  <script src="bootstrap.js"></script>
+</body>
+</html>

@@ -103,19 +103,24 @@
 			}
 		},
 		close: function() {
-			if (this.el) {
-				if (this.opts.showAnimate) {
-					var self=this;
+			var self=this;
+			if (self.el) {
+				if (self.opts.showAnimate) {
 					self.el.className += ' fadeOutDown';
 					setTimeout(function(){
-						self.el.parentNode.removeChild(self.el);
-						self.el = null;
+						self.removeDom();
 					},500);
 				}else{
-					this.el.parentNode.removeChild(this.el);
-					this.el = null;
+					self.removeDom();
 				}
 			}
+		},
+		removeDom:function(){
+			this.el.parentNode.removeChild(this.el);
+			this.el=null;
+			if (document.body.classList.contains('ios-select-body-class')) {
+				document.body.classList.remove('ios-select-body-class');
+			};
 		}
 	}
 	function IosSelect(level, data, options) {
@@ -510,14 +515,14 @@
 					bounce: false
 				});
 				this.scrollFive.on('scrollStart', function() {
-					self.toggleClassList(self.fourLevelContainDom);
+					self.toggleClassList(self.fiveLevelContainDom);
 				});
 				this.scrollFive.on('scroll', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
 					var plast = 0;
 					plast = Math.round(pa) + 1;
 
-					self.toggleClassList(self.fourLevelContainDom);
+					self.toggleClassList(self.fiveLevelContainDom);
 
 					self.changeClassName(self.fiveLevelContainDom, plast);
 				});
@@ -534,7 +539,7 @@
 					}
 					self.scrollFive.scrollTo(0, -to, 0);
 
-					self.toggleClassList(self.fourLevelContainDom);
+					self.toggleClassList(self.fiveLevelContainDom);
 
 					var pdom = self.changeClassName(self.fiveLevelContainDom, plast);
 
@@ -553,7 +558,7 @@
 					}
 					self.scrollFive.scrollTo(0, -to, 0);
 
-					self.toggleClassList(self.fourLevelContainDom);
+					self.toggleClassList(self.fiveLevelContainDom);
 
 					var pdom = self.changeClassName(self.fiveLevelContainDom, plast);
 
@@ -564,17 +569,11 @@
 			// 取消 确认 事件
 			this.closeBtnDom = this.iosSelectLayer.el.querySelector('.close');
 			this.closeBtnDom.addEventListener('click', function(e) {
-				if (document.body.classList.contains('ios-select-body-class')) {
-					document.body.classList.remove('ios-select-body-class');
-				}
 				window.scrollTo(0, self.offsetTop);
 			});
 
 			this.selectBtnDom = this.iosSelectLayer.el.querySelector('.sure');
 			this.selectBtnDom.addEventListener('click', function(e) {
-				if (document.body.classList.contains('ios-select-body-class')) {
-					document.body.classList.remove('ios-select-body-class');
-				}
 				window.scrollTo(0, self.offsetTop);
 				self.callback && self.callback(self.selectOneObj, self.selectTwoObj, self.selectThreeObj, self.selectFourObj, self.selectFiveObj);
 			});
