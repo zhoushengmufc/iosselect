@@ -2219,19 +2219,24 @@
 			}
 		},
 		close: function() {
-			if (this.el) {
-				if (this.opts.showAnimate) {
-					var self=this;
+			var self=this;
+			if (self.el) {
+				if (self.opts.showAnimate) {
 					self.el.className += ' fadeOutDown';
 					setTimeout(function(){
-						self.el.parentNode.removeChild(self.el);
-						self.el = null;
+						self.removeDom();
 					},500);
 				}else{
-					this.el.parentNode.removeChild(this.el);
-					this.el = null;
+					self.removeDom();
 				}
 			}
+		},
+		removeDom:function(){
+			this.el.parentNode.removeChild(this.el);
+			this.el=null;
+			if (document.body.classList.contains('ios-select-body-class')) {
+				document.body.classList.remove('ios-select-body-class');
+			};
 		}
 	}
 	function IosSelect(level, data, options) {
@@ -2368,30 +2373,14 @@
 				bounce: false
 			});
 			this.scrollOne.on('scrollStart', function() {
-				Array.prototype.slice.call(self.oneLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-					if (v.classList.contains('at')) {
-						v.classList.remove('at');
-					} else if (v.classList.contains('side1')) {
-						v.classList.remove('side1');
-					} else if (v.classList.contains('side2')) {
-						v.classList.remove('side2');
-					}
-				});
+				self.toggleClassList(self.oneLevelContainDom);
 			});
 			this.scrollOne.on('scroll', function() {
 				var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
 				var plast = 1;
 
 				plast = Math.round(pa) + 1;
-				Array.prototype.slice.call(self.oneLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-					if (v.classList.contains('at')) {
-						v.classList.remove('at');
-					} else if (v.classList.contains('side1')) {
-						v.classList.remove('side1');
-					} else if (v.classList.contains('side2')) {
-						v.classList.remove('side2');
-					}
-				});
+				self.toggleClassList(self.oneLevelContainDom);
 
 				self.changeClassName(self.oneLevelContainDom, plast);
 			});
@@ -2408,15 +2397,7 @@
 				}
 				self.scrollOne.scrollTo(0, -to, 0);
 
-				Array.prototype.slice.call(self.oneLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-					if (v.classList.contains('at')) {
-						v.classList.remove('at');
-					} else if (v.classList.contains('side1')) {
-						v.classList.remove('side1');
-					} else if (v.classList.contains('side2')) {
-						v.classList.remove('side2');
-					}
-				});
+				self.toggleClassList(self.oneLevelContainDom);
 
 				var pdom = self.changeClassName(self.oneLevelContainDom, plast);
 
@@ -2439,15 +2420,7 @@
 				}
 				self.scrollOne.scrollTo(0, -to, 0);
 
-				Array.prototype.slice.call(self.oneLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-					if (v.classList.contains('at')) {
-						v.classList.remove('at');
-					} else if (v.classList.contains('side1')) {
-						v.classList.remove('side1');
-					} else if (v.classList.contains('side2')) {
-						v.classList.remove('side2');
-					}
-				});
+				self.toggleClassList(self.oneLevelContainDom);
 
 				var pdom = self.changeClassName(self.oneLevelContainDom, plast);
 
@@ -2464,30 +2437,14 @@
 					bounce: false
 				});
 				this.scrollTwo.on('scrollStart', function() {
-					Array.prototype.slice.call(self.twoLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.twoLevelContainDom);
 				});
 				this.scrollTwo.on('scroll', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
 					var plast = 0;
 					plast = Math.round(pa) + 1;
 
-					Array.prototype.slice.call(self.twoLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.twoLevelContainDom);
 
 					self.changeClassName(self.twoLevelContainDom, plast);
 				});
@@ -2504,15 +2461,7 @@
 					}
 					self.scrollTwo.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.twoLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.twoLevelContainDom);
 
 					var pdom = self.changeClassName(self.twoLevelContainDom, plast);
 
@@ -2535,15 +2484,7 @@
 					}
 					self.scrollTwo.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.twoLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.twoLevelContainDom);
 
 					var pdom = self.changeClassName(self.twoLevelContainDom, plast);
 
@@ -2561,30 +2502,14 @@
 					bounce: false
 				});
 				this.scrollThree.on('scrollStart', function() {
-					Array.prototype.slice.call(self.threeLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.threeLevelContainDom);
 				});
 				this.scrollThree.on('scroll', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
 					var plast = 0;
 					plast = Math.round(pa) + 1;
 
-					Array.prototype.slice.call(self.threeLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.threeLevelContainDom);
 
 					self.changeClassName(self.threeLevelContainDom, plast);
 				});
@@ -2601,15 +2526,7 @@
 					}
 					self.scrollThree.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.threeLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.threeLevelContainDom);
 
 					var pdom = self.changeClassName(self.threeLevelContainDom, plast);
 
@@ -2631,15 +2548,7 @@
 					}
 					self.scrollThree.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.threeLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.threeLevelContainDom);
 
 					var pdom = self.changeClassName(self.threeLevelContainDom, plast);
 
@@ -2656,30 +2565,14 @@
 					bounce: false
 				});
 				this.scrollFour.on('scrollStart', function() {
-					Array.prototype.slice.call(self.fourLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.fourLevelContainDom);
 				});
 				this.scrollFour.on('scroll', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
 					var plast = 0;
 					plast = Math.round(pa) + 1;
 
-					Array.prototype.slice.call(self.fourLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.fourLevelContainDom);
 
 					self.changeClassName(self.fourLevelContainDom, plast);
 				});
@@ -2696,15 +2589,7 @@
 					}
 					self.scrollFour.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.fourLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.fourLevelContainDom);
 
 					var pdom = self.changeClassName(self.fourLevelContainDom, plast);
 
@@ -2727,15 +2612,7 @@
 					}
 					self.scrollFour.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.fourLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.fourLevelContainDom);
 
 					var pdom = self.changeClassName(self.fourLevelContainDom, plast);
 
@@ -2753,30 +2630,14 @@
 					bounce: false
 				});
 				this.scrollFive.on('scrollStart', function() {
-					Array.prototype.slice.call(self.fiveLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.fiveLevelContainDom);
 				});
 				this.scrollFive.on('scroll', function() {
 					var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
 					var plast = 0;
 					plast = Math.round(pa) + 1;
 
-					Array.prototype.slice.call(self.fiveLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.fiveLevelContainDom);
 
 					self.changeClassName(self.fiveLevelContainDom, plast);
 				});
@@ -2793,15 +2654,7 @@
 					}
 					self.scrollFive.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.fiveLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.fiveLevelContainDom);
 
 					var pdom = self.changeClassName(self.fiveLevelContainDom, plast);
 
@@ -2820,15 +2673,7 @@
 					}
 					self.scrollFive.scrollTo(0, -to, 0);
 
-					Array.prototype.slice.call(self.fiveLevelContainDom.querySelectorAll('li')).forEach(function(v, i, o) {
-						if (v.classList.contains('at')) {
-							v.classList.remove('at');
-						} else if (v.classList.contains('side1')) {
-							v.classList.remove('side1');
-						} else if (v.classList.contains('side2')) {
-							v.classList.remove('side2');
-						}
-					});
+					self.toggleClassList(self.fiveLevelContainDom);
 
 					var pdom = self.changeClassName(self.fiveLevelContainDom, plast);
 
@@ -2839,17 +2684,11 @@
 			// 取消 确认 事件
 			this.closeBtnDom = this.iosSelectLayer.el.querySelector('.close');
 			this.closeBtnDom.addEventListener('click', function(e) {
-				if (document.body.classList.contains('ios-select-body-class')) {
-					document.body.classList.remove('ios-select-body-class');
-				}
 				window.scrollTo(0, self.offsetTop);
 			});
 
 			this.selectBtnDom = this.iosSelectLayer.el.querySelector('.sure');
 			this.selectBtnDom.addEventListener('click', function(e) {
-				if (document.body.classList.contains('ios-select-body-class')) {
-					document.body.classList.remove('ios-select-body-class');
-				}
 				window.scrollTo(0, self.offsetTop);
 				self.callback && self.callback(self.selectOneObj, self.selectTwoObj, self.selectThreeObj, self.selectFourObj, self.selectFiveObj);
 			});
@@ -3210,6 +3049,17 @@
 			else {
 				this.baseSize = 1;
 			}
+		},
+		toggleClassList: function (dom) {
+			Array.prototype.slice.call(dom.querySelectorAll('li')).forEach(function (v) {
+				if (v.classList.contains('at')) {
+					v.classList.remove('at');
+				} else if (v.classList.contains('side1')) {
+					v.classList.remove('side1');
+				} else if (v.classList.contains('side2')) {
+					v.classList.remove('side2');
+				}
+			})
 		}
 	}
 	if (typeof module != 'undefined' && module.exports) {
