@@ -108,12 +108,6 @@ https://pengweifu.github.io/iosselect/demo/ajax/angular/index.html#/components
 .ios-select-widget-box ul li
 
 ### 参数说明
-    
-### level
-
-.ios-select-widget-box ul li
-
-### 参数说明
 
 #### level
 
@@ -208,6 +202,13 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 
 选择完毕后的回调函数，必选项
 options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, selectFiveObj) selectNumberObj为每级对应选中项，包含对应数据的所有字段及dom对象
+
+#### options.fallback
+
+    default: undefined
+    type:    function
+
+选择取消后的回调函数，可选项
 
 #### options.title
 

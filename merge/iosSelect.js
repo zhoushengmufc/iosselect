@@ -2203,6 +2203,7 @@
 			var self = this;
 			this.el.addEventListener('click', function(e) {
 				self.close();
+				self.opts.fallback && self.opts.fallback();
 			});
 			this.layer_el.addEventListener('click', function(e) {
 				e.stopPropagation();
@@ -2215,6 +2216,7 @@
 			for (var i = 0, len = closeDom.length; i < len; i++) {
 				closeDom[i].addEventListener('click', function(e) {
 					self.close();
+					self.opts.fallback && self.opts.fallback();
 				});
 			}
 		},
@@ -2263,6 +2265,7 @@
 			this.typeBox = 'five-level-box';
 		}
 		this.callback = options.callback;
+		this.fallback = options.fallback;
 		this.title = options.title || '';
 		this.options.itemHeight = options.itemHeight || 35;
 		this.options.itemShowCount = [3, 5, 7, 9].indexOf(options.itemShowCount) !== -1? options.itemShowCount: 7; 
@@ -2331,7 +2334,8 @@
 			this.iosSelectLayer = new Layer(all_html, {
 				className: 'ios-select-widget-box ' + this.typeBox + (this.options.addClassName? ' ' + this.options.addClassName: '') + (this.options.showAnimate? ' fadeInUp': ''),
 				container: this.options.container || '',
-				showAnimate:this.options.showAnimate
+				showAnimate:this.options.showAnimate,
+				fallback:this.options.fallback
 			});
 
 			this.iosSelectTitleDom = this.iosSelectLayer.el.querySelector('#iosSelectTitle');
