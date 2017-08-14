@@ -18,7 +18,7 @@ http://zhoushengfe.com/iosselect/website/index.html
 
 ### 起步
 
-* 使用NPM
+* npm
 
 ``` javascript
 npm install iosselect
