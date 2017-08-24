@@ -36,6 +36,7 @@ npm install iosselect
 * 实例化组件
 
 ``` javascript
+var data=[{'id': '10001', 'value': '演示数据1'},{'id': '10002', 'value': '演示数据2'}];
 var showDom = document.querySelector('#showDom');// 绑定一个触发元素
 var valDom = document.querySelector('#valDom');  // 绑定一个存储结果的元素
 showDom.addEventListener('click', function () {  // 添加监听事件
@@ -43,7 +44,7 @@ showDom.addEventListener('click', function () {  // 添加监听事件
     var title = showDom.dataset['value'];        // 获取元素的data-value属性值
 	// 实例化组件
     var example = new IosSelect(1,               // 第一个参数为级联层级，演示为1
-        [{'id': '10001', 'value': '演示数据1'},{'id': '10002', 'value': '演示数据2'}],                             // 演示数据
+        [data],                             // 演示数据
         {
             container: '.container',             // 容器class
             title: '演示标题',                    // 标题
