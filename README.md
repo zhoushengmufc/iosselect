@@ -218,6 +218,20 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 
 显示标题，可选项
 
+#### options.sureText
+
+	default: '确定'
+	type:    string
+
+设置确定按钮文字，可选项
+
+#### options.closeText
+
+	default: '取消'
+	type:    string
+
+设置取消按钮文字，可选项
+
 #### options.itemHeight
 
 	default: 35
