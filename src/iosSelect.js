@@ -256,8 +256,15 @@
 			this.oneLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 
 			this.offsetTop = document.body.scrollTop;
+
+			const currentScrolledTop = document.body.scrollTop;
+			const backStillFlag = this.options.backStill || false;
 			document.body.classList.add('ios-select-body-class');
-			window.scrollTo(0, 0);
+			if(backStillFlag){
+				document.body.style.top = "-" + currentScrolledTop + "px";
+			}else{
+				window.scrollTo(0, 0);
+			}
 
 			this.scrollOne = new IScroll('#oneLevelContain', {
 				probeType: 3,
