@@ -123,7 +123,11 @@
 			this.el=null;
 			if (document.body.classList.contains('ios-select-body-class')) {
 				document.body.classList.remove('ios-select-body-class');
-			};
+			}
+			document.body.style.top ="";
+			if (this.opts.offsetTop) {
+				window.scrollTo(0,this.opts.offsetTop);
+			}
 		}
 	}
 	function IosSelect(level, data, options) {
@@ -218,11 +222,13 @@
 				    '<div class="ios-select-loading"></div>',
 				'</div>'
 			].join('\r\n');
+			this.offsetTop = document.body.scrollTop;
 			this.iosSelectLayer = new Layer(all_html, {
 				className: 'ios-select-widget-box ' + this.typeBox + (this.options.addClassName? ' ' + this.options.addClassName: '') + (this.options.showAnimate? ' fadeInUp': ''),
 				container: this.options.container || '',
 				showAnimate:this.options.showAnimate,
-				fallback:this.options.fallback
+				fallback:this.options.fallback,
+				offsetTop:this.offsetTop
 			});
 
 			this.iosSelectTitleDom = this.iosSelectLayer.el.querySelector('#iosSelectTitle');
@@ -255,9 +261,8 @@
 
 			this.oneLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 
-			this.offsetTop = document.body.scrollTop;
 			document.body.classList.add('ios-select-body-class');
-			window.scrollTo(0, 0);
+			document.body.style.top = "-" + this.offsetTop + "px";
 
 			this.scrollOne = new IScroll('#oneLevelContain', {
 				probeType: 3,
@@ -576,12 +581,10 @@
 			// 取消 确认 事件
 			this.closeBtnDom = this.iosSelectLayer.el.querySelector('.close');
 			this.closeBtnDom.addEventListener('click', function(e) {
-				window.scrollTo(0, self.offsetTop);
 			});
 
 			this.selectBtnDom = this.iosSelectLayer.el.querySelector('.sure');
 			this.selectBtnDom.addEventListener('click', function(e) {
-				window.scrollTo(0, self.offsetTop);
 				self.callback && self.callback(self.selectOneObj, self.selectTwoObj, self.selectThreeObj, self.selectFourObj, self.selectFiveObj);
 			});
 		},
