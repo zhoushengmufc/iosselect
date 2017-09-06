@@ -232,6 +232,13 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 
 设置取消按钮文字，可选项
 
+#### options.backStill
+
+	default: false
+	type:    boolean
+
+设置弹窗出现时背景页面是否保持静止，如果不设置(默认false)或主动设置成false，背景页面回到页面顶部
+
 #### options.itemHeight
 
 	default: 35
