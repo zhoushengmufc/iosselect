@@ -1,6 +1,6 @@
 {
   "name": "iosselect",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "iosselect for andriod and ios",
   "main": "merge/iosSelect.js",
   "scripts": {
