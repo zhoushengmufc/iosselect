@@ -26,12 +26,260 @@
 </body>
 <script src="zepto.js"></script>
 <script src="../../src/iscroll.js"></script>
-<!-- <script src="areaData_v2.js"></script> -->
+<script src="mock.min.js"></script>
 <script src="../../src/iosSelect.js"></script>
 <script type="text/javascript">
+    // 用mock.js拦截ajax请求，并生成省份数据
+    Mock.mock(/area\.php$/, function(){
+        return [
+            {"id": "110000", "value": "北京市", "parentId": "0"},
+            {"id": "120000", "value": "天津市", "parentId": "0"},
+            {"id": "130000", "value": "河北省", "parentId": "0"}
+        ];
+    });
+    // 用mock.js拦截ajax请求，并生成城市数据
+    Mock.mock(/area\.php\?province=\d+$/, function(options){
+        var data=[
+            {"id":"110100","value":"北京市","parentId":"110000"},
+            {"id":"120100","value":"天津市","parentId":"120000"},
+            {"id":"130100","value":"石家庄市","parentId":"130000"},
+            {"id":"130200","value":"唐山市","parentId":"130000"},
+            {"id":"130300","value":"秦皇岛市","parentId":"130000"},
+            {"id":"130400","value":"邯郸市","parentId":"130000"},
+            {"id":"130500","value":"邢台市","parentId":"130000"},
+            {"id":"130600","value":"保定市","parentId":"130000"},
+            {"id":"130700","value":"张家口市","parentId":"130000"},
+            {"id":"130800","value":"承德市","parentId":"130000"},
+            {"id":"130900","value":"沧州市","parentId":"130000"},
+            {"id":"131000","value":"廊坊市","parentId":"130000"},
+            {"id":"131100","value":"衡水市","parentId":"130000"}
+        ];
+        var province=options.url.replace(/\D+/,'');
+        var result=[];
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].parentId==province) {
+                result.push(data[i]);
+            }
+        }
+        return result;
+    });
+    // 用mock.js拦截ajax请求，并生成行政区数据
+    Mock.mock(/area\.php\?province=\d+&city=\d+$/, function(options){
+        var data = [
+            {"id":"110101","value":"东城区","parentId":"110100"},
+            {"id":"110102","value":"西城区","parentId":"110100"},
+            {"id":"110105","value":"朝阳区","parentId":"110100"},
+            {"id":"110106","value":"丰台区","parentId":"110100"},
+            {"id":"110107","value":"石景山区","parentId":"110100"},
+            {"id":"110108","value":"海淀区","parentId":"110100"},
+            {"id":"110109","value":"门头沟区","parentId":"110100"},
+            {"id":"110111","value":"房山区","parentId":"110100"},
+            {"id":"110112","value":"通州区","parentId":"110100"},
+            {"id":"110113","value":"顺义区","parentId":"110100"},
+            {"id":"110114","value":"昌平区","parentId":"110100"},
+            {"id":"110115","value":"大兴区","parentId":"110100"},
+            {"id":"110116","value":"怀柔区","parentId":"110100"},
+            {"id":"110117","value":"平谷区","parentId":"110100"},
+            {"id":"110228","value":"密云县","parentId":"110100"},
+            {"id":"110229","value":"延庆县","parentId":"110100"},
+            {"id":"120101","value":"和平区","parentId":"120100"},
+            {"id":"120102","value":"河东区","parentId":"120100"},
+            {"id":"120103","value":"河西区","parentId":"120100"},
+            {"id":"120104","value":"南开区","parentId":"120100"},
+            {"id":"120105","value":"河北区","parentId":"120100"},
+            {"id":"120106","value":"红桥区","parentId":"120100"},
+            {"id":"120110","value":"东丽区","parentId":"120100"},
+            {"id":"120111","value":"西青区","parentId":"120100"},
+            {"id":"120112","value":"津南区","parentId":"120100"},
+            {"id":"120113","value":"北辰区","parentId":"120100"},
+            {"id":"120114","value":"武清区","parentId":"120100"},
+            {"id":"120115","value":"宝坻区","parentId":"120100"},
+            {"id":"120116","value":"滨海新区","parentId":"120100"},
+            {"id":"130102","value":"长安区","parentId":"130100"},
+            {"id":"130103","value":"桥东区","parentId":"130100"},
+            {"id":"130104","value":"桥西区","parentId":"130100"},
+            {"id":"130105","value":"新华区","parentId":"130100"},
+            {"id":"130107","value":"井陉矿区","parentId":"130100"},
+            {"id":"130108","value":"裕华区","parentId":"130100"},
+            {"id":"130121","value":"井陉县","parentId":"130100"},
+            {"id":"130123","value":"正定县","parentId":"130100"},
+            {"id":"130124","value":"栾城县","parentId":"130100"},
+            {"id":"130125","value":"行唐县","parentId":"130100"},
+            {"id":"130126","value":"灵寿县","parentId":"130100"},
+            {"id":"130127","value":"高邑县","parentId":"130100"},
+            {"id":"130128","value":"深泽县","parentId":"130100"},
+            {"id":"130129","value":"赞皇县","parentId":"130100"},
+            {"id":"130130","value":"无极县","parentId":"130100"},
+            {"id":"130131","value":"平山县","parentId":"130100"},
+            {"id":"130132","value":"元氏县","parentId":"130100"},
+            {"id":"130133","value":"赵县","parentId":"130100"},
+            {"id":"130181","value":"辛集市","parentId":"130100"},
+            {"id":"130182","value":"藁城市","parentId":"130100"},
+            {"id":"130183","value":"晋州市","parentId":"130100"},
+            {"id":"130184","value":"新乐市","parentId":"130100"},
+            {"id":"130185","value":"鹿泉市","parentId":"130100"},
+            {"id":"130202","value":"路南区","parentId":"130200"},
+            {"id":"130203","value":"路北区","parentId":"130200"},
+            {"id":"130204","value":"古冶区","parentId":"130200"},
+            {"id":"130205","value":"开平区","parentId":"130200"},
+            {"id":"130207","value":"丰南区","parentId":"130200"},
+            {"id":"130208","value":"丰润区","parentId":"130200"},
+            {"id":"130223","value":"滦县","parentId":"130200"},
+            {"id":"130224","value":"滦南县","parentId":"130200"},
+            {"id":"130225","value":"乐亭县","parentId":"130200"},
+            {"id":"130227","value":"迁西县","parentId":"130200"},
+            {"id":"130229","value":"玉田县","parentId":"130200"},
+            {"id":"130230","value":"曹妃甸区","parentId":"130200"},
+            {"id":"130281","value":"遵化市","parentId":"130200"},
+            {"id":"130283","value":"迁安市","parentId":"130200"},
+            {"id":"130302","value":"海港区","parentId":"130300"},
+            {"id":"130303","value":"山海关区","parentId":"130300"},
+            {"id":"130304","value":"北戴河区","parentId":"130300"},
+            {"id":"130321","value":"青龙满族自治县","parentId":"130300"},
+            {"id":"130322","value":"昌黎县","parentId":"130300"},
+            {"id":"130323","value":"抚宁县","parentId":"130300"},
+            {"id":"130324","value":"卢龙县","parentId":"130300"},
+            {"id":"130402","value":"邯山区","parentId":"130400"},
+            {"id":"130403","value":"丛台区","parentId":"130400"},
+            {"id":"130404","value":"复兴区","parentId":"130400"},
+            {"id":"130406","value":"峰峰矿区","parentId":"130400"},
+            {"id":"130421","value":"邯郸县","parentId":"130400"},
+            {"id":"130423","value":"临漳县","parentId":"130400"},
+            {"id":"130424","value":"成安县","parentId":"130400"},
+            {"id":"130425","value":"大名县","parentId":"130400"},
+            {"id":"130426","value":"涉县","parentId":"130400"},
+            {"id":"130427","value":"磁县","parentId":"130400"},
+            {"id":"130428","value":"肥乡县","parentId":"130400"},
+            {"id":"130429","value":"永年县","parentId":"130400"},
+            {"id":"130430","value":"邱县","parentId":"130400"},
+            {"id":"130431","value":"鸡泽县","parentId":"130400"},
+            {"id":"130432","value":"广平县","parentId":"130400"},
+            {"id":"130433","value":"馆陶县","parentId":"130400"},
+            {"id":"130434","value":"魏县","parentId":"130400"},
+            {"id":"130435","value":"曲周县","parentId":"130400"},
+            {"id":"130481","value":"武安市","parentId":"130400"},
+            {"id":"130502","value":"桥东区","parentId":"130500"},
+            {"id":"130503","value":"桥西区","parentId":"130500"},
+            {"id":"130521","value":"邢台县","parentId":"130500"},
+            {"id":"130522","value":"临城县","parentId":"130500"},
+            {"id":"130523","value":"内丘县","parentId":"130500"},
+            {"id":"130524","value":"柏乡县","parentId":"130500"},
+            {"id":"130525","value":"隆尧县","parentId":"130500"},
+            {"id":"130526","value":"任县","parentId":"130500"},
+            {"id":"130527","value":"南和县","parentId":"130500"},
+            {"id":"130528","value":"宁晋县","parentId":"130500"},
+            {"id":"130529","value":"巨鹿县","parentId":"130500"},
+            {"id":"130530","value":"新河县","parentId":"130500"},
+            {"id":"130531","value":"广宗县","parentId":"130500"},
+            {"id":"130532","value":"平乡县","parentId":"130500"},
+            {"id":"130533","value":"威县","parentId":"130500"},
+            {"id":"130534","value":"清河县","parentId":"130500"},
+            {"id":"130535","value":"临西县","parentId":"130500"},
+            {"id":"130581","value":"南宫市","parentId":"130500"},
+            {"id":"130582","value":"沙河市","parentId":"130500"},
+            {"id":"130602","value":"新市区","parentId":"130600"},
+            {"id":"130603","value":"北市区","parentId":"130600"},
+            {"id":"130604","value":"南市区","parentId":"130600"},
+            {"id":"130621","value":"满城县","parentId":"130600"},
+            {"id":"130622","value":"清苑县","parentId":"130600"},
+            {"id":"130623","value":"涞水县","parentId":"130600"},
+            {"id":"130624","value":"阜平县","parentId":"130600"},
+            {"id":"130625","value":"徐水县","parentId":"130600"},
+            {"id":"130626","value":"定兴县","parentId":"130600"},
+            {"id":"130627","value":"唐县","parentId":"130600"},
+            {"id":"130628","value":"高阳县","parentId":"130600"},
+            {"id":"130629","value":"容城县","parentId":"130600"},
+            {"id":"130630","value":"涞源县","parentId":"130600"},
+            {"id":"130631","value":"望都县","parentId":"130600"},
+            {"id":"130632","value":"安新县","parentId":"130600"},
+            {"id":"130633","value":"易县","parentId":"130600"},
+            {"id":"130634","value":"曲阳县","parentId":"130600"},
+            {"id":"130635","value":"蠡县","parentId":"130600"},
+            {"id":"130636","value":"顺平县","parentId":"130600"},
+            {"id":"130637","value":"博野县","parentId":"130600"},
+            {"id":"130638","value":"雄县","parentId":"130600"},
+            {"id":"130681","value":"涿州市","parentId":"130600"},
+            {"id":"130682","value":"定州市","parentId":"130600"},
+            {"id":"130683","value":"安国市","parentId":"130600"},
+            {"id":"130684","value":"高碑店市","parentId":"130600"},
+            {"id":"130702","value":"桥东区","parentId":"130700"},
+            {"id":"130703","value":"桥西区","parentId":"130700"},
+            {"id":"130705","value":"宣化区","parentId":"130700"},
+            {"id":"130706","value":"下花园区","parentId":"130700"},
+            {"id":"130721","value":"宣化县","parentId":"130700"},
+            {"id":"130722","value":"张北县","parentId":"130700"},
+            {"id":"130723","value":"康保县","parentId":"130700"},
+            {"id":"130724","value":"沽源县","parentId":"130700"},
+            {"id":"130725","value":"尚义县","parentId":"130700"},
+            {"id":"130726","value":"蔚县","parentId":"130700"},
+            {"id":"130727","value":"阳原县","parentId":"130700"},
+            {"id":"130728","value":"怀安县","parentId":"130700"},
+            {"id":"130729","value":"万全县","parentId":"130700"},
+            {"id":"130730","value":"怀来县","parentId":"130700"},
+            {"id":"130731","value":"涿鹿县","parentId":"130700"},
+            {"id":"130732","value":"赤城县","parentId":"130700"},
+            {"id":"130733","value":"崇礼县","parentId":"130700"},
+            {"id":"130802","value":"双桥区","parentId":"130800"},
+            {"id":"130803","value":"双滦区","parentId":"130800"},
+            {"id":"130804","value":"鹰手营子矿区","parentId":"130800"},
+            {"id":"130821","value":"承德县","parentId":"130800"},
+            {"id":"130822","value":"兴隆县","parentId":"130800"},
+            {"id":"130823","value":"平泉县","parentId":"130800"},
+            {"id":"130824","value":"滦平县","parentId":"130800"},
+            {"id":"130825","value":"隆化县","parentId":"130800"},
+            {"id":"130826","value":"丰宁满族自治县","parentId":"130800"},
+            {"id":"130827","value":"宽城满族自治县","parentId":"130800"},
+            {"id":"130828","value":"围场满族蒙古族自治县","parentId":"130800"},
+            {"id":"130902","value":"新华区","parentId":"130900"},
+            {"id":"130903","value":"运河区","parentId":"130900"},
+            {"id":"130921","value":"沧县","parentId":"130900"},
+            {"id":"130922","value":"青县","parentId":"130900"},
+            {"id":"130923","value":"东光县","parentId":"130900"},
+            {"id":"130924","value":"海兴县","parentId":"130900"},
+            {"id":"130925","value":"盐山县","parentId":"130900"},
+            {"id":"130926","value":"肃宁县","parentId":"130900"},
+            {"id":"130927","value":"南皮县","parentId":"130900"},
+            {"id":"130928","value":"吴桥县","parentId":"130900"},
+            {"id":"130929","value":"献县","parentId":"130900"},
+            {"id":"130930","value":"孟村回族自治县","parentId":"130900"},
+            {"id":"130981","value":"泊头市","parentId":"130900"},
+            {"id":"130982","value":"任丘市","parentId":"130900"},
+            {"id":"130983","value":"黄骅市","parentId":"130900"},
+            {"id":"130984","value":"河间市","parentId":"130900"},
+            {"id":"131002","value":"安次区","parentId":"131000"},
+            {"id":"131003","value":"广阳区","parentId":"131000"},
+            {"id":"131022","value":"固安县","parentId":"131000"},
+            {"id":"131023","value":"永清县","parentId":"131000"},
+            {"id":"131024","value":"香河县","parentId":"131000"},
+            {"id":"131025","value":"大城县","parentId":"131000"},
+            {"id":"131026","value":"文安县","parentId":"131000"},
+            {"id":"131028","value":"大厂回族自治县","parentId":"131000"},
+            {"id":"131081","value":"霸州市","parentId":"131000"},
+            {"id":"131082","value":"三河市","parentId":"131000"},
+            {"id":"131102","value":"桃城区","parentId":"131100"},
+            {"id":"131121","value":"枣强县","parentId":"131100"},
+            {"id":"131122","value":"武邑县","parentId":"131100"},
+            {"id":"131123","value":"武强县","parentId":"131100"},
+            {"id":"131124","value":"饶阳县","parentId":"131100"},
+            {"id":"131125","value":"安平县","parentId":"131100"},
+            {"id":"131126","value":"故城县","parentId":"131100"},
+            {"id":"131127","value":"景县","parentId":"131100"},
+            {"id":"131128","value":"阜城县","parentId":"131100"},
+            {"id":"131181","value":"冀州市","parentId":"131100"},
+            {"id":"131182","value":"深州市","parentId":"131100"}
+        ];
+        var city=options.url.replace(/[^&]+&city=/,'');
+        var result=[];
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].parentId==city) {
+                result.push(data[i]);
+            }
+        }
+        return result;
+    });
     var areaData1= function(callback){// callback为回调函数
         $.ajax({
-          url: 'https://test-isemail.rhcloud.com/area.php',
+          url: './area.php',
           dataType: 'json',
           success:function(data,textStatus){
             callback(data);
@@ -41,7 +289,7 @@
 
     var areaData2= function(province,callback){// province为已经选中的省份ID,callback为回调函数
         $.ajax({
-          url: 'https://test-isemail.rhcloud.com/area.php?province='+province,
+          url: './area.php?province='+province,
           dataType: 'json',
           success:function(data,textStatus){
             callback(data);
@@ -51,7 +299,7 @@
 
     var areaData3= function(province,city,callback){// province为已经选中的省份ID,city为已经选中的城市ID,callback为回调函数
         $.ajax({
-          url: 'https://test-isemail.rhcloud.com/area.php?province='+province+'&city='+city,
+          url: './area.php?province='+province+'&city='+city,
           dataType: 'json',
           success:function(data,textStatus){
             callback(data);
