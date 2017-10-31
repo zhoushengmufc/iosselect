@@ -16,7 +16,7 @@ http://zhoushengfe.com/iosselect/website/index.html
 * 支持设置高度和高度单位
 * 适用于android和iOS设备(PC端支持IE9+，不过PC端上滑动体验不太实用)
 
-### 起步
+### 起步 
 
 * npm
 
