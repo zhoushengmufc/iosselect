@@ -1,63 +1,161 @@
 <!DOCTYPE html>
+
 <head>
-    <title>bank</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="../../src/iosSelect.css">
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-        var hm = document.createElement("script");
-        hm.src = "//hm.baidu.com/hm.js?b25bf95dd99f58452db28b1e99a1a46f";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
+  <title>bank</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="../../src/iosSelect.css">
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?b25bf95dd99f58452db28b1e99a1a46f";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
 </head>
+
 <body>
-<a href="https://github.com/zhoushengmufc/iosselect">查看文档</a>
-<div class="form-item item-line">
+  <a href="https://github.com/zhoushengmufc/iosselect">查看文档</a>
+  <!-- 以下为两个独立的选择项 -->
+  <div class="form-item item-line">
     <label>请选择银行</label>
     <div class="pc-box">
-        <input type="hidden" name="bank_id" class="bankId" value="">
-        <span class="showBank">点击这里选择银行</span>
+      <input type="hidden" name="bank_id">
+      <span class="showBank">点击这里选择银行</span>
     </div>
-</div>
-<div class="form-item item-line">
+  </div>
+  <div class="form-item item-line">
     <label>请选择银行</label>
     <div class="pc-box">
-        <input type="hidden" name="bank_id" class="bankId" value="">
-        <span class="showBank">点击这里选择银行</span>
+      <input type="hidden" name="bank_id">
+      <span class="showBank">点击这里选择银行</span>
     </div>
-</div>
-    <div class="container"></div>
+  </div>
+  <!-- 以下为两个关联的选择项 -->
+  <div class="form-item item-line">
+    <label>请选择银行</label>
+    <div class="pc-box">
+      <input type="hidden" name="bank_id">
+      <span class="showParent">点击这里选择银行</span>
+    </div>
+  </div>
+  <div class="form-item item-line">
+    <label>请选择支行</label>
+    <div class="pc-box">
+      <input type="hidden" name="bank_id">
+      <span class="showChild">点击这里选择支行</span>
+    </div>
+  </div>
+  <div class="container"></div>
 </body>
 <script src="bank.js"></script>
 <script src="../../src/iosSelect.js"></script>
-<!-- <script src="../../src/iosSelect.js"></script> -->
 <script type="text/javascript">
-    var showBankDom = document.querySelectorAll('.showBank');
-    for (var i = 0; i < showBankDom.length; i++) {
-        showBankDom[i].addEventListener('click', function (e) {
-        var bankId = e.target.dataset['id'];
-        var bankIdDom=e.target.previousElementSibling;
-        var bankSelect = new IosSelect(1,
-            [data],
-            {
-                container: '.container',
-                title: '银行卡选择',
-                itemHeight: 50,
-                itemShowCount: 3,
-                oneLevelId: bankId,
-                callback: function (selectOneObj) {
-                    bankIdDom.value = selectOneObj.id;
-                    e.target.innerHTML = selectOneObj.value;
-                    e.target.dataset['id'] = selectOneObj.id;
-                    e.target.dataset['value'] = selectOneObj.value;
-                }
-        });
+// 以下为两个独立的选择项
+var showBankDom = document.querySelectorAll('.showBank');
+for (var i = 0; i < showBankDom.length; i++) {
+  showBankDom[i].addEventListener('click', function(e) {
+    var bankId = e.target.dataset['id'];
+    var bankIdDom = e.target.previousElementSibling;
+    var bankSelect = new IosSelect(1, [data], {
+      container: '.container',
+      title: '选择银行',
+      itemHeight: 50,
+      itemShowCount: 3,
+      oneLevelId: bankId,
+      callback: function(selectOneObj) {
+        bankIdDom.value = selectOneObj.id;
+        e.target.innerHTML = selectOneObj.value;
+        e.target.dataset['id'] = selectOneObj.id;
+        //触发支行选择
+        var event = document.createEvent("MouseEvents");
+        event.initEvent("click", true, true);
+        branchDom.dispatchEvent(event);
+      }
     });
+  });
+}
+var bankChild = [
+  { 'parendtId': '10001', 'value': '燕南支行', 'id': '1000101' },
+  { 'parendtId': '10001', 'value': '红岭支行', 'id': '1000102' },
+  { 'parendtId': '10002', 'value': '农业银行支行', 'id': '1000201' },
+  { 'parendtId': '10003', 'value': '建设银行支行', 'id': '1000301' },
+  { 'parendtId': '10004', 'value': '中国银行支行', 'id': '1000401' },
+  { 'parendtId': '10005', 'value': '交通银行支行', 'id': '1000501' },
+  { 'parendtId': '10006', 'value': '浦发银行支行', 'id': '1000601' },
+  { 'parendtId': '10007', 'value': '上海银行支行', 'id': '1000701' },
+  { 'parendtId': '10008', 'value': '汇丰银行支行', 'id': '1000801' },
+  { 'parendtId': '10009', 'value': '光大银行支行', 'id': '1000901' },
+  { 'parendtId': '10010', 'value': '招商银行支行', 'id': '1001001' },
+  { 'parendtId': '10011', 'value': '中信银行支行', 'id': '1001101' },
+  { 'parendtId': '10012', 'value': '民生银行支行', 'id': '1001201' },
+  { 'parendtId': '10013', 'value': '平安银行支行', 'id': '1001301' },
+  { 'parendtId': '10014', 'value': '华夏银行支行', 'id': '1001401' },
+  { 'parendtId': '10015', 'value': '广发银行支行', 'id': '1001501' },
+  { 'parendtId': '10016', 'value': '北京银行支行', 'id': '1001601' }
+];
+var showParentDom = document.querySelector('.showParent');
+var showChildDom = document.querySelector('.showChild');
+var getBranch = function(callback) {
+  var oneLevelId = showParentDom.dataset['id'];
+  var data = [];
+  for (var i = 0; i < bankChild.length; i++) {
+    if (bankChild[i].parendtId == oneLevelId) {
+      data.push(bankChild[i]);
     }
+  }
+  callback(data);
+}
+
+showParentDom.addEventListener('click', function(e) {
+  var bankId = e.target.dataset['id'];
+  var bankIdDom = e.target.previousElementSibling;
+  var bankSelect = new IosSelect(1, [data], {
+    container: '.container',
+    title: '选择银行',
+    itemHeight: 50,
+    itemShowCount: 3,
+    oneLevelId: bankId,
+    callback: function(selectOneObj) {
+      bankIdDom.value = selectOneObj.id;
+      e.target.innerHTML = selectOneObj.value;
+      e.target.dataset['id'] = selectOneObj.id;
+      //触发支行选择
+      var event = document.createEvent("MouseEvents");
+      event.initEvent("click", true, true);
+      showChildDom.dispatchEvent(event);
+    }
+  });
+});
+
+showChildDom.addEventListener('click', function(e) {
+  var oneLevelId = showParentDom.dataset['id'];
+  if (/^\d+$/.test(oneLevelId) === false) {
+    //触发银行选择
+    var event = document.createEvent("MouseEvents");
+    event.initEvent("click", true, true);
+    showParentDom.dispatchEvent(event);
+    e.preventDefault();
+    return;
+  }
+  var bankId = e.target.dataset['id'];
+  var bankIdDom = e.target.previousElementSibling;
+  var bankSelect = new IosSelect(1, [getBranch], {
+    container: '.container',
+    title: '选择支行',
+    itemHeight: 50,
+    itemShowCount: 3,
+    oneLevelId: bankId,
+    callback: function(selectOneObj) {
+      bankIdDom.value = selectOneObj.id;
+      e.target.innerHTML = selectOneObj.value;
+      e.target.dataset['id'] = selectOneObj.id;
+    }
+  });
+});
 </script>
 </body>
+
 </html>
