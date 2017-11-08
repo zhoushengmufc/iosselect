@@ -126,8 +126,8 @@ https://pengweifu.github.io/iosselect/demo/ajax/angular/index.html#/components
 	default: undefined
 	type:    ...Array
 
-[oneLevelArray[, twoLevelArray[, threeLevelArray, [fourLevelArray, [fiveLevelArray, [sixLevelArray]]]]]] 可以用数组，也可以用方法。
-前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
+[oneLevelData[, twoLevelData[, threeLevelData[, fourLevelData[, fiveLevelData[, sixLevelData]]]]]] 可以用数组，也可以用方法。
+6项分别对应级联1,2,3,4,5,6项，每一项又是一个数组或方法
 如果是数组：
 每一项数组中包含一系列对象，每个对象必须要有id,作为该条数据在该项数组中的唯一标识，value作为显示值，parentId是可选属性，作为关联的标志，数据形如：
 
@@ -206,7 +206,7 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 	type:    function
 
 选择完毕后的回调函数，必选项
-options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, selectFiveObj) selectNumberObj为每级对应选中项，包含对应数据的所有字段及dom对象
+options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, selectFiveObj, selectSixObj) selectNumberObj为每级对应选中项，包含对应数据的所有字段及dom对象
 
 #### options.fallback
 
