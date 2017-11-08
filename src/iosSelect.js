@@ -1134,7 +1134,7 @@
 			this.el = null;
 			if (document.documentElement.classList.contains('ios-select-body-class')) {
 				document.documentElement.classList.remove('ios-select-body-class');
-				document.body.removeEventListener('touchstart', preventEventFun);
+				document.body.removeEventListener('touchmove', preventEventFun);
 			}
 		}
 	}
@@ -1280,7 +1280,7 @@
 
 			this.oneLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 			document.documentElement.classList.add('ios-select-body-class');
-			document.body.addEventListener('touchstart', preventEventFun);
+			document.body.addEventListener('touchmove', preventEventFun);
 
 			this.scrollOne = new IScrollForIosSelect('#oneLevelContain', {
 				probeType: 3,

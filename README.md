@@ -145,39 +145,37 @@ var iosCitys = [
 http://zhoushengfe.com/iosselect/demo/three/area.html
 
 如果是方法：
-传入一个方法，在方法中获取数据，数据形如：
+传入一个方法，在方法中获取数据，该方法有该列前序列的选中值和回调方法。
+如果是第一列的方法，可如下定义：
 
 ``` javascript
-var yearData = function(callback) {
-callback(formatYear(nowYear))
+function oneFun(callback) {
+	var arr1 = [];
+	callback(arr1);
 }
-var monthData = function (year, callback) {
-callback(formatMonth());
-};
-var dateData = function (year, month, callback) {
-    callback(formatDate(28));
-   }
-var hourData = function(one, two, three, callback) {
-var hours = [];
-for (var i = 0,len = 24; i < len; i++) {
-    hours.push({
-	id: i,
-	value: i + '时'
-    });
-}
-callback(hours);
-};
-var minuteData = function(one, two, three, four, callback) {
-var minutes = [];
-for (var i = 0, len = 60; i < len; i++) {
-    minutes.push({
-	id: i,
-	value: i + '分'
-    });
-}
-callback(minutes);
-};
 ```
+如果是第二列的方法，可如下定义：
+``` javascript
+function twoFun(oneLevelId, callback) {
+	var arr2 = [];
+	callback(arr2);
+}
+```
+如果第三列，可如下定义方法：
+``` javascript
+function threeFun(oneLevelId, twoLevelId, callback) {
+	var arr3 = [];
+	callback(arr3);
+}
+```
+依次类推，第六列获取数据的方法可如下定义：
+``` javascript
+function sixFun(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, callback) {
+	var arr6 = [];
+	callback(arr6);
+}
+```
+在方法里可以根据前序列的选中值定义需要的数据，比如年月日，当年月变化时，可根据年月选中值，设置日期的取值范围。
 
 具体可参考demo中的日期选择器和日期时间选择器。
 点击查看demo：
@@ -273,10 +271,11 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 
 #### options.relation
 
-	default: [0, 0, 0, 0]
+	default: [0, 0, 0, 0, 0]
 	type:    ...Array
 
-[oneTwoRelation, twoThreeRelation, threeFourRelation, fourFiveRelation]各级选项之间是否通过parentId关联，可选项
+[oneTwoRelation, twoThreeRelation, threeFourRelation, fourFiveRelation, fiveSixRelation]
+可选项。如果数据是数组(非方法)，各级选项之间通过parentId关联时，需要设置；如果是通过方法获取数据，不需要该参数。
 
 #### options.relation.oneTwoRelation
 
@@ -305,6 +304,13 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 	type:    number
 
 第四列和第五列是否通过parentId关联，可选项
+
+#### options.relation.fiveSixRelation
+
+	default: 0
+	type:    number
+
+第五列和第六列是否通过parentId关联，可选项
 
 #### options.oneLevelId
 
@@ -335,6 +341,12 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 	type:    string
 
 实例展示时，第五级数据默认选中值，可选项，默认为第五级数据第一项id
+
+#### options.sixLevelId
+
+	type:    string
+
+实例展示时，第6级数据默认选中值，可选项，默认为第6级数据第一项id
 
 #### options.showLoading
 
