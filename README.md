@@ -12,7 +12,7 @@ http://zhoushengfe.com/iosselect/website/index.html
 * 0依赖，只需引用一个js和css即可
 * 样式可自己定制，也可使用默认样式
 * 一个页面同时实例化多个组件
-* 支持最多5级级联
+* 支持最多6级级联
 * 支持设置高度和高度单位
 * 适用于android和iOS设备(PC端支持IE9+，不过PC端上滑动体验不太实用)
 
@@ -87,6 +87,10 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 
 http://zhoushengfe.com/iosselect/demo/five/time.html
 
+* 日期时间选择器，共6级，通过方法获取数据
+
+http://zhoushengfe.com/iosselect/demo/six/time.html
+
 * AJAX获取数据
 
 https://pengweifu.github.io/iosselect/demo/ajax/area2.html
@@ -115,14 +119,14 @@ https://pengweifu.github.io/iosselect/demo/ajax/angular/index.html#/components
 	default: 1
 	type:    number
 
-数据的层级，最多支持5层
+数据的层级，最多支持6层
 
 #### data
 
 	default: undefined
 	type:    ...Array
 
-[oneLevelArray[, twoLevelArray[, threeLevelArray, [fourLevelArray, [fiveLevelArray]]]]] 可以用数组，也可以用方法。
+[oneLevelArray[, twoLevelArray[, threeLevelArray, [fourLevelArray, [fiveLevelArray, [sixLevelArray]]]]]] 可以用数组，也可以用方法。
 前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
 如果是数组：
 每一项数组中包含一系列对象，每个对象必须要有id,作为该条数据在该项数组中的唯一标识，value作为显示值，parentId是可选属性，作为关联的标志，数据形如：
