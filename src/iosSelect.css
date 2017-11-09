@@ -189,7 +189,10 @@ ul, li {
     color: #333;
 }
 .ios-select-body-class {
-  overflow: hidden;
+    overflow: hidden;
+}
+.ios-select-body-class body {
+    touch-action: none;
 }
 .ios-select-widget-box.olay > div > .ios-select-loading-box {
     width: 100%;

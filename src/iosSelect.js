@@ -1,7 +1,7 @@
 /**
  * IosSelect
- * @param {number} level 选择的层级 1 2 3 4 5 最多支持5层
- * @param {...Array} data [oneLevelArray[, twoLevelArray[, threeLevelArray]]]
+ * @param {number} level 选择的层级 1 2 3 4 5 6 最多支持6层
+ * @param {...Array} data [oneLevelData[, twoLevelData[, threeLevelData[, fourLevelData[, fiveLevelData[, sixLevelData]]]]]] 可以用数组，也可以用方法
  * @param {Object} options
  * @param {string=} options.container 组件插入到该元素下 可选
  * @param {Function} options.callback 选择完毕后的回调函数
@@ -12,16 +12,18 @@
  * @param {number=} options.headerHeight 组件标题栏高度 默认 44
  * @param {css=} options.cssUnit px或者rem 默认是px
  * @param {string=} options.addClassName 组件额外类名 用于自定义样式
- * @param {...Array=} options.relation 数组 [oneTwoRelation, twoThreeRelation, threeFourRelation, fourFiveRelation] 默认值：[0, 0, 0, 0]
+ * @param {...Array=} options.relation 数组 [oneTwoRelation, twoThreeRelation, threeFourRelation, fourFiveRelation] 默认值：[0, 0, 0, 0, 0, 0]
  * @param {number=} options.relation.oneTwoRelation 第一列和第二列是否通过parentId关联
  * @param {number=} options.relation.twoThreeRelation 第二列和第三列是否通过parentId关联
  * @param {number=} options.relation.threeFourRelation 第三列和第四列是否通过parentId关联
  * @param {number=} options.relation.fourFiveRelation 第四列和第五列是否通过parentId关联
+ * @param {number=} options.relation.fiveSixRelation 第五列和第六列是否通过parentId关联
  * @param {string=} options.oneLevelId 第一级选中id
  * @param {string=} options.twoLevelId 第二级选中id
  * @param {string=} options.threeLevelId 第三级选中id
  * @param {string=} options.fourLevelId 第四级选中id
  * @param {string=} options.fiveLevelId 第五级选中id
+ * @param {string=} options.sixLevelId 第六级选中id
  * @param {boolean=} options.showLoading 如果你的数据是异步加载的，可以使用该参数设置为true，下拉菜单会有加载中的效果
  * @param {boolean=} options.showAnimate 是否需要入场动画和退场动画，如需自定义动画效果，请修改css
  */
@@ -1058,9 +1060,9 @@
 			return html;
 		}
 	};
-	function preventEventFun(e) {
+	/*function preventEventFun(e) {
 		e.preventDefault();
-	}
+	}*/
 	// Layer
 	function Layer(html, opts) {
 		if (!(this instanceof Layer)) {
@@ -1134,7 +1136,9 @@
 			this.el = null;
 			if (document.documentElement.classList.contains('ios-select-body-class')) {
 				document.documentElement.classList.remove('ios-select-body-class');
-				document.body.removeEventListener('touchmove', preventEventFun);
+				/*document.body.removeEventListener('touchmove', preventEventFun, {
+					passive: false
+				});*/
 			}
 		}
 	}
@@ -1280,7 +1284,9 @@
 
 			this.oneLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 			document.documentElement.classList.add('ios-select-body-class');
-			document.body.addEventListener('touchmove', preventEventFun);
+			/*document.body.addEventListener('touchmove', preventEventFun, {
+				passive: false
+			});*/
 
 			this.scrollOne = new IScrollForIosSelect('#oneLevelContain', {
 				probeType: 3,
