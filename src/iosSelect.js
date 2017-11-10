@@ -1190,14 +1190,26 @@
 		if (this.options.cssUnit !== 'px' && this.options.cssUnit !== 'rem') {
 			this.options.cssUnit = 'px';
 		}
+		var self = this;
 		// 选中元素的信息
-		this.selectOneObj = {};
-		this.selectTwoObj = {};
-		this.selectThreeObj = {};
-		this.selectFourObj = {};
-		this.selectFiveObj = {};
-		this.selectSixObj = {};
-
+		this.selectOneObj = {
+			id: self.options.oneLevelId
+		};
+		this.selectTwoObj = {
+			id: self.options.twoLevelId
+		};
+		this.selectThreeObj = {
+			id: self.options.threeLevelId
+		};
+		this.selectFourObj = {
+			id: self.options.fourLevelId
+		};
+		this.selectFiveObj = {
+			id: self.options.fiveLevelId
+		};
+		this.selectSixObj = {
+			id: self.options.sixLevelId
+		};
 		this.setBase();
 		this.init();
 	};
@@ -1429,7 +1441,6 @@
 					if ((mapKey.relation === 1 && iosSelectUtil.isArray(self.data[index])) || iosSelectUtil.isFunction(self.data[index])) {
 						self.setLevelData(index + 1, self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id, self.selectSixObj.id);
 					}
-					
 				}
 			});
             scrollInstance.on('scrollCancel', function () {
@@ -1583,12 +1594,11 @@
 			renderMap.scrollInstance.refresh();
 			renderMap.scrollInstance.scrollToElement(':nth-child(' + plast + ')', 0);
 			var pdom = this.changeClassName(renderMap.levelContainDom, plast);
-			var obj = this.selectFiveObj = iosSelectUtil.attrToData(pdom, plast + Math.ceil(this.options.itemShowCount / 2));
+			var obj = iosSelectUtil.attrToData(pdom, plast + Math.ceil(this.options.itemShowCount / 2));
 			this.setSelectObj(index, obj);
 			if (this.level > index) {
-				this.setLevelData(index + 1, oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, sixLevelId);
+				this.setLevelData(index + 1, this.selectOneObj.id, this.selectTwoObj.id, this.selectThreeObj.id, this.selectFourObj.id, this.selectFiveObj.id, this.selectSixObj.id);
 			}
-			
 	    },
 	    setSelectObj: function (index, obj) {
 	    	if (index === 1) {
