@@ -1594,7 +1594,7 @@
 			renderMap.scrollInstance.refresh();
 			renderMap.scrollInstance.scrollToElement(':nth-child(' + plast + ')', 0);
 			var pdom = this.changeClassName(renderMap.levelContainDom, plast);
-			var obj = iosSelectUtil.attrToData(pdom, plast + Math.ceil(this.options.itemShowCount / 2));
+			var obj = iosSelectUtil.attrToData(pdom, plast);
 			this.setSelectObj(index, obj);
 			if (this.level > index) {
 				this.setLevelData(index + 1, this.selectOneObj.id, this.selectTwoObj.id, this.selectThreeObj.id, this.selectFourObj.id, this.selectFiveObj.id, this.selectSixObj.id);
