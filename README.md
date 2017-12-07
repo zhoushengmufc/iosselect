@@ -7,7 +7,7 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
   
 http://zhoushengfe.com/iosselect/website/index.html
 
-### 特点
+### 特点 
 
 * 0依赖，只需引用一个js和css即可
 * 样式可自己定制，也可使用默认样式
