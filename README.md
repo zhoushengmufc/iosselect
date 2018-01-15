@@ -5,7 +5,7 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
 
 ## 支持本项目
 
-![](https://github.com/zhoushengmufc/iosselect/blob/master/zhifubao.jpg){:height="20%" width="20%"}
+![](https://github.com/zhoushengmufc/iosselect/blob/master/zhifubao2.jpg)
 
 ## 官网
   
