@@ -3,6 +3,10 @@ master主干为稳定版，可放心使用
  
 html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统一下拉菜单样式而生，我们以IOS下select的交互和样式为蓝本，开发了这一组件。
 
+## 支持本项目
+
+![](https://github.com/zhoushengmufc/iosselect/blob/master/zhifubao.jpg)
+
 ## 官网
   
 http://zhoushengfe.com/iosselect/website/index.html
