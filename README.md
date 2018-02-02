@@ -214,6 +214,13 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 
 选择取消后的回调函数，可选项
 
+#### options.maskCallback
+
+    default: undefined
+    type:    function
+    
+点击背景层关闭组件时触发的方法，可选项
+
 #### options.title
 
 	default: ''
