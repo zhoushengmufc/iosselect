@@ -48,6 +48,12 @@
                     showBankDom.innerHTML = selectOneObj.value;
                     showBankDom.dataset['id'] = selectOneObj.id;
                     showBankDom.dataset['value'] = selectOneObj.value;
+                },
+                fallback: function () {
+                    console.log(1);
+                },
+                maskCallback: function () {
+                    console.log(2);
                 }
         });
     });

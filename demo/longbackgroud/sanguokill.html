@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+    <title>三国杀</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../src/iosSelect.css">
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?b25bf95dd99f58452db28b1e99a1a46f";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style="height: 1500px;">
+<a href="https://github.com/zhoushengmufc/iosselect">查看文档</a>
+<div class="form-item item-line" style="margin-top:400px;">                 
+    <label>选择选将组合</label>                 
+    <div class="pc-box">                     
+        <input type="hidden" name="su_id" id="suId" value=""> 
+        <input type="hidden" name="wei_id" id="weiId" value="">                     
+        <span id="showGeneral">点击这里选择将领</span>  
+    </div>             
+</div>
+</body>
+<script src="data.js"></script>
+<script src="../../src/iosSelect.js"></script>
+<script type="text/javascript">
+    var showGeneralDom = document.querySelector('#showGeneral');
+    var suIdDom = document.querySelector('#suId');
+    var weiIdDom = document.querySelector('#weiId');
+    showGeneralDom.addEventListener('click', function () {
+        var suId = showGeneralDom.dataset['su_id'];
+        var suValue = showGeneralDom.dataset['su_value'];
+        var weiId = showGeneralDom.dataset['wei_id'];
+        var weiValue = showGeneralDom.dataset['wei_value'];
+        var sanguoSelect = new IosSelect(2, 
+            [suData, weiData],
+            {
+                title: '将领选择',
+                itemHeight: 35,
+                oneLevelId: suId,
+                twoLevelId: weiId,
+                callback: function (selectOneObj, selectTwoObj) {
+                    suIdDom.value = selectOneObj.id;
+                    weiIdDom.value = selectTwoObj.id;
+                    showGeneralDom.innerHTML = '蜀国将领是：' + selectOneObj.value + ' 魏国将领是：' + selectTwoObj.value;
+
+                    showGeneralDom.dataset['su_id'] = selectOneObj.id;
+                    showGeneralDom.dataset['su_value'] = selectOneObj.value;
+                    showGeneralDom.dataset['wei_id'] = selectTwoObj.id;
+                    showGeneralDom.dataset['wei_value'] = selectTwoObj.value;
+                },
+                fallback: function () {
+                }
+        });
+    });
+</script>
+</body>
+</html>

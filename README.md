@@ -1,18 +1,19 @@
 # iOSselect
-master主干为稳定版，可放心使用
-
+打赏本项目：![image](https://github.com/zhoushengmufc/iosselect/blob/master/zhifubao.jpg)
+ 
 html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统一下拉菜单样式而生，我们以IOS下select的交互和样式为蓝本，开发了这一组件。
 
 ## 官网
-
+  
 http://zhoushengfe.com/iosselect/website/index.html
 
-### 特点
+### 特点 
 
 * 0依赖，只需引用一个js和css即可
 * 样式可自己定制，也可使用默认样式
 * 一个页面同时实例化多个组件
-* 支持最多5级级联
+* jquery zepto angular vue react均适用
+* 支持最多6级级联
 * 支持设置高度和高度单位
 * 适用于android和iOS设备(PC端支持IE9+，不过PC端上滑动体验不太实用)
 
@@ -87,6 +88,10 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 
 http://zhoushengfe.com/iosselect/demo/five/time.html
 
+* 日期时间选择器，共6级，通过方法获取数据
+
+http://zhoushengfe.com/iosselect/demo/six/time.html
+
 * AJAX获取数据
 
 https://pengweifu.github.io/iosselect/demo/ajax/area2.html
@@ -115,15 +120,15 @@ https://pengweifu.github.io/iosselect/demo/ajax/angular/index.html#/components
 	default: 1
 	type:    number
 
-数据的层级，最多支持5层
+数据的层级，最多支持6层
 
 #### data
 
 	default: undefined
 	type:    ...Array
 
-[oneLevelArray[, twoLevelArray[, threeLevelArray, [fourLevelArray, [fiveLevelArray]]]]] 可以用数组，也可以用方法。
-前五项分别对应级联1,2,3,4,5项，每一项又是一个数组或方法
+[oneLevelData[, twoLevelData[, threeLevelData[, fourLevelData[, fiveLevelData[, sixLevelData]]]]]] 可以用数组，也可以用方法。
+6项分别对应级联1,2,3,4,5,6项，每一项又是一个数组或方法
 如果是数组：
 每一项数组中包含一系列对象，每个对象必须要有id,作为该条数据在该项数组中的唯一标识，value作为显示值，parentId是可选属性，作为关联的标志，数据形如：
 
@@ -141,39 +146,37 @@ var iosCitys = [
 http://zhoushengfe.com/iosselect/demo/three/area.html
 
 如果是方法：
-传入一个方法，在方法中获取数据，数据形如：
+传入一个方法，在方法中获取数据，该方法有该列前序列的选中值和回调方法。
+如果是第一列的方法，可如下定义：
 
 ``` javascript
-var yearData = function(callback) {
-callback(formatYear(nowYear))
+function oneFun(callback) {
+	var arr1 = [];
+	callback(arr1);
 }
-var monthData = function (year, callback) {
-callback(formatMonth());
-};
-var dateData = function (year, month, callback) {
-    callback(formatDate(28));
-   }
-var hourData = function(one, two, three, callback) {
-var hours = [];
-for (var i = 0,len = 24; i < len; i++) {
-    hours.push({
-	id: i,
-	value: i + '时'
-    });
-}
-callback(hours);
-};
-var minuteData = function(one, two, three, four, callback) {
-var minutes = [];
-for (var i = 0, len = 60; i < len; i++) {
-    minutes.push({
-	id: i,
-	value: i + '分'
-    });
-}
-callback(minutes);
-};
 ```
+如果是第二列的方法，可如下定义：
+``` javascript
+function twoFun(oneLevelId, callback) {
+	var arr2 = [];
+	callback(arr2);
+}
+```
+如果第三列，可如下定义方法：
+``` javascript
+function threeFun(oneLevelId, twoLevelId, callback) {
+	var arr3 = [];
+	callback(arr3);
+}
+```
+依次类推，第六列获取数据的方法可如下定义：
+``` javascript
+function sixFun(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, callback) {
+	var arr6 = [];
+	callback(arr6);
+}
+```
+在方法里可以根据前序列的选中值定义需要的数据，比如年月日，当年月变化时，可根据年月选中值，设置日期的取值范围。
 
 具体可参考demo中的日期选择器和日期时间选择器。
 点击查看demo：
@@ -202,7 +205,7 @@ http://zhoushengfe.com/iosselect/demo/datepicker/date.html
 	type:    function
 
 选择完毕后的回调函数，必选项
-options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, selectFiveObj) selectNumberObj为每级对应选中项，包含对应数据的所有字段及dom对象
+options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, selectFiveObj, selectSixObj) selectNumberObj为每级对应选中项，包含对应数据的所有字段及dom对象
 
 #### options.fallback
 
@@ -210,6 +213,13 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
     type:    function
 
 选择取消后的回调函数，可选项
+
+#### options.maskCallback
+
+    default: undefined
+    type:    function
+    
+点击背景层关闭组件时触发的方法，可选项
 
 #### options.title
 
@@ -269,10 +279,11 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 
 #### options.relation
 
-	default: [0, 0, 0, 0]
+	default: [0, 0, 0, 0, 0]
 	type:    ...Array
 
-[oneTwoRelation, twoThreeRelation, threeFourRelation, fourFiveRelation]各级选项之间是否通过parentId关联，可选项
+[oneTwoRelation, twoThreeRelation, threeFourRelation, fourFiveRelation, fiveSixRelation]
+可选项。如果数据是数组(非方法)，各级选项之间通过parentId关联时，需要设置；如果是通过方法获取数据，不需要该参数。
 
 #### options.relation.oneTwoRelation
 
@@ -301,6 +312,13 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 	type:    number
 
 第四列和第五列是否通过parentId关联，可选项
+
+#### options.relation.fiveSixRelation
+
+	default: 0
+	type:    number
+
+第五列和第六列是否通过parentId关联，可选项
 
 #### options.oneLevelId
 
@@ -331,6 +349,12 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
 	type:    string
 
 实例展示时，第五级数据默认选中值，可选项，默认为第五级数据第一项id
+
+#### options.sixLevelId
+
+	type:    string
+
+实例展示时，第6级数据默认选中值，可选项，默认为第6级数据第一项id
 
 #### options.showLoading
 
