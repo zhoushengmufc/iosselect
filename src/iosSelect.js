@@ -35,7 +35,20 @@
 	    window.mozRequestAnimationFrame     ||
 	    window.oRequestAnimationFrame       ||
 	    window.msRequestAnimationFrame      ||
-	    function (callback) { window.setTimeout(callback, 1000 / 60); };
+		function (callback) { window.setTimeout(callback, 1000 / 60); };
+	var aF = (function () {
+		var eleStyle = document.createElement('div').style;
+		var verdors = ['a', 'webkitA', 'MozA', 'OA', 'msA'];
+		var endEvents = ['animationend', 'webkitAnimationEnd', 'animationend', 'oAnimationEnd', 'MSAnimationEnd'];
+		var animation;
+		for (var i = 0, len = verdors.length; i < len; i++) {
+			animation = verdors[i] + 'nimation';
+			if (animation in eleStyle) {
+				return endEvents[i];
+			}
+		}
+		return 'animationend';
+	}());
 
 	var utils = (function () {
 	    var me = {};
@@ -1123,9 +1136,9 @@
 			if (self.el) {
 				if (self.opts.showAnimate) {
 					self.el.className += ' fadeOutDown';
-					setTimeout(function(){
+					self.el.addEventListener(aF, function () {
 						self.removeDom();
-					}, 500);
+					});
 				}
 				else {
 					self.removeDom();
@@ -1156,23 +1169,9 @@
 		this.level = level || 1;
 		this.options = options;
 		this.typeBox = 'one-level-box';
-		if (this.level === 1) {
-			this.typeBox = 'one-level-box';
-		}
-		else if (this.level === 2) {
-			this.typeBox = 'two-level-box';
-		}
-		else if (this.level === 3) {
-			this.typeBox = 'three-level-box';
-		}
-		else if (this.level === 4) {
-			this.typeBox = 'four-level-box';
-		}
-		else if (this.level === 5) {
-			this.typeBox = 'five-level-box';
-		}
-		else if (this.level === 6) {
-			this.typeBox = 'six-level-box';
+		var boxClass = ['one', 'two', 'three', 'four', 'five', 'six'];
+		if (this.level <= 6 && this.level >= 1) {
+			this.typeBox = boxClass[parseInt(this.level) - 1] + '-level-box';
 		}
 		this.title = options.title || '';
 		this.options.itemHeight = options.itemHeight || 35;
