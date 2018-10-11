@@ -1,6 +1,6 @@
 /**
  * IosSelect
- * @param {number} level 选择的层级 1 2 3 4 5 6 最多支持6层
+ * @param {number} level 选择的层级 1 2 3 4 5 6 最多支持6层 
  * @param {...Array} data [oneLevelData[, twoLevelData[, threeLevelData[, fourLevelData[, fiveLevelData[, sixLevelData]]]]]] 可以用数组，也可以用方法
  * @param {Object} options
  * @param {string=} options.container 组件插入到该元素下 可选
