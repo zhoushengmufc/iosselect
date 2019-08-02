@@ -2,11 +2,6 @@
  
 html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统一下拉菜单样式而生，我们以IOS下select的交互和样式为蓝本，开发了这一组件。
 
-## 主要维护人员
-
-https://github.com/zhoushengmufc
-
-https://github.com/pengweifu
 
 ## 官网
   

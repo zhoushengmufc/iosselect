@@ -31,12 +31,11 @@
 <script type="text/javascript">
     var showBankDom = document.querySelector('#showBank');
     var bankIdDom = document.querySelector('#bankId');
-    var bankSelect;
     showBankDom.addEventListener('click', function () {
         var bankId = showBankDom.dataset['id'];
         var bankName = showBankDom.dataset['value'];
 
-        bankSelect = new IosSelect(1, 
+        var bankSelect = new IosSelect(1, 
             [data],
             {
                 container: '.container',
@@ -50,21 +49,13 @@
                     showBankDom.dataset['id'] = selectOneObj.id;
                     showBankDom.dataset['value'] = selectOneObj.value;
                 },
-                fallback: function (e) {
-                    console.log(e);
+                fallback: function () {
+                    console.log(1);
                 },
-                maskCallback: function (e) {
-                    console.log(e);
+                maskCallback: function () {
+                    console.log(2);
                 }
         });
-    });
-
-    setTimeout(function() {
-        bankSelect.close();
-    }, 10000);
-
-    window.addEventListener('destroyIosSelect', function(e) {
-        console.log(e);
     });
 </script>
 </body>
