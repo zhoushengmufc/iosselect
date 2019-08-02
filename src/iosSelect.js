@@ -124,11 +124,12 @@
 	    };
 
 	    var _transform = _prefixStyle('transform');
+	    var isWechatDevTool = navigator.userAgent.toLowerCase().indexOf('wechatdevtools') > -1;
 
 	    me.extend(me, {
 	        hasTransform: _transform !== false,
 	        hasPerspective: _prefixStyle('perspective') in _elementStyle,
-	        hasTouch: 'ontouchstart' in window,
+	        hasTouch: 'ontouchstart' in window || isWechatDevTool,
 	        hasPointer: !!(window.PointerEvent || window.MSPointerEvent), // IE10 is prefixed
 	        hasTransition: _prefixStyle('transition') in _elementStyle
 	    });
@@ -1114,7 +1115,7 @@
 			var self = this;
 			this.el.addEventListener('click', function(e) {
 				self.close();
-				self.opts.maskCallback && self.opts.maskCallback();
+				self.opts.maskCallback && self.opts.maskCallback(e);
 			});
 			this.layer_el.addEventListener('click', function(e) {
 				e.stopPropagation();
@@ -1125,9 +1126,9 @@
 				});
 			});
 			Array.prototype.slice.call(closeDom).forEach(function (item, index) {
-				item.addEventListener('click', function () {
+				item.addEventListener('click', function (e) {
 					self.close();
-					self.opts.fallback && self.opts.fallback();
+					self.opts.fallback && self.opts.fallback(e);
 				});
 			});
 		},
@@ -1148,6 +1149,9 @@
 		removeDom: function (){
 			this.el.parentNode.removeChild(this.el);
 			this.el = null;
+      var evt = document.createEvent('HTMLEvents');
+      evt.initEvent('destroyIosSelect', false, false);
+      window.dispatchEvent(evt);
 			if (document.documentElement.classList.contains('ios-select-body-class')) {
 				document.documentElement.classList.remove('ios-select-body-class');
 				/*document.body.removeEventListener('touchmove', preventEventFun, {
@@ -1353,6 +1357,10 @@
 				self.options.callback && self.options.callback(self.selectOneObj, self.selectTwoObj, self.selectThreeObj, self.selectFourObj, self.selectFiveObj, self.selectSixObj);
 			});
 		},
+		close: function() {
+      this.options.callback && this.options.callback(this.selectOneObj, this.selectTwoObj, this.selectThreeObj, this.selectFourObj, this.selectFiveObj, this.selectSixObj);
+      this.iosSelectLayer.close();
+    },
 		mapKeyByIndex: function (index) {
 			var self = this;
 			var map = {
@@ -1461,7 +1469,6 @@
 					if ((mapKey.relation === 1 && iosSelectUtil.isArray(self.data[index])) || iosSelectUtil.isFunction(self.data[index])) {
 						self.setLevelData(index + 1, self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id, self.selectSixObj.id);
 					}
-					
 				}
 			});
 		},
