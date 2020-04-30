@@ -1108,6 +1108,9 @@
 				this.el.className += ' ' + this.opts.className;
 			}
 			this.bindEvent();
+			var evt = document.createEvent('HTMLEvents');
+      evt.initEvent('IosSelectCreated', true, false);
+      this.el.dispatchEvent(evt);
 		},
 		bindEvent: function () {
 			var sureDom = this.el.querySelectorAll('.sure');
@@ -1147,11 +1150,11 @@
 			}
 		},
 		removeDom: function (){
+			var evt = document.createEvent('HTMLEvents');
+      evt.initEvent('IosSelectDestroyed', true, false);
+      this.el.dispatchEvent(evt);
 			this.el.parentNode.removeChild(this.el);
 			this.el = null;
-      var evt = document.createEvent('HTMLEvents');
-      evt.initEvent('destroyIosSelect', false, false);
-      window.dispatchEvent(evt);
 			if (document.documentElement.classList.contains('ios-select-body-class')) {
 				document.documentElement.classList.remove('ios-select-body-class');
 				/*document.body.removeEventListener('touchmove', preventEventFun, {
@@ -1469,6 +1472,7 @@
 					if ((mapKey.relation === 1 && iosSelectUtil.isArray(self.data[index])) || iosSelectUtil.isFunction(self.data[index])) {
 						self.setLevelData(index + 1, self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id, self.selectSixObj.id);
 					}
+					
 				}
 			});
 		},
