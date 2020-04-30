@@ -7,6 +7,8 @@ html下拉菜单select在安卓和IOS下表现不一样，iosselect正是为统�
   
 http://zhoushengfe.com/iosselect/website/index.html
 
+备用网址: https://www.pengwf.com/iosselect/index.html
+
 ### 特点 
 
 * 0依赖，只需引用一个js和css即可
@@ -66,47 +68,47 @@ showDom.addEventListener('click', function () {  // 添加监听事件
 
 * 一级级联，银行选择
 
-http://zhoushengfe.com/iosselect/demo/one/bank.html
+https://www.pengwf.com/iosselect/demo/one/bank.html
 
 * 二级级联，三国杀将领组合选
 
-http://zhoushengfe.com/iosselect/demo/two/sanguokill.html
+https://www.pengwf.com/iosselect/demo/two/sanguokill.html
 
 * 三级级联，省市区选择
 
-http://zhoushengfe.com/iosselect/demo/three/area.html
+https://www.pengwf.com/iosselect/demo/three/area.html
 
 * viewport缩放时处理方案
 
-http://zhoushengfe.com/iosselect/demo/rem/bank.html
+https://www.pengwf.com/iosselect/demo/rem/bank.html
 
 * 日期选择器 三级联动，通过方法获取数据，并且有加载中效果
 
-http://zhoushengfe.com/iosselect/demo/datepicker/date.html
+https://www.pengwf.com/iosselect/demo/datepicker/date.html
 
 * 日期时间选择器，共五级，通过方法获取数据
 
-http://zhoushengfe.com/iosselect/demo/five/time.html
+https://www.pengwf.com/iosselect/demo/five/time.html
 
 * 日期时间选择器，共6级，通过方法获取数据
 
-http://zhoushengfe.com/iosselect/demo/six/time.html
+https://www.pengwf.com/iosselect/demo/six/time.html
 
 * AJAX获取数据
 
-https://pengweifu.github.io/iosselect/demo/ajax/area2.html
+https://www.pengwf.com/iosselect/demo/ajax/area2.html
 
 * 出场动画／退场动画
 
-https://pengweifu.github.io/iosselect/demo/one/animate.html
+https://www.pengwf.com/iosselect/demo/one/animate.html
 
 * 组件实例化多次
 
-https://pengweifu.github.io/iosselect/demo/one/multi.html
+https://www.pengwf.com/iosselect/demo/one/multi.html
 
 * AngularJS 异步加载
 
-https://pengweifu.github.io/iosselect/demo/ajax/angular/index.html#/components
+https://www.pengwf.com/iosselect/demo/ajax/angular/index.html#/components
 
 
 ### 如果要修改菜单项里样式，请自行修改样式，比如：
@@ -143,7 +145,7 @@ var iosCitys = [
 
 当我们选择河北省时，就到城市中找到parentId为河北省id的数据，然后展示出来。
 点击查看demo：
-http://zhoushengfe.com/iosselect/demo/three/area.html
+https://www.pengwf.com/iosselect/demo/three/area.html
 
 如果是方法：
 传入一个方法，在方法中获取数据，该方法有该列前序列的选中值和回调方法。
@@ -180,11 +182,11 @@ function sixFun(oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, 
 
 具体可参考demo中的日期选择器和日期时间选择器。
 点击查看demo：
-http://zhoushengfe.com/iosselect/demo/datepicker/date.html
+https://www.pengwf.com/iosselect/demo/datepicker/date.html
 
 如何ajax获取数据
 
-![image](http://zhoushengfe.com/img/ajax.jpg)
+![image](https://www.pengwf.com/iosselect/demo/img/ajax.jpg)
 
 #### options
 
@@ -213,6 +215,11 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
     type:    function
 
 选择取消后的回调函数，可选项
+```
+fallback: function (e) {
+	console.log(e);
+},
+```
 
 #### options.maskCallback
 
@@ -220,6 +227,11 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
     type:    function
     
 点击背景层关闭组件时触发的方法，可选项
+```
+fallback: maskCallback (e) {
+	console.log(e);
+},
+```
 
 #### options.title
 
@@ -369,5 +381,29 @@ options.callback(selectOneObj, selectTwoObj, selectThreeObj, selectFourObj, sele
     type:    boolean
 
 是否显示入场动画和退场动画，如需自定义动画效果，请覆写.fadeInUp .layer和.fadeOutDown .layer的css3动画。PS:动画时间为0.5秒。
+
+#### 方法
+#### close
+关闭已实例化的组件
+```
+object.close();
+```
+
+#### 事件
+
+#### IosSelectCreated
+组件创建完毕事件
+```
+window.addEventListener('IosSelectCreated', function(e) {
+		console.log(e);
+});
+```
+#### IosSelectDestroyed
+组件销毁事件
+```
+window.addEventListener('IosSelectDestroyed', function(e) {
+		console.log(e);
+});
+```
 
 ## 如果有使用问题，可加QQ群：419468553
